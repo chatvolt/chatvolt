@@ -1,0 +1,68 @@
+openapi: 3.0.2
+info:
+  title: Retrieval Plugin API
+  description: A retrieval API for querying and filtering documents based on natural language queries and metadata
+  version: 1.0.0
+  servers:
+    - url: https://your-app-url.com
+paths:
+  /DATASTORE_QUERY_PATH:
+    post:
+      summary: Query
+      description: Accepts search query objects array each with query and optional filter. Break down complex questions into sub-questions. Refine results by criteria, e.g. time / source, don't do this often. Split queries if ResponseTooLargeError occurs.
+      operationId: query_query_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueryResponse"
+      security:
+        - HTTPBearer: []
+components:
+  schemas:
+    QueryRequest:
+      title: QueryRequest
+      required:
+        - query
+      type: object
+      properties:
+        query:
+          title: Query
+          type: string
+        top_k:
+          title: Top K
+          description: The number of text 256 tokens large chunks to return
+          type: integer
+          default: 3
+    QueryResponse:
+      title: QueryResponse
+      type: array
+      items:
+        $ref: "#/components/schemas/QueryResult"
+    QueryResult:
+      title: QueryResult
+      required:
+        - text
+      type: object
+      properties:
+        text:
+          title: Text
+          type: string
+        source:
+          title: Source
+          type: string
+        score:
+          title: Score
+          type: number
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,17 @@
+{
+  "name": "@chatvolt/embeds",
+  "version": "1.0.158",
+  "description": "Chatvolt Embeds",
+  "main": "dist/chatbox/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chatvolt/chatvolt.git"
+  },
+  "author": "Chatvolt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chatvolt/chatvolt/issues"
+  },
+  "homepage": "https://github.com/chatvolt/chatvolt#readme"
+}

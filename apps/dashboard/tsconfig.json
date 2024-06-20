@@ -1,0 +1,28 @@
+{
+  "extends": "@chatvolt/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./*"],
+      "@chatvolt/lib/*": ["../../packages/lib/*"],
+      "@chatvolt/ui/*": ["../../packages/ui/src/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "../../packages/lib/**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "widgets/prestashop/vendor"]
+}

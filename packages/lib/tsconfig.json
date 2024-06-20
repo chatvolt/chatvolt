@@ -1,0 +1,19 @@
+{
+    "extends": "@chatvolt/tsconfig/nextjs.json",
+    "include": [
+      "**/*.ts",
+      "**/*.tsx",
+    ],
+    "exclude": [
+      "node_modules"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+          "@chatvolt/lib/*": [
+            "./*"
+          ]
+        },
+      },
+  }
+  

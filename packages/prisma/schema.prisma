@@ -1,0 +1,1025 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id      String  @id @default(cuid())
+  name    String
+  iconUrl String? @map("icon_url")
+
+  leads            Lead[]
+  usage            Usage?
+  agents           Agent[]
+  apiKeys          UserApiKey[]
+  sessions         Session[]
+  approvals        ActionApproval[]
+  datastores       Datastore[]
+  memberships      Membership[]
+  conversations    Conversation[]
+  subscriptions    Subscription[]
+  appDatasources   AppDatasource[]
+  serviceProviders ServiceProvider[]
+  forms            Form[]
+  mailInboxes         MailInbox[]
+  contacts            Contact[]
+  visitors            Visitor[]
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("organizations")
+}
+
+model Membership {
+  id   String         @id @default(cuid())
+  role MembershipRole
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String       @map("organization_id")
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+
+  assignedConversations Conversation[] @relation("assignees")
+
+
+  // When the user joins, we will clear out the name and email and set the user.
+  invitedName  String? @map("invited_name")
+  invitedEmail String? @map("invited_email")
+  invitedToken String? @map("invited_token")
+
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@unique([organizationId, invitedEmail])
+  @@unique([organizationId, userId])
+  @@map("memberships")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+
+  image    String?
+  accounts Account[]
+  sessions Session[]
+
+  picture       String?
+  customPicture String? @map("custom_picture")
+  hasOptInEmail Boolean? @default(false) @map("has_opt_in_email")
+
+  agents        Agent[]
+  datastores    Datastore[]
+  datasources   AppDatasource[]
+  subscriptions Subscription[]  @relation("user")
+  apiKeys       UserApiKey[]
+  usage         Usage?
+  conversations Conversation[]
+  messages      Message[]
+
+  serviceProviders ServiceProvider[]
+
+  memberships Membership[]
+
+  role GlobalRole @default(CUSTOMER)
+
+  viaProduct String? @default("chatvolt") @map("via_product")
+  
+
+  joinedConversationsV2 Conversation[] @relation("participants_users") 
+
+  // TODO: delete after migration and rename joinedConversationsV2 to joinedConversations
+  joinedConversations Conversation[] @relation("participants") 
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Usage {
+  id String @id @default(cuid())
+
+  userId String? @unique @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @unique @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  nbAgentQueries        Int @default(0) @map("nb_agent_queries")
+  nbDatastoreQueries    Int @default(0) @map("nb_datastore_queries")
+  nbUploadedBytes       Int @default(0) @map("nb_uploaded_bytes")
+  nbDataProcessingBytes Int @default(0) @map("nb_data_processing_bytes")
+  nbModelTokens         Int @default(0) @map("nb_tokens")
+  nbStoredTokens        Int @default(0) @map("nb_stored_tokens")
+
+  notifiedAgentQueriesLimitReached Boolean? @default(false) @map("notified_nb_agent_queries_limit_reached")
+  notifiedStoredTokenLimitReached Boolean? @default(false) @map("notified_nb_stored_tokens_limit_reached")
+
+  @@map("usages")
+}
+
+model Datastore {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  type        DatastoreType
+  datasources AppDatasource[]
+  visibility  DatastoreVisibility @default(private)
+  apiKeys     DatastoreApiKey[]
+  tool        Tool[]
+  forms       Form[]
+
+  pluginIconUrl              String? @map("plugin_icon_url")
+  pluginName                 String? @map("plugin_name")
+  pluginDescriptionForHumans String? @map("plugin_description_for_humans")
+  pluginDescriptionForModel  String? @map("plugin_description_for_model")
+
+  config Json?
+
+  ownerId String? @map("owner_id")
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  messagesBNP MessageBNP[]
+
+  @@map("data_stores")
+}
+
+// Naming the model Datasource conflicts with prisma
+// https://github.com/prisma/prisma/issues/12332
+model AppDatasource {
+  id     String           @id @default(cuid())
+  type   DatasourceType
+  name   String
+  status DatasourceStatus @default(unsynched)
+
+  config Json?
+
+  datastoreId String?    @map("datastore_id")
+  datastore   Datastore? @relation(fields: [datastoreId], references: [id], onDelete: Cascade)
+
+  ownerId String? @map("owner_id")
+  owner   User?   @relation(fields: [ownerId], references: [id])
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  nbChunks Int? @default(0) @map("nb_chunks")
+  textSize Int? @default(0) @map("text_size")
+  nbTokens Int? @default(0) @map("nb_tokens")
+
+  hash String?
+
+  nbSynch   Int?      @default(0) @map("nb_synch")
+  lastSynch DateTime? @map("last_synch")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  groupId  String?         @map("group_id")
+  group    AppDatasource?  @relation(name: "group", fields: [groupId], references: [id], onDelete: Cascade)
+  children AppDatasource[] @relation("group")
+
+  serviceProviderId String?          @map("service_provider_id")
+  serviceProvider   ServiceProvider? @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+
+  @@map("data_sources")
+}
+
+model UserApiKey {
+  id  String @id @default(cuid())
+  key String @unique()
+
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_api_keys")
+}
+
+model DatastoreApiKey {
+  id  String @id @default(cuid())
+  key String @unique()
+
+  datastoreId          String?               @map("datastore_id")
+  datastore            Datastore?            @relation(fields: [datastoreId], references: [id], onDelete: Cascade)
+  externalIntegrations ExternalIntegration[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("datastore_api_keys")
+}
+
+model Agent {
+  id String @id @default(cuid())
+
+  hidden      Boolean @default(false)
+  name        String
+  description String
+  
+  userPrompt  String? @map("user_prompt")
+  systemPrompt String? @map("system_prompt")
+
+  prompt      String?
+  promptType  PromptType     @default(customer_support) @map("prompt_type")
+  iconUrl     String?        @map("icon_url")
+  temperature Float          @default(0.0)
+  modelName   AgentModelName @default(gpt_3_5_turbo) @map("model_name")
+
+  includeSources    Boolean? @default(true) @map("include_sources")
+  restrictKnowledge Boolean? @default(true) @map("restrict_knowledge")
+  useMarkdown Boolean? @default(true) @map("use_markdown")
+  useLanguageDetection Boolean? @default(true) @map("use_language_detection")
+
+  visibility    AgentVisibility @default(private)
+  messages Message[]
+  joinedConversations Conversation[] @relation("participants_agents")
+  // TODO Deprcate and rename joinedConversations to conversations
+  conversations Conversation[]
+
+  ownerId String? @map("owner_id")
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  externalIntegration ExternalIntegration[]
+  serviceProviders    ServiceProvider[]
+
+  nbQueries Int? @default(0) @map("nb_queries")
+
+  interfaceConfig Json? @map("interface_config")
+
+  tools Tool[]
+
+  handle  String?  @unique @map("handle")
+  domains Domain[]
+  leads   Lead[]
+  contacts   Contact[]
+  
+  approvals ActionApproval[]
+
+  form   Form?  @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId String? @unique @map("form_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("agents")
+}
+
+model ActionApproval {
+  id String @id @default(cuid())
+
+  payload Json?
+
+  tool   Tool?   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String? @map("tool_id")
+
+  message   Message?   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  messageId String? @map("message_id")
+
+  agent   Agent?   @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agentId String? @map("agent_id")
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("action_approvals")
+}
+
+model Domain {
+  id      String @id @default(cuid())
+  name    String @unique
+  agentId String @map("agent_id")
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("domains")
+}
+
+model Conversation {
+  id        String  @id @default(cuid())
+  title     String?
+
+  messages Message[]
+
+  isAiEnabled Boolean? @default(true)  @map("is_ai_enabled")
+  
+  channel ConversationChannel @default(dashboard)
+
+  status ConversationStatus @default(UNRESOLVED)
+
+  metadata Json?
+
+  channelExternalId String? @unique @map("channel_external_id")
+  channelCredentialsId String? @map("channel_credentials_id")
+  channelCredentials ServiceProvider? @relation(fields:[channelCredentialsId],references:[id])
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  mailInbox   MailInbox? @relation(fields: [mailInboxId], references: [id])
+  mailInboxId String?          @map("mail_inbox_id")
+
+
+  lead Lead?
+ 
+
+  formSubmissions FormSubmission[]
+
+  assignees  Membership[] @relation("assignees")
+
+  priority ConversationPriority @default(MEDIUM)
+  
+  form    Form?    @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId  String?   @map("form_id")
+
+  // DEPRECATED: REMOVE AFTER MIGRATion
+  participants User[] @relation("participants")
+  contacts Contact[]
+
+  // Participants
+  participantsUsers User[] @relation("participants_users")
+  participantsAgents Agent[] @relation("participants_agents")
+  participantsContacts Contact[] @relation("participants_contacts")
+  participantsVisitors Visitor[] @relation("participants_visitors")
+
+  // Still need this one as multiple use cases are based on single agent/conversation this e.g. /agents/:id/query
+  agent    Agent?    @relation(fields: [agentId], references: [id])
+  agentId  String?   @map("agent_id")
+
+  // Todo: deprecate in favor of participants
+  userId    String? @map("user_id")
+  user      User?   @relation(fields: [userId], references: [id])
+
+  // Todo: deprecate in favor of visitorID relation
+  visitorId String? @map("visitor_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([visitorId], type: Hash)
+  @@map("conversations")
+}
+model Message {
+  id             String        @id @default(cuid())
+  text           String
+  html           String?
+  from           MessageFrom
+
+  conversationId String?       @map("conversation_id")
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  sources        Json?
+
+  usage          Json?
+
+  externalId     String?       @unique @map("external_id")
+
+  // Sender is one of visitor, contact, user, agent
+  userId String?       @map("user_id")
+  user   User? @relation(fields: [userId], references: [id])
+
+  contactId String?       @map("contact_id")
+  contact   Contact? @relation(fields: [contactId], references: [id])
+
+  visitorId      String?       @map("visitor_id")
+  visitor        Visitor? @relation(fields: [visitorId], references: [id])
+
+  agentId String?       @map("agent_id")
+  agent   Agent? @relation(fields: [agentId], references: [id])
+  // 
+
+  metadata       Json?
+
+  inputId String?       @map("input_id")
+  input   Message? @relation(fields: [inputId], references: [id], name: "input")
+
+  outputs Message[] @relation("input")
+
+  eval MessageEval?
+
+  approvals ActionApproval[]
+
+  read Boolean? @default(false)
+
+  attachments Attachment[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("messages")
+}
+
+model Tool {
+  id   String   @id @default(cuid())
+  type ToolType
+
+  agent   Agent?  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agentId String? @map("agent_id")
+
+  datastoreId String?    @map("datastore_id")
+  datastore   Datastore? @relation(fields: [datastoreId], references: [id], onDelete: Cascade)
+
+  formId String?    @map("form_id")
+  form   Form? @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  config Json?
+
+  serviceProviderId String?          @map("service_provider_id")
+  serviceProvider   ServiceProvider? @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  approvals ActionApproval[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("tools")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model ExternalIntegration {
+  id   String          @id @default(cuid())
+  type IntegrationType
+
+  integrationId    String  @unique @map("integration_id")
+  integrationToken String? @map("integration_token")
+
+  agentId String? @map("agent_id")
+  agent   Agent?  @relation(fields: [agentId], references: [id])
+
+  // DEPRECATED
+  apiKeyId String?          @map("api_key_id")
+  apiKey   DatastoreApiKey? @relation(fields: [apiKeyId], references: [id])
+
+  metadata Json?
+
+  @@map("external_integrations")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  active      Boolean  @default(false)
+  name        String
+  description String?
+  image       String?
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  prices      Price[]
+
+  @@map("products")
+}
+
+model Price {
+  id                String         @id @default(cuid())
+  productId         String         @map("product_id")
+  active            Boolean        @default(false)
+  currency          String
+  interval          PriceInterval?
+  unitAmount        Int?           @map("unit_amount")
+  interval_count    Int?
+  trial_period_days Int?
+  type              PriceType?
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
+  product           Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  subscriptions     Subscription[]
+
+  @@map("prices")
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  plan                 SubscriptionPlan?  @default(level_1)
+  priceId              String
+  customerId           String             @map("customer_id")
+  status               SubscriptionStatus
+  start_date           DateTime?
+  ended_at             DateTime?
+  trial_end            DateTime?
+  trial_start          DateTime?
+  cancel_at            DateTime?
+  cancel_at_period_end Boolean?
+  canceled_at          DateTime?
+  metadata             Json?
+  coupon               String?
+
+  price Price @relation(fields: [priceId], references: [id])
+
+  user   User?   @relation(name: "user", fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique @map("user_id")
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("subscriptions")
+}
+
+model ServiceProvider {
+  id   String              @id @default(cuid())
+  type ServiceProviderType
+
+  name         String?
+  refreshToken String? @map("refresh_token")
+  accessToken  String? @map("access_token")
+  externalId   String? @map("external_id")
+
+  config Json?
+
+  ownerId String? @map("user_id")
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  appDatasources AppDatasource[]
+  agents Agent[]
+  tools Tool[]
+
+  conversations Conversation[]
+  // mailInboxes            MailInbox[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([type, externalId], name: "unique_external_id")
+  @@map("service_providers")
+}
+
+model MessageBNP {
+  id       String      @id @default(cuid())
+  text     String
+  from     MessageFrom
+  userName String?     @map("user_name")
+
+  datastoreId String?    @map("datastore_id")
+  datastore   Datastore? @relation(fields: [datastoreId], references: [id], onDelete: Cascade)
+
+  read Boolean? @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("messages_bnp")
+}
+
+model Lead {
+  id          String  @id @default(cuid())
+  email       String?
+  firstName   String? @map("first_name")
+  lastName    String? @map("last_name")
+  phoneNumber String? @map("phone_number")
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  agent   Agent?  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agentId String? @map("agent_id")
+
+  conversation Conversation? @relation(fields: [conversationId], references: [id])
+  conversationId String?  @unique @map("conversation_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("leads")
+}
+model Form {
+  id          String  @id @default(cuid())
+
+  name        String
+
+  draftConfig Json?
+  publishedConfig Json?
+  
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // responses FormResponse[]
+ 
+  datastore            Datastore?            @relation(fields: [datastoreId], references: [id], onDelete: Cascade)
+  datastoreId          String?               @map("datastore_id")
+  
+  
+  conversations Conversation[]
+  submissions  FormSubmission[]
+  tool        Tool[]
+
+  agent Agent?
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("forms")
+}
+
+model FormSubmission {
+  id          String  @id @default(cuid())
+  
+  status FormStatus @default(IN_PROGRESS)
+  
+  data Json?
+
+  form   Form? @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId String?       @map("form_id")
+
+  conversationId String?  @map("conversation_id")
+  conversation Conversation? @relation(fields: [conversationId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  @@map("form_submissions")
+}
+
+// model FormResponse {
+//   id          String  @id @default(cuid())
+
+//   data Json?
+
+//   formId String?       @map("form_id")
+//   form   Form? @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+//   @@map("form_responses")
+// }
+
+model XPBNPEval {
+  id             String  @id @default(cuid())
+  active         Boolean @default(false)
+  userName       String? @map("user_name")
+  feature        String?
+  usecase        String?
+  promptType     String? @map("prompt_type")
+  datasourceName String? @map("datasource_name")
+  datastoreName  String? @map("datastore_name")
+  prompt         String?
+  comment        String?
+  result         String?
+  score1         Int?    @map("score_1")
+  score2         Int?    @map("score_2")
+  score3         Int?    @map("score_3")
+  metadata       Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("xp_bnp_evals")
+}
+
+model LLMTaskOutput {
+  id             String  @id @default(cuid())
+  type            LLMTaskOutputType
+
+  externalId     String? @map("external_id")
+
+
+  output Json?
+  usage  Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([type, externalId], name: "unique_external_id")
+  @@map("llm_task_outputs")
+}
+
+model MailInbox {
+
+  id String  @id @default(cuid())
+
+  name String
+  description String?
+
+  alias String @unique
+  fromName String? @map("from_name")
+  signature String? @map("signature")
+
+  showBranding Boolean? @default(true) @map("show_branding")
+
+  customEmail String? @map("custom_email")
+  isCustomEmailVerified Boolean? @default(false) @map("is_custom_email_verified")
+  conversations    Conversation[]
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  customEmailVerificationToken   VerificationCode?  @relation(fields: [customEmailVerificationTokenId], references: [code])
+  customEmailVerificationTokenId String? @unique @map("custom_email_verification_token_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("mail_inboxes")
+}
+
+model Attachment {
+  id String  @id @default(cuid())
+  name String
+  url String
+  size Int
+  mimeType String @map("mime_type")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  messageId String  @map("message_id")
+
+  @@map("attachments")
+}
+
+model Contact {
+  id String  @id @default(cuid())
+
+  email String?
+  phoneNumber String? @map("phone_number")
+  externalId String? @map("external_id")
+
+  firstName String? @map("first_name")
+  lastName String? @map("last_name")
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  agent   Agent?  @relation(fields: [agentId], references: [id])
+  agentId String? @map("agent_id")
+
+  conversations Conversation[]
+  conversationsV2 Conversation[] @relation("participants_contacts")
+  messages Message[]
+
+  visitors Visitor[]
+
+  metadata Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([email, organizationId], name: "unique_email_for_org")
+  @@unique([phoneNumber, organizationId], name: "unique_phone_number_for_org")
+  @@unique([externalId, organizationId], name: "unique_external_id_for_org")  
+  @@map("contacts") 
+}
+
+model Visitor {
+  id String  @id @default(cuid())
+
+  contact   Contact?  @relation(fields: [contactId], references: [id])
+  contactId String? @map("contact_id")
+
+   metadata Json?
+
+  organizationId String?       @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  externalId String? @map("external_id")
+
+  conversations Conversation[] @relation("participants_visitors")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+ @@unique([externalId, organizationId], name: "unique_external_id_for_org")
+ @@map("visitors")  
+}
+
+model VerificationCode {
+  code   String              @id @default(cuid())
+
+  mailInbox   MailInbox? 
+  mailInboxId String?        @map("maiL_inbox_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  @@map("verification_codes")
+}
+
+
+enum LLMTaskOutputType {
+  youtube_summary
+  web_page_summary
+}
+
+enum DatastoreVisibility {
+  public
+  private
+}
+
+enum AgentVisibility {
+  public
+  private
+}
+
+enum DatasourceStatus {
+  unsynched
+  pending
+  running
+  synched
+  error
+  usage_limit_reached
+}
+
+enum DatasourceType {
+  web_page
+  web_site
+  text
+  file
+  google_drive_file
+  google_drive_folder
+  notion
+  notion_page
+  qa
+  youtube_video
+  youtube_bulk
+}
+
+enum ServiceProviderType {
+  website
+  wordpress
+  google_drive
+  notion
+  crisp
+  slack
+  zendesk
+  whatsapp
+  // smtp
+}
+
+enum DatastoreType {
+  pinecone
+  qdrant
+}
+
+enum ToolType {
+  datastore
+  form
+  connector
+  agent
+  http
+  mark_as_resolved
+  request_human
+  lead_capture
+}
+
+enum SubscriptionPlan {
+  level_0
+  level_0_5
+  level_1
+  level_2
+  level_3
+  level_4
+}
+
+enum IntegrationType {
+  website
+  crisp
+  slack
+}
+
+enum PriceType {
+  recurring
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  incomplete
+  incomplete_expired
+  past_due
+  trialing
+  unpaid
+}
+
+enum PriceInterval {
+  day
+  month
+  week
+  year
+}
+
+enum PromptType {
+  raw
+  customer_support
+}
+
+enum MessageFrom {
+  agent
+  human
+}
+
+enum ConversationChannel {
+  dashboard
+  website
+  slack
+  crisp
+  zapier
+  api
+  form
+  mail
+  whatsapp
+}
+
+enum AgentModelName {
+  gpt_3_5_turbo
+  gpt_3_5_turbo_16k
+  gpt_4
+  gpt_4_32k
+  gpt_4_turbo
+  gpt_4_turbo_vision
+}
+
+enum MessageEval {
+  good
+  bad
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  USER
+}
+
+enum GlobalRole {
+  SUPERADMIN
+  CUSTOMER
+}
+
+enum ConversationStatus {
+     RESOLVED
+     UNRESOLVED
+     HUMAN_REQUESTED
+}
+enum FormStatus {
+  COMPLETED
+  IN_PROGRESS
+  ABANDONED
+}
+
+enum ConversationPriority {
+  LOW
+  MEDIUM
+  HIGH
+}

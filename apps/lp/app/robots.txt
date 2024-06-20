@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Sitemap: https://www.chatvolt.ai/sitemap.xml
+Sitemap: https://www.chatvolt.ai/api/sitemaps/tools/youtube-summarizer.xml
+Sitemap: https://www.chatvolt.ai/api/sitemaps/tools/ai-news.xml

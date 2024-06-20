@@ -1,0 +1,24 @@
+{
+  "crisp": {
+    "choices": {
+      "resolve": "Als Gelöst Markieren",
+      "request": "Einen Mensch anfordern",
+      "enableAi": "AI erneut aktivieren"
+    },
+    "instructions": {
+      "callback": "Ein Operator wird sich in Kürze bei Ihnen melden.",
+      "unavailable": "Leider sind zurzeit keine Operatoren verfügbar."
+    }
+  },
+  "chatbubble": {
+    "actions": {
+      "resolve": "Als Gelöst Markieren",
+      "request": "Einen Mensch anfordern"
+    },
+    "lead": {
+      "instruction": "Lass uns wissen, wie wir dich kontaktieren können",
+      "email": "email",
+      "required": "Erforderlich, um einen Mensch anfordern"
+    }
+  }
+}

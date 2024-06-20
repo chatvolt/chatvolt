@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script
+      defer
+      src="./dist/chatbox/legacy.js"
+      id="clrz0tn6h000108kxfyomdzxg"
+      data-name="chatvolt-chat-bubble"
+    ></script> -->
+    <script type="module">
+      import Chatbox from './dist/chatbox/index.js';
+
+      Chatbox.initBubble({
+        agentId: 'clrz0tn6h000108kxfyomdzxg',
+        // contact: {
+        //   firstName: 'Georges',
+        //   lastName: 'Chatvolt',
+        //   email: 'georges+test@chatvolt.ai',
+        //   phoneNumber: '+33612345644',
+        //   userId: '42424242',
+        // },
+
+        interface: {
+          primaryColor: '#f00',
+          // isInitMessagePopupDisabled: true,
+          // initialMessages: [
+          //   'Hello Georges how are you doing today?',
+          //   'How can I help you ?',
+          // ],
+        },
+      });
+
+      Chatbox.initStandard({
+        id: '4242',
+        agentId: 'clrz0tn6h000108kxfyomdzxg',
+        // styles: {
+        //   height: '600px',
+        // },
+        // contact: {
+        //   firstName: 'StandardGeorges',
+        //   lastName: 'StandardChatvolt',
+        //   email: 'standardgeorges+test@chatvolt.ai',
+        //   phoneNumber: '+33612345678',
+        //   userId: '44444444',
+        // },
+        interface: {
+          primaryColor: '#f00',
+          initialMessages: [
+            'Hello Georges how are you doing today?',
+            'How can I help you ?',
+          ],
+        },
+
+        // context: `The user you are talking to is Georges. Start by Greeting him by his name.`,
+      });
+
+      // Chatbox.initStandard({
+      //   id: '4444',
+      //   agentId: 'clrz0tn6h000108kxfyomdzxg',
+      //   // styles: {
+      //   //   height: '600px',
+      //   // },
+      //   // contact: {
+      //   //   firstName: 'StandardGeorges',
+      //   //   lastName: 'StandardChatvolt',
+      //   //   email: 'standardgeorges+test@chatvolt.ai',
+      //   //   phoneNumber: '+33612345678',
+      //   //   userId: '44444444',
+      //   // },
+      //   interface: {
+      //     primaryColor: '#f00',
+      //     initialMessages: [
+      //       'Hello Georges how are you doing today?',
+      //       'How can I help you ?',
+      //     ],
+      //   },
+
+      //   // context: `The user you are talking to is Georges. Start by Greeting him by his name.`,
+      // });
+    </script>
+  </head>
+  <body>
+    <h1>WebChatbubble:</h1>
+    <chatvolt-chatbox-standard
+      id="4242"
+      style="width: 100%; height: 650px"
+    ></chatvolt-chatbox-standard>
+
+    <!-- <chatvolt-chatbox-standard
+      id="4444"
+      style="width: 100%; height: 650px"
+    ></chatvolt-chatbox-standard> -->
+
+    <!-- use webcomponent directly ⬇️ -->
+    <!-- <chatvolt-chatbox-standard style="width: 100%; height: 650px" /> -->
+  </body>
+</html>

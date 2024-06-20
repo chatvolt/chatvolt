@@ -1,0 +1,12 @@
+{
+  "extends": "@chatvolt/tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules", ".turbo"],
+  "compilerOptions": {
+    "lib": ["dom", "ES2015"],
+    "baseUrl": ".",
+    "paths": {
+      "@chatvolt/ui/*": ["./src/*"]
+    }
+  }
+}

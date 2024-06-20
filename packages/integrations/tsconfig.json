@@ -1,0 +1,12 @@
+{
+  "extends": "@chatvolt/tsconfig/nextjs.json",
+  "include": ["**/*.ts", "**/*.tsx", "../../packages/lib/**/*.d.ts"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@chatvolt/integrations/*": ["./*"],
+      "@chatvolt/ui/*": ["../ui/src/*"]
+    }
+  }
+}

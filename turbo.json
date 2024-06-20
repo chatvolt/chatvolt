@@ -1,0 +1,48 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDotEnv": [".env.local"],
+  "pipeline": {
+    "prisma:generate": {
+      "cache": false
+    },
+    "prisma:push": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build", "@chatvolt/prisma#prisma:generate"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "outputMode": "new-only"
+    },
+    "dev": {
+      "dotEnv": [".env.local"],
+      "dependsOn": [
+        "^dev",
+        "@chatvolt/prisma#prisma:generate",
+        "@chatvolt/prisma#prisma:push"
+      ],
+      "cache": false
+    },
+    "lint": {},
+    "typecheck": {},
+    "sendDailyLeads": {
+      "dependsOn": ["@chatvolt/prisma#prisma:generate"],
+      "cache": false
+    },
+    "syncDatasources": {
+      "dependsOn": ["@chatvolt/prisma#prisma:generate"],
+      "cache": false
+    },
+    "sendWeeklyAdminStats": {
+      "dependsOn": ["@chatvolt/prisma#prisma:generate"],
+      "cache": false
+    },
+    "sendAccountCleaningWarning": {
+      "dependsOn": ["@chatvolt/prisma#prisma:generate"],
+      "cache": false
+    },
+    "aiNewsLoad": {
+      "dependsOn": ["@chatvolt/prisma#prisma:generate"],
+      "cache": false
+    }
+  }
+}
