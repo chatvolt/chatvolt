@@ -1,5 +1,5 @@
 
-> dashboard@0.1.21 dotenv /Users/gChatvolt/workspace/chatvolt/apps/dashboard
+> dashboard@0.1.21 dotenv /Users/gchatvolt/workspace/chatvolt/apps/dashboard
 > dotenv -e ../../.env.local "--" "tsx" "scripts/customer-analysis.ts"
 
 found 102

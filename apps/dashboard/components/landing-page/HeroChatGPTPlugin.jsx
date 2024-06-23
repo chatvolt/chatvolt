@@ -83,9 +83,9 @@ export function HeroChatGPTPlugin() {
               <span className="flex items-center justify-center px-2 py-3 font-extrabold uppercase bg-indigo-500 rounded-full">
                 <span>New</span>
               </span>
-              Discover ResolveAI
+              Discover Chatvolt
               <Link
-                href="https://www.resolveai.io"
+                href="https://www.chatvolt.ai"
                 style={{ background: 'none' }}
                 className="text-[10px]underline-offset-4 text-indigo-300 text-main-hover flex items-center gap-2 font-medium transition-all hover:underline"
                 target="_blank"
@@ -218,7 +218,7 @@ export function HeroChatGPTPlugin() {
               </Link>
               <Link
                 target="_blank"
-                href={'https://calendar.app.google/js1tgwSh2CUvV4CA7'}
+                href={'https://book.chatvolt.ai/alexander'}
               >
                 <Button
                   variant="outlined"
@@ -241,7 +241,7 @@ export function HeroChatGPTPlugin() {
             />
             <div className="w-full h-[500px] overflow-hidden rounded-3xl bg-white">
               <iframe
-                src={`${appUrl}/agents/clq6g5cuv000wpv8iddswwvnd/iframe`}
+                src={`${appUrl}/agents/clw0wuhp6000hpbgjnpivm3ni/iframe`}
                 width="100%"
                 height="100%"
                 frameBorder="0"
@@ -255,7 +255,7 @@ export function HeroChatGPTPlugin() {
         <div className="flex justify-center mt-10 gap-x-6">
           {/* <Button target="_blank" href="https://app.chatvolt.ai/signin">Start Building</Button> */}
           {/* <Button
-          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          href="https://www.youtube.com/watch?v=xxx"
           variant="outline"
         >
           <svg
@@ -315,7 +315,7 @@ export function HeroChatGPTPlugin() {
               //   className="w-full h-[300px] rounded-2xl"
               //   width="560"
               className="w-full aspect-video rounded-3xl"
-              src="https://www.youtube.com/embed/Pa-cyPJzt5k"
+              src="https://www.youtube.com/embed/xxx"
               title="YouTube video player"
               frameBorder="0"
               allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

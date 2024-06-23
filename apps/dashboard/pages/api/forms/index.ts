@@ -8,7 +8,7 @@ import {
   respond,
 } from '@chatvolt/lib/createa-api-handler';
 import { formToJsonSchema } from '@chatvolt/lib/forms';
-import generateFunId from '@chatvolt/lib/generate-fun-id';
+import generateIdByEmail from '@chatvolt/lib/generate-id-by-email';
 import cors from '@chatvolt/lib/middlewares/cors';
 import pipe from '@chatvolt/lib/middlewares/pipe';
 import runMiddleware from '@chatvolt/lib/run-middleware';
@@ -66,7 +66,7 @@ export const createForm = async (
   return prisma.form.create({
     data: {
       id: formId,
-      name: data.name || generateFunId(),
+      name: data.name || generateIdByEmail(req.session?.user?.email),
       organization: {
         connect: {
           id: organizationId,

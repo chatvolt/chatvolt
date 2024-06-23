@@ -210,7 +210,7 @@ export const formChat = async (
         conversationId,
         query: data.query,
         systemPrompt: prompt,
-        modelName: AgentModelName.gpt_4_turbo,
+        modelName: AgentModelName.gpt_4_o,
         streaming: true,
         toolsConfig: {
           [form!.agent!.tools[0].id]: {

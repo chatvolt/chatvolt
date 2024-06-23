@@ -26,12 +26,12 @@ import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { z } from 'zod';
 
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getAgents } from '@app/pages/api/agents';
 import { getServiceProviders } from '@app/pages/api/service-providers';
 
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 type Props = {
   isOpen: boolean;

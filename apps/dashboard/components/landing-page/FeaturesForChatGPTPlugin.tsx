@@ -53,7 +53,7 @@ export default function Example() {
             //   className="w-full h-[300px] rounded-2xl"
             //   width="560"
             className="w-full aspect-video rounded-3xl"
-            src="https://www.youtube.com/embed/SplbxerHabo"
+            src="https://www.youtube.com/embed/xxx"
             title="YouTube video player"
             frameBorder="0"
             allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

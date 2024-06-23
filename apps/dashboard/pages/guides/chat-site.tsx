@@ -56,9 +56,11 @@ export default function DatasourcesPage() {
             Apps
           </Typography>
         </Link>
-        <Typography fontSize="inherit" color="neutral">
+        
+        {/* <Typography fontSize="inherit" color="neutral">
           Crisp Plugin
-        </Typography>
+        </Typography> */}
+
         {/* <JoyLink
           underline="hover"
           color="neutral"

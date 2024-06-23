@@ -23,7 +23,6 @@ import { useEffect, useState } from 'react';
 import superjson from 'superjson';
 
 import Logo from '@app/components/Logo';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import createIntegrationId from '@chatvolt/lib/create-integration-id';
 import { getConnectedWebsites } from '@chatvolt/lib/crisp';
@@ -35,6 +34,7 @@ import {
   Subscription,
 } from '@chatvolt/prisma';
 import { prisma } from '@chatvolt/prisma/client';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 export default function CrispConfig(props: { agent: Agent }) {
   const session = useSession();
@@ -124,7 +124,7 @@ export default function CrispConfig(props: { agent: Agent }) {
         <title>Chatvolt - LLMs automation without code</title>
         <meta
           name="description"
-          content="ChatGPT Bot trained on your data integrated on wordpress"
+          content="ChatGPT Bot trained on your data"
         />
       </Head>
       {/* <Header /> */}

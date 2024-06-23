@@ -10,11 +10,11 @@ import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
-import useStateReducer from '@app/hooks/useStateReducer';
-
+import { AcceptedDatasourceFileMimeTypes } from '@chatvolt/lib/accepted-mime-types';
 import accountConfig from '@chatvolt/lib/account-config';
 import { DatasourceSchema } from '@chatvolt/lib/types/models';
 import { DatasourceType } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import UsageLimitModal from '../UsageLimitModal';
 
@@ -23,17 +23,6 @@ import type { DatasourceFormProps } from './types';
 
 type DatasourceFile = Extract<DatasourceSchema, { type: 'file' }>;
 type Props = DatasourceFormProps<DatasourceFile> & {};
-
-const acceptedFileTypes = [
-  'text/csv',
-  'text/plain',
-  'text/markdown',
-  'application/pdf',
-  'application/json',
-  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-];
 
 function Nested() {
   const { data: session, status } = useSession();
@@ -108,7 +97,7 @@ function Nested() {
       <input
         type="file"
         hidden
-        accept={acceptedFileTypes.join(',')}
+        accept={AcceptedDatasourceFileMimeTypes.join(',')}
         {...register('config.file_url')}
         onChange={handleFileInputChange}
         ref={fileInputRef as any}

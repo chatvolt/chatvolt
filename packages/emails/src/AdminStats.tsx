@@ -76,8 +76,6 @@ const exampleData = {
   nbTotalExternalMsg: 42,
   userRepartition: [
     { _count: 9910, viaProduct: 'chatvolt' },
-    { _count: 5, viaProduct: 'www.resolveai.io' },
-    { _count: 1, viaProduct: 'www.chatbotgpt.ai' },
   ],
   dsRepartition: [
     { _count: 114906, type: 'web_page' },
@@ -100,7 +98,7 @@ const exampleData = {
     {
       count: 4117,
       organization_id: 'clmqs59zx00020un40t9nsnmk',
-      email: 'chatvolt.ai@gmail.com',
+      email: 'team@chatvolt.ai',
       status: 'active',
     },
   ],
@@ -141,7 +139,7 @@ export const AdminStats = ({
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="50"
                 height="auto"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>

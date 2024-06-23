@@ -256,10 +256,13 @@ handler.post(async (req, res) => {
         case 'checkout.session.completed':
           {
             const data = event.data.object as Stripe.Checkout.Session;
-            const organizationId = data.client_reference_id as string;
-
+            
+            let organizationId = data.client_reference_id as string;
             if (!organizationId) {
-              throw new Error('No user id found');
+              organizationId = data.customer as string; //Caso tenha sido uma compra via Link isolado não vem com client_reference_id
+              if (!organizationId) {
+                throw new Error('No user id found');
+              }
             }
 
             const subscription = await stripe.subscriptions.retrieve(

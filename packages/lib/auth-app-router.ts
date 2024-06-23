@@ -12,7 +12,7 @@ import { Middleware } from 'next-connect';
 import requestIp from 'request-ip';
 import { v4 as uuidv4 } from 'uuid';
 
-import generateFunId from '@chatvolt/lib/generate-fun-id';
+import generateIdByEmail from '@chatvolt/lib/generate-id-by-email';
 import logger from '@chatvolt/lib/logger';
 import { AppNextApiRequest } from '@chatvolt/lib/types/index';
 import {
@@ -67,7 +67,7 @@ const CustomPrismaProvider = (req: NextRequest) => (p: PrismaClient) => {
               role: 'OWNER',
               organization: {
                 create: {
-                  name: generateFunId(),
+                  name: generateIdByEmail(data.email),
                   apiKeys: {
                     create: {
                       key: uuidv4(),

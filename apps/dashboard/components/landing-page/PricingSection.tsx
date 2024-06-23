@@ -1,4 +1,5 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
+import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import { useColorScheme } from '@mui/joy/styles';
 import clsx from 'clsx';
@@ -21,11 +22,11 @@ const tiers = [
     id: 'tier-free',
     href: `${appUrl}/settings/billing`,
     price: { monthly: '$0', annually: '$0' },
-    description: 'The essentials to get started quickly.',
+    description: 'Get started quickly for free. Ideal for initial testing.',
     features: [
       `${accountConfig['level_0'].limits.maxAgents} agent(s)`,
       `${accountConfig['level_0'].limits.maxDatastores} datastore(s)`,
-      `${accountConfig['level_0'].limits.maxAgentsQueries} GPT-3.5 agents queries / month`,
+      `${accountConfig['level_0'].limits.maxAgentsQueries} message credits/month`,
       `${formatter.format(
         accountConfig['level_0'].limits.maxStoredTokens
       )} words storage`,
@@ -35,8 +36,6 @@ const tiers = [
 
       // `Data processing limited to ${accountConfig['level_0'].limits
       //   .maxDataProcessing / 1000000}MB / month`,
-      'Manual data synching',
-      // 'Access to Chatvolt API',
       // 'ChatGPT plugin',
     ],
     mostPopular: false,
@@ -45,14 +44,12 @@ const tiers = [
   //   name: 'Hobby',
   //   id: 'tier-hobby',
   //   href: `${appUrl}/settings/billing`,
-  //   price: { monthly: '$15', annually: '$150' },
+  //   price: { monthly: '$17', annually: '$179' },
   //   description: 'The essentials to get started quickly.',
   //   features: [
   //     `${accountConfig['level_0_5'].limits.maxAgents} agent(s)`,
   //     `${accountConfig['level_0_5'].limits.maxDatastores} datastore(s)`,
-  //     `${accountConfig['level_0_5'].limits.maxAgentsQueries} GPT-3.5 or ${
-  //       accountConfig['level_0_5'].limits.maxAgentsQueries / 20
-  //     } GPT-4 agents queries / month`,
+  //     `${accountConfig['level_0_5'].limits.maxAgentsQueries} message credits/month`,
   //     `${formatter.format(
   //       accountConfig['level_0_5'].limits.maxStoredTokens
   //     )} words storage`,
@@ -74,14 +71,12 @@ const tiers = [
     name: 'Growth',
     id: 'tier-startup',
     href: 'https://app.chatvolt.ai/settings/billing',
-    price: { monthly: '$25', annually: '$250' },
-    description: 'A plan that scales with your rapidly growing business.',
+    price: { monthly: '$25', annually: '$259' },
+    description: 'Scale your business with advanced, affordable features.',
     features: [
       `${accountConfig['level_1'].limits.maxAgents} agent(s)`,
       `${accountConfig['level_1'].limits.maxDatastores} datastore(s)`,
-      `${accountConfig['level_1'].limits.maxAgentsQueries} GPT-3.5 or ${
-        accountConfig['level_1'].limits.maxAgentsQueries / 20
-      } GPT-4 agents queries / month`,
+      `${accountConfig['level_1'].limits.maxAgentsQueries} message credits/month`,
       `${formatter.format(
         accountConfig['level_1'].limits.maxStoredTokens
       )} words storage`,
@@ -90,13 +85,39 @@ const tiers = [
       }MB / file`,
       // `Data processing limited to ${accountConfig['level_1'].limits
       //   .maxDataProcessing / 1000000}MB / month`,
-      'Manual data synching',
       // 'ChatGPT plugin',
-      `Website loader limited to  ${accountConfig['level_1'].limits.maxWebsiteURL} Pages`,
-      'Access to WhatsApp Plugin',
-      'Access to Crisp Plugin',
-      'Access to Slack Plugin',
+      `+Website loader limited to  ${accountConfig['level_1'].limits.maxWebsiteURL} Pages`,
+      '+Access to WhatsApp Plugin',
+      //'+Access to Crisp Plugin',
+      //'+Access to Slack Plugin',
       `${accountConfig['level_1'].limits.maxSeats} Team seat(s) included`,
+    ],
+    mostPopular: false,
+  },
+  {
+    name: 'Plus',
+    id: 'tier-plus',
+    href: 'https://app.chatvolt.ai/settings/billing',
+    price: { monthly: '$65', annually: '$657' },
+    description: 'Offers larger limits and enhanced features beyond Growth.',
+    features: [
+      `${accountConfig['level_1_5'].limits.maxAgents} agent(s)`,
+      `${accountConfig['level_1_5'].limits.maxDatastores} datastore(s)`,
+      `${accountConfig['level_1_5'].limits.maxAgentsQueries} message credits/month`,
+      `${formatter.format(
+        accountConfig['level_1_5'].limits.maxStoredTokens
+      )} words storage`,
+      `File upload limited to ${
+        accountConfig['level_1_5'].limits.maxFileSize / 1000000
+      }MB / file`,
+      // `Data processing limited to ${accountConfig['level_1_5'].limits
+      //   .maxDataProcessing / 1000000}MB / month`,
+      // 'ChatGPT plugin',
+      'Access to WhatsApp Plugin',
+      //'Access to Crisp Plugin',
+      `+Website loader limited to  ${accountConfig['level_1_5'].limits.maxWebsiteURL} Pages`,
+      //'+Access to Slack Plugin',
+      `${accountConfig['level_1_5'].limits.maxSeats} Team seat(s) included`,
     ],
     mostPopular: false,
   },
@@ -104,14 +125,12 @@ const tiers = [
     name: 'Pro',
     id: 'tier-pro',
     href: `${appUrl}/settings/billing`,
-    price: { monthly: '$99', annually: '$990' },
-    description: 'For power users who want access more powerful features.',
+    price: { monthly: '$99', annually: '$999' },
+    description: 'For power users seeking more robust features.',
     features: [
       `${accountConfig['level_2'].limits.maxAgents} agent(s)`,
       `${accountConfig['level_2'].limits.maxDatastores} datastore(s)`,
-      `${accountConfig['level_2'].limits.maxAgentsQueries} GPT-3.5 or ${
-        accountConfig['level_2'].limits.maxAgentsQueries / 20
-      } GPT-4 agents queries / month`,
+      `${accountConfig['level_2'].limits.maxAgentsQueries} message credits/month`,
       `${formatter.format(
         accountConfig['level_2'].limits.maxStoredTokens
       )} words storage`,
@@ -120,13 +139,14 @@ const tiers = [
       }MB / file`,
       // `Data processing limited to ${accountConfig['level_2'].limits
       //   .maxDataProcessing / 1000000}MB / month`,
-      'Access to Chatvolt API',
-      'Auto synch datasources',
+      //'Access to Chatvolt API',
       // 'ChatGPT plugin',
       'Access to WhatsApp Plugin',
-      'Access to Crisp Plugin',
-      'Access to Slack Plugin',
-      `Website loader limited to  ${accountConfig['level_2'].limits.maxWebsiteURL} Pages`,
+      //'Access to Crisp Plugin',
+      //'Access to Slack Plugin',
+      `+Website loader limited to  ${accountConfig['level_2'].limits.maxWebsiteURL} Pages`,
+      //'+Google Drive as datasources',
+      '+Auto synch datasources',
       `${accountConfig['level_2'].limits.maxSeats} Team seat(s) included`,
     ],
     mostPopular: true,
@@ -135,14 +155,12 @@ const tiers = [
     name: 'Enterprise',
     id: 'tier-enterprise',
     href: `${appUrl}/settings/billing`,
-    price: { monthly: '$499', annually: '$4990' },
-    description: 'Dedicated support and for your team.',
+    price: { monthly: '$527', annually: '$5297' },
+    description: 'Dedicated support and comprehensive features for large teams.',
     features: [
       `${accountConfig['level_3'].limits.maxAgents} agent(s)`,
       `${accountConfig['level_3'].limits.maxDatastores} datastore(s)`,
-      `${accountConfig['level_3'].limits.maxAgentsQueries} GPT-3.5 or ${
-        accountConfig['level_3'].limits.maxAgentsQueries / 20
-      } GPT-4 agents queries / month`,
+      `${accountConfig['level_3'].limits.maxAgentsQueries} message credits/month`,
       `${formatter.format(
         accountConfig['level_3'].limits.maxStoredTokens
       )} words storage`,
@@ -151,10 +169,14 @@ const tiers = [
       }MB / file`,
       // `Data processing limited to ${accountConfig['level_3'].limits
       //   .maxDataProcessing / 1000000}MB / month`,
-      'Access to Chatvolt API',
-      'Auto synch datasources',
+      //'Access to Chatvolt API',
       // 'ChatGPT plugin',
-      `Website loader limited to  ${accountConfig['level_3'].limits.maxWebsiteURL} Pages`,
+      'Access to WhatsApp Plugin',
+      //'Access to Crisp Plugin',
+      //'Access to Slack Plugin',
+      `+Website loader limited to  ${accountConfig['level_3'].limits.maxWebsiteURL} Pages`,
+      //'Google Drive as datasources',
+      'Auto synch datasources',
       `${accountConfig['level_3'].limits.maxSeats} Team seat(s) included`,
     ],
     mostPopular: false,
@@ -163,15 +185,12 @@ const tiers = [
   //   name: 'Ultimate',
   //   id: 'tier-ultimate',
   //   href: `${appUrl}/settings/billing`,
-  //   price: { monthly: '$999', annually: '$9990' },
-  //   description:
-  //     'You’ve got a huge amount of assets but it’s not enough. To the moon.',
+  //   price: { monthly: '$997', annually: '$9970' },
+  //   description: 'Large-scale features for peak performance and growth.',
   //   features: [
   //     `${accountConfig['level_4'].limits.maxAgents} agent(s)`,
   //     `${accountConfig['level_4'].limits.maxDatastores} datastore(s)`,
-  //     `${accountConfig['level_4'].limits.maxAgentsQueries} GPT-3.5 or ${
-  //       accountConfig['level_4'].limits.maxAgentsQueries / 20
-  //     } GPT-4 agents queries / month`,
+  //     `${accountConfig['level_4'].limits.maxAgentsQueries} message credits/month`,
   //     `${formatter.format(
   //       accountConfig['level_4'].limits.maxStoredTokens
   //     )} words storage`,
@@ -181,9 +200,13 @@ const tiers = [
   //     // `Data processing limited to ${accountConfig['level_4'].limits
   //     //   .maxDataProcessing / 1000000}MB / month`,
   //     'Access to Chatvolt API',
-  //     'Auto synch datasources',
   //     // 'ChatGPT plugin',
-  //     `Website loader limited to  ${accountConfig['level_4'].limits.maxWebsiteURL} Pages`,
+  //     'Access to WhatsApp Plugin',
+  //     'Access to Crisp Plugin',
+  //     'Access to Slack Plugin',
+  //     `+Website loader limited to  ${accountConfig['level_4'].limits.maxWebsiteURL} Pages`,
+  //     '+Google Drive as datasources',
+  //     'Auto synch datasources',
   //     `${accountConfig['level_4'].limits.maxSeats} Team seat(s) included`,
   //   ],
   //   mostPopular: false,
@@ -229,6 +252,7 @@ export default function PricingSection() {
     <div className="py-24 bg-black sm:py-32">
       {/* <ForceDarkMode key={Date.now()} /> */}
       <div className="px-6 mx-auto max-w-[1500px] lg:px-8">
+
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-400">
             Pricing
@@ -241,31 +265,8 @@ export default function PricingSection() {
           Choose an affordable plan that’s packed with the best features for
           engaging your audience, creating customer loyalty, and driving sales.
         </p>
-        {/* <div className="flex justify-center mt-16">
-          <RadioGroup
-            value={frequency}
-            onChange={setFrequency}
-            className="grid grid-cols-2 gap-x-1 p-1 text-xs font-semibold leading-5 text-center text-white rounded-full bg-white/5"
-          >
-            <RadioGroup.Label className="sr-only">
-              Payment frequency
-            </RadioGroup.Label>
-            {frequencies.map((option) => (
-              <RadioGroup.Option
-                key={option.value}
-                value={option}
-                className={({ checked }) =>
-                  classNames(
-                    checked ? 'bg-indigo-500' : '',
-                    'cursor-pointer rounded-full px-2.5 py-1'
-                  )
-                }
-              >
-                <span>{option.label}</span>
-              </RadioGroup.Option>
-            ))}
-          </RadioGroup>
-        </div> */}
+
+
         <div className="grid isolate grid-cols-1 gap-8 mx-auto mt-16 max-w-md lg:mx-0 lg:max-w-none lg:grid-cols-4">
           {tiers.map((tier) => (
             <Card
@@ -326,14 +327,7 @@ export default function PricingSection() {
                     key={feature}
                     className={clsx('flex gap-x-3', {
                       'text-green-400':
-                        feature.includes('Access to Chatvolt API') ||
-                        feature.includes('Auto synch') ||
-                        feature.includes('ChatGPT') ||
-                        feature.includes('Crisp Plugin') ||
-                        feature.includes('Slack Plugin') ||
-                        feature.includes('Website loader') ||
-                        feature.includes('seat') ||
-                        feature.includes('WhatsApp'),
+                        feature.includes('+') || feature.includes('Team seat'),
                     })}
                   >
                     <CheckIcon
@@ -347,6 +341,33 @@ export default function PricingSection() {
             </Card>
           ))}
         </div>
+
+
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-base font-semibold leading-7 text-indigo-400">
+            <br /><br />Exclusive<br />
+          </h2>
+          <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+             Implementation Service
+          </p>
+        </div>
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-center text-gray-300">
+          We also offer the additional service of implementing the Chatvolt solution, 
+          ideal for ensuring a complete and efficient integration within your company. 
+          For more information, schedule a meeting by clicking the button below.
+        </p>
+        <br />
+
+        <div className="flex justify-center items-center h-full">
+          <Link target="_blank" href="https://book.chatvolt.ai/alexander">
+            <Button
+              variant="solid"
+              size="lg"
+              sx={{ borderRadius: 100 }}
+            >{`☎  Book a meeting`}</Button>
+          </Link>
+        </div>
+
       </div>
     </div>
   );

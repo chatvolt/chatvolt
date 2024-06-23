@@ -92,7 +92,7 @@ export default function AgentGeneralSettingsTab(props: Props) {
               </Link>
             }
           >
-            Learn more about the Datatberry API
+            Learn more about the Chatvolt API
           </Alert>
 
           <Alert

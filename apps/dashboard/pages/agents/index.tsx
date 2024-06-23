@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import {
   Alert,
   Box,
@@ -33,7 +34,6 @@ import Layout from '@app/components/Layout';
 import SettingCard from '@app/components/ui/SettingCard';
 import UsageLimitModal from '@app/components/UsageLimitModal';
 import { getProductFromHostname } from '@app/hooks/useProduct';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import accountConfig from '@chatvolt/lib/account-config';
 import { CUSTOMER_SUPPORT_V3 } from '@chatvolt/lib/prompt-templates';
@@ -41,6 +41,7 @@ import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { RouteNames } from '@chatvolt/lib/types';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { Agent, AgentModelName, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import { getAgents } from '../api/agents';
 import { getDatastores } from '../api/datastores';
@@ -168,9 +169,27 @@ export default function AgentsPage() {
         Agents are customizable instances of large language models tailored to
         fit your specific use cases. By connecting them to a datastore, you can
         train them on your unique knowledge base.
-      </Alert>
+      </Alert> 
 
-      {getAgentsQuery.data && <AgentTable items={getAgentsQuery.data} />}
+      {getAgentsQuery.data && getAgentsQuery.data.length > 0 ? (
+        <AgentTable items={getAgentsQuery.data} />
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+          <a href="https://www.youtube.com/watch?v=ZfFBWM3K-lc" target="_blank" rel="noopener noreferrer">
+          <Button
+            variant="solid"
+            style={{ backgroundColor: '#FF0000', color: '#FFFFFF' }}
+            startDecorator={<PlayCircleIcon />}>Watch Tutorial (EN)</Button>
+          </a>
+          <a href="https://www.youtube.com/watch?v=Zwj4AOI2D2M" target="_blank" rel="noopener noreferrer">
+          <Button
+            variant="solid"
+            style={{ backgroundColor: '#FF0000', color: '#FFFFFF' }}
+            startDecorator={<PlayCircleIcon />}>Assistir Tutorial (PT-Br)</Button>
+          </a>
+        </div>
+      )}
+
 
       <Modal
         onClose={() => setState({ isAgentModalOpen: false })}
@@ -207,8 +226,8 @@ export default function AgentsPage() {
               <Stack gap={4}>
                 <GeneralInput />
 
-                <details>
-                  <summary>GPT Model / Prompt Settings</summary>
+                <details open>
+                  <summary>AI Model / Prompt Settings</summary>
                   <Stack sx={{ pt: 2, px: 1 }}>
                     <ModelInput />
                   </Stack>

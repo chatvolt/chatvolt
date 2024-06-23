@@ -255,7 +255,7 @@ export const capture = async (req: AppNextApiRequest, res: NextApiResponse) => {
     }),
     mailer.sendMail({
       from: {
-        name: 'Chatvolt',
+        name: 'Chatvolt AI',
         address: process.env.EMAIL_FROM!,
       },
       to: onwerEmail,

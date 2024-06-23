@@ -23,8 +23,8 @@ export const checkAliasAvailability = async (
   const data = CheckAliasAvailabilitySchema.parse(req.body);
 
   const reservedAliases = [
-    'georges',
-    'adam',
+    'marcos',
+    'franklin',
     'chatvolt',
     'blalbaform',
     'inbox',

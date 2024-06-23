@@ -89,13 +89,13 @@ function MobileNavigation() {
           >
             <MobileNavLink href="/pricing">Pricing</MobileNavLink>
             {/* <MobileNavLink
-              href="https://github.com/chatvolt/chatvolt"
+              href="https://github.com/"
               target={'_blank'}
             >
               GitHub
             </MobileNavLink>
             <MobileNavLink
-              href="https://chatvolt.getrewardful.com/"
+              href="https://pages.chatvolt.com.br/affiliates"
               target={'_blank'}
             >
               Affiliates
@@ -128,13 +128,7 @@ export function Header() {
     }
   }, []);
 
-  let logoUrl = '/logo-resolveai-dark.png';
-
-  if (hostname?.includes('resolveai.io')) {
-    logoUrl = '/logo-resolveai-dark.png';
-  } else if (hostname?.includes('chatbotgpt.ai')) {
-    logoUrl = '/logo-chatbotgpt-dark.png';
-  }
+  let logoUrl = '/app-logo-dark.png';
 
   return (
     <>
@@ -144,7 +138,7 @@ export function Header() {
           <div className="inline-flex items-center space-x-1">
             <CheckIcon className="w-4 font-bold text-yellow-400" />
 
-            <span>Founded in France. We respect your privacy.</span>
+            <span>Founded in Brazil. We respect your privacy.</span>
           </div>
           <div className="inline-flex items-center space-x-1">
             <div className="inline-flex items-center">
@@ -169,7 +163,7 @@ export function Header() {
                   width="80"
                   height="100"
                   // className={clsx(props.className)}
-                  // src="/logo-chatbotgpt-dark.png"
+                  // src="/app-logo-dark.png"
                   src={logoUrl}
                   alt=""
                 />
@@ -192,14 +186,14 @@ export function Header() {
 
                 {/* <NavLink href="/help">Help Center</NavLink> */}
                 <NavLink href="/pricing">Pricing</NavLink>
-                {/* <NavLink href="https://github.com/chatvolt/chatvolt" target={'_blank'}>
+                {/* <NavLink href="https://github.com/author/chatvolt" target={'_blank'}>
                 GitHub
               </NavLink> */}
                 {/* <NavLink href="https://docs.chatvolt.ai/" target={'_blank'}>
                 Docs
               </NavLink> */}
                 {/* <NavLink
-                  href="https://chatvolt.getrewardful.com/"
+                  href="https://pages.chatvolt.com.br/affiliates"
                   target={'_blank'}
                 >
                   Affiliates
@@ -217,7 +211,7 @@ export function Header() {
               </span>
             </Button> */}
               {/* Change following link href with /signin for local signin */}
-              {/* <Link href="https://app.chatvolt.ai/signin?product=chatbotgpt"> */}
+              {/* <Link href="https://app.chatvolt.ai/signin?product=chatvolt"> */}
               <Link href={`${appUrl}/signin?product=${hostname}`}>
                 <Button variant="outlined" sx={{ borderRadius: 100 }}>
                   Sign In

@@ -28,6 +28,7 @@ export const getDatastores = async (
   req: AppNextApiRequest,
   res: NextApiResponse
 ) => {
+  const { frontend = 'false' } = req.query; // Adicione o parâmetro frontend
   const session = req.session;
 
   const datastores = await prisma.datastore.findMany({
@@ -47,7 +48,32 @@ export const getDatastores = async (
     take: 100,
   });
 
-  return datastores;
+  if (frontend === 'true') {
+    const datastoresWithAgentInfo = await Promise.all(
+      datastores.map(async (datastore) => {
+        const agents = await prisma.agent.findMany({
+          where: {
+            tools: {
+              some: {
+                datastoreId: datastore.id,
+              },
+            },
+          },
+          select: {
+            name: true,
+          },
+        });
+        return {
+          ...datastore,
+          agentCount: agents.length,
+          agentNames: agents.map(agent => agent.name).join(', '),
+        };
+      })
+    );
+    return datastoresWithAgentInfo;
+  } else {
+    return datastores;
+  }
 };
 
 handler.get(respond(getDatastores));

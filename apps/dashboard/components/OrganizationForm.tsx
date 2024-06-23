@@ -19,7 +19,6 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import useSWR, { mutate } from 'swr';
 
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getMemberships } from '@app/pages/api/memberships';
 import { getOrg } from '@app/pages/api/organizations/[id]';
 
@@ -34,6 +33,7 @@ import {
   UpdateOrgSchema,
 } from '@chatvolt/lib/types/dtos';
 import { MembershipRole, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import IconInput from './ui/IconInput';
 import SettingCard from './ui/SettingCard';
@@ -160,6 +160,7 @@ function OrganizationForm({}: Props) {
       setState({
         isUpdatingOrg: false,
       });
+      window.location.reload();
     }
   };
 
@@ -245,8 +246,8 @@ function OrganizationForm({}: Props) {
   return (
     <Stack gap={4} id="team">
       <SettingCard
-        title="Team Settings"
-        description="Personalize your team name and icon."
+        title="Organization Settings"
+        description="Personalize your organization name and icon."
         disableSubmitButton
       >
         <form
@@ -279,7 +280,7 @@ function OrganizationForm({}: Props) {
             />
             <Input
               control={updateOrgMethods.control}
-              label="Team Name"
+              label="Organization Name"
               defaultValue={getOrganizationQuery?.data?.name!}
               disabled={!hasAdminRole(session?.roles) || state.isUpdatingOrg}
               {...updateOrgMethods.register('name')}

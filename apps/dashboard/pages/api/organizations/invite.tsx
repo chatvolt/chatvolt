@@ -57,11 +57,11 @@ export const invite = async (req: AppNextApiRequest, res: NextApiResponse) => {
 
     await mailer.sendMail({
       from: {
-        name: 'Chatvolt',
+        name: 'Chatvolt AI',
         address: process.env.EMAIL_FROM!,
       },
       to: data.email,
-      subject: `💌 You have been invited to join ${session?.organization?.name}`,
+      subject: `🤝 You have been invited to join ${session?.organization?.name}`,
       html: render(
         <InviteUser
           teamName={session?.organization?.name}

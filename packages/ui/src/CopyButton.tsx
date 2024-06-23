@@ -3,7 +3,7 @@ import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import { IconButton } from '@mui/joy';
 import React, { useCallback, useRef, useState } from 'react';
 
-function CopyButton(props: { text: string }) {
+function CopyButton(props: { text: string; className?: string }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<NodeJS.Timeout>();
 
@@ -19,13 +19,19 @@ function CopyButton(props: { text: string }) {
     } catch (err) {}
   }, [props.text]);
 
-  return copied ? (
-    <IconButton size="sm" color="neutral" variant="plain">
-      <DoneRoundedIcon sx={{ fontSize: 'sm' }} />
-    </IconButton>
-  ) : (
-    <IconButton size="sm" color="neutral" variant="plain" onClick={handleCopy}>
-      <ContentPasteRoundedIcon sx={{ fontSize: 'sm' }} />
+  return (
+    <IconButton
+      size="sm"
+      color="neutral"
+      variant="plain"
+      onClick={handleCopy}
+      className={props.className}
+    >
+      {copied ? (
+        <DoneRoundedIcon sx={{ fontSize: 'sm' }} />
+      ) : (
+        <ContentPasteRoundedIcon sx={{ fontSize: 'sm' }} />
+      )}
     </IconButton>
   );
 }

@@ -151,7 +151,7 @@ const items: Product[] = [
     },
     features: {
       title: `AI-Powered email support`,
-      description: `Handle all your emails through Chatvolt's convenient dashboard. The Email Inbox uses AI too - it will assist you in resolving the issue faster.`,
+      description: `Handle all your emails through Chatvolt's convenient dashboard. It will assist you in resolving the issue faster.`,
       items: [
         {
           name: '2-minutes setup',

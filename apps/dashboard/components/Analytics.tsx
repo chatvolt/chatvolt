@@ -73,8 +73,6 @@ function Analytics({ children, userId }: Props) {
         includedDomains: [
           'www.chatvolt.ai',
           'app.chatvolt.ai',
-          'www.resolveai.io',
-          'www.chatbotgpt.ai',
         ],
       });
     }

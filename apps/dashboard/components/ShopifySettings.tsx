@@ -25,7 +25,7 @@ export default function ShopifySettings(props: Props) {
      
     // optionally, Override initial messages
     // initialMessages: [
-    //   'Hello Georges how are you doing today?',
+    //   'Hello Marcos how are you doing today?',
     //   'How can I help you ?',
     // ],
      

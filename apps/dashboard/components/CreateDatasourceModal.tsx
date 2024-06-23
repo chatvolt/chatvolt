@@ -12,13 +12,12 @@ import axios from 'axios';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-import useStateReducer from '@app/hooks/useStateReducer';
-
 import {
   AppDatasource as Datasource,
   DatasourceType,
   DatastoreType,
 } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import DatasourceOptions from './DatasourceForms/DatasourceOptions';
 

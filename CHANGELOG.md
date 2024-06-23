@@ -1,5 +1,760 @@
 # Changelog
 
+<a name="0.1.369"></a>
+## 0.1.369 (2024-06-10)
+
+### Fixed
+
+- 🐛 freeze turbo version [[944843b](https://github.com/chatvolt/chatvolt/commit/944843b17bb87208222956350a8d53767faf0829)]
+
+
+<a name="0.1.368"></a>
+## 0.1.368 (2024-06-10)
+
+### Fixed
+
+- 🐛 wrong upload url telegram [[a8d9f2f](https://github.com/chatvolt/chatvolt/commit/a8d9f2fd4d444e0c225f05810a1a9cccbf19152a)]
+
+
+<a name="0.1.367"></a>
+## 0.1.367 (2024-06-10)
+
+### Fixed
+
+- 🐛 whatsapp fast webhook response to prevent duplicate [[4579eff](https://github.com/chatvolt/chatvolt/commit/4579eff63d29cbb1feb1c7a30cfa03faa1ea2a4c)]
+- 🐛 seo markup [[c69a088](https://github.com/chatvolt/chatvolt/commit/c69a08844dc8305872ef4638453c168b9c1ed505)]
+- 🐛 remove http config from agent outside of dashboard [[347a279](https://github.com/chatvolt/chatvolt/commit/347a2796f327a7d8b1e68c2ca669d7ef55c16adb)]
+
+### Miscellaneous
+
+- 🎸 add structured json metadata [[68609f7](https://github.com/chatvolt/chatvolt/commit/68609f7e2bb21c9a2a59ed2d0d570c58a27af11a)]
+- 🎸 seo markup [[1d95ff9](https://github.com/chatvolt/chatvolt/commit/1d95ff9918c7f07d343dec900655e4fa543803be)]
+
+
+<a name="0.1.366"></a>
+## 0.1.366 (2024-06-03)
+
+### Miscellaneous
+
+-  update footer [[8d35abc](https://github.com/chatvolt/chatvolt/commit/8d35abc7513e37150316062af091498cf8f1af33)]
+-  fix tracking header values [[80c1028](https://github.com/chatvolt/chatvolt/commit/80c1028d1579e2f3da30d7d9883cccfcef378985)]
+
+
+<a name="0.1.365"></a>
+## 0.1.365 (2024-06-01)
+
+### Miscellaneous
+
+-  debug form validation [[b104a5d](https://github.com/chatvolt/chatvolt/commit/b104a5dc72164872f86a7ed6373a9562d97524a7)]
+
+
+<a name="0.1.364"></a>
+## 0.1.364 (2024-06-01)
+
+### Miscellaneous
+
+-  debug form validation [[5aab079](https://github.com/chatvolt/chatvolt/commit/5aab07953d845f57dec1a195b2690c3c18a6a07a)]
+
+
+<a name="0.1.363"></a>
+## 0.1.363 (2024-05-31)
+
+### Fixed
+
+- 🐛 rag prompt structure [[8e93d53](https://github.com/chatvolt/chatvolt/commit/8e93d535e530005983407ddab50b7ef7d43bcfe2)]
+
+
+<a name="0.1.362"></a>
+## 0.1.362 (2024-05-31)
+
+### Miscellaneous
+
+-  fix types [[bd9148b](https://github.com/chatvolt/chatvolt/commit/bd9148b6a67da1fb1c2031c27e34ed6b3959551b)]
+-  telegram connect attachement to conversation ([#386](https://github.com/chatvolt/chatvolt/issues/386)) [[5a6e5e7](https://github.com/chatvolt/chatvolt/commit/5a6e5e71340bb0c1ce481bc74fe274b20b7311c7)]
+
+
+<a name="0.1.361"></a>
+## 0.1.361 (2024-05-30)
+
+### Fixed
+
+- 🐛 use user language prompt with claude models [[270b6bf](https://github.com/chatvolt/chatvolt/commit/270b6bf6be074bee0fbba1aff31ec5280fe8460a)]
+
+
+<a name="0.1.360"></a>
+## 0.1.360 (2024-05-28)
+
+### Fixed
+
+- 🐛 broken email inbox after switching mail provider [[027e757](https://github.com/chatvolt/chatvolt/commit/027e75728d3410dd5ad22744a3cf79b7cb265124)]
+
+
+<a name="0.1.359"></a>
+## 0.1.359 (2024-05-27)
+
+### Miscellaneous
+
+- 🤖 update message tempaltes dashboad [[b45531a](https://github.com/chatvolt/chatvolt/commit/b45531a51c149fc0175794711c4bd7952578569c)]
+
+
+<a name="0.1.358"></a>
+## 0.1.358 (2024-05-27)
+
+### Fixed
+
+- 🐛 form tool not working properly with RAG [[efb84f8](https://github.com/chatvolt/chatvolt/commit/efb84f84a2b9eb24e6381ca1f80d0ab0c53a57b4)]
+
+
+<a name="0.1.357"></a>
+## 0.1.357 (2024-05-27)
+
+### Fixed
+
+- 🐛 form tool name [[a3e0bb5](https://github.com/chatvolt/chatvolt/commit/a3e0bb55e3785d4fcd3be2cf4da6885493623546)]
+
+
+<a name="0.1.356"></a>
+## 0.1.356 (2024-05-27)
+
+### Fixed
+
+- 🐛 form tool broken [[ddc0a69](https://github.com/chatvolt/chatvolt/commit/ddc0a69d7566f177ae1d31e4f8e33bdc4d3e1516)]
+
+
+<a name="0.1.355"></a>
+## 0.1.355 (2024-05-27)
+
+### Miscellaneous
+
+- 🤖 bump next-auth [[a54e5cc](https://github.com/chatvolt/chatvolt/commit/a54e5cc563ac860aa7a72f2d3500909795773155)]
+
+
+<a name="0.1.354"></a>
+## 0.1.354 (2024-05-26)
+
+### Miscellaneous
+
+- 🤖 add min tls version for ses [[8272004](https://github.com/chatvolt/chatvolt/commit/8272004db055f1107414e7abe3d736b08349b8c0)]
+
+
+<a name="0.1.353"></a>
+## 0.1.353 (2024-05-24)
+
+### Fixed
+
+- 🐛 loading state signin button [[bc64603](https://github.com/chatvolt/chatvolt/commit/bc646036293c83aa001b7a552cad95c523b77568)]
+
+
+<a name="0.1.352"></a>
+## 0.1.352 (2024-05-20)
+
+### Fixed
+
+- 🐛 cusotm icon chatbuble header [[8b8769a](https://github.com/chatvolt/chatvolt/commit/8b8769ad07b3accf70e928a4c2a01457278e9cbd)]
+
+### Miscellaneous
+
+-  bump [[3cb9504](https://github.com/chatvolt/chatvolt/commit/3cb9504958ae3948eaec612d1befd26aa0c02af7)]
+-  fix: remove flickering [[c33eefa](https://github.com/chatvolt/chatvolt/commit/c33eefaf9a9af654c61f60d1e5b4b82eaecbdc9d)]
+
+
+<a name="0.1.351"></a>
+## 0.1.351 (2024-05-17)
+
+### Fixed
+
+- 🐛 fix alignemnt text area [[9c4571d](https://github.com/chatvolt/chatvolt/commit/9c4571dfd44cc96c6dcbf6db820ee3f0163da414)]
+- 🐛 rate limit input validation coerce [[78e3b16](https://github.com/chatvolt/chatvolt/commit/78e3b162b7843c2cc370b11301e23f827f12d8c2)]
+- 🐛 vision [[073f8e5](https://github.com/chatvolt/chatvolt/commit/073f8e5e5c44feafcfcb5539c4354ebf2dbdd400)]
+
+### Miscellaneous
+
+-  Release 0.1.350 [[e4ab3e2](https://github.com/chatvolt/chatvolt/commit/e4ab3e288c597356cdb3cf4d4cb405fb8cd75224)]
+-  bump [[8bc89cc](https://github.com/chatvolt/chatvolt/commit/8bc89cc3ca4d84aceaa689d7ac38fa6add680557)]
+- 🎸 bring back ui button for request human + resolve [[2e6fcf8](https://github.com/chatvolt/chatvolt/commit/2e6fcf820754679c77ff315035e86eda5450f9dc)]
+-  add delay to agent typing indicator [[b4398eb](https://github.com/chatvolt/chatvolt/commit/b4398eb6ebf417996ea5b28f685cdc558dddbf39)]
+
+
+<a name="0.1.349"></a>
+## 0.1.349 (2024-05-17)
+
+### Fixed
+
+- 🐛 onCompositionStart [[bb1fc33](https://github.com/chatvolt/chatvolt/commit/bb1fc33bd52e57fc7e4d95b0ab6e4488d0614236)]
+
+
+<a name="0.1.348"></a>
+## 0.1.348 (2024-05-16)
+
+### Fixed
+
+- 🐛 chat message loading icon [[479450f](https://github.com/chatvolt/chatvolt/commit/479450f806a29196e4541bf1413fdefc1aabe9ac)]
+
+
+<a name="0.1.347"></a>
+## 0.1.347 (2024-05-15)
+
+### Fixed
+
+- 🐛 bubble top bar border [[8320ebc](https://github.com/chatvolt/chatvolt/commit/8320ebc31f3f78ed6c8bc392f2f9817f2301305c)]
+
+### Miscellaneous
+
+-  bump [[08cbbef](https://github.com/chatvolt/chatvolt/commit/08cbbefe9181c7a018b3b26390a7f5433ce943c0)]
+
+
+<a name="0.1.346"></a>
+## 0.1.346 (2024-05-15)
+
+### Fixed
+
+- 🐛 layout issue [[687a26f](https://github.com/chatvolt/chatvolt/commit/687a26fb7c3318d7363c305cf61195186c7de72a)]
+
+
+<a name="0.1.345"></a>
+## 0.1.345 (2024-05-15)
+
+### Miscellaneous
+
+- 🎸 new dashboard ui ([#379](https://github.com/chatvolt/chatvolt/issues/379)) [[cc957e3](https://github.com/chatvolt/chatvolt/commit/cc957e37b8c3595302364fee612df86633545bdf)]
+-  fix type [[1a060d6](https://github.com/chatvolt/chatvolt/commit/1a060d6b122c265567081b466a6a6037133ce3d8)]
+
+
+<a name="0.1.344"></a>
+## 0.1.344 (2024-05-13)
+
+### Miscellaneous
+
+- 🎸 gpt-4o [[ae7543b](https://github.com/chatvolt/chatvolt/commit/ae7543b27facf05b4c570d185c53c675f70818ee)]
+-  fix pnpm version [[72b7b80](https://github.com/chatvolt/chatvolt/commit/72b7b80410203e062b0a8572dd846b5de858a9f1)]
+
+
+<a name="0.1.343"></a>
+## 0.1.343 (2024-05-13)
+
+### Fixed
+
+- 🐛 slow api/conversations query [[def4276](https://github.com/chatvolt/chatvolt/commit/def4276ed9858be9c3bd6dc35bd346fd9dbbe7b0)]
+- 🐛 api url typo [[f065380](https://github.com/chatvolt/chatvolt/commit/f065380822403b531c9f2ea2d161c5b6bbc147df)]
+- 🐛 crisp operator message ([#383](https://github.com/chatvolt/chatvolt/issues/383)) [[fcb2b5d](https://github.com/chatvolt/chatvolt/commit/fcb2b5df15e297ead8511c80ba64587d461d7711)]
+- 🐛 doc [[0f506d9](https://github.com/chatvolt/chatvolt/commit/0f506d9a5ea376f6b81e5405f48338b4da636405)]
+
+### Miscellaneous
+
+-  typo [[c57d977](https://github.com/chatvolt/chatvolt/commit/c57d97751f8ab2d5ee636520bce33055ccb5aa81)]
+- 🤖 add footer link [[f8f0b83](https://github.com/chatvolt/chatvolt/commit/f8f0b83f6e6fc5467c48065f0ffaa474950e624e)]
+- 🎸 add createNewConversation method [[0f70ff8](https://github.com/chatvolt/chatvolt/commit/0f70ff81c5d8eb11a6e9517aab92a6736d8848e3)]
+
+
+<a name="0.1.342"></a>
+## 0.1.342 (2024-04-16)
+
+### Fixed
+
+- 🐛 optional props [[d913df7](https://github.com/chatvolt/chatvolt/commit/d913df7bf8bdecb0d9deee3f3c0d55b1457e6558)]
+
+
+<a name="0.1.341"></a>
+## 0.1.341 (2024-04-16)
+
+### Miscellaneous
+
+- 🎸 handle chatbox drag&amp;drop files [[af5ab92](https://github.com/chatvolt/chatvolt/commit/af5ab92e03de78677e0df47eb9370f8ec91e7e8c)]
+
+
+<a name="0.1.340"></a>
+## 0.1.340 (2024-04-16)
+
+### Fixed
+
+- 🐛 layout use fileupload [[1fbebaa](https://github.com/chatvolt/chatvolt/commit/1fbebaa5246b3cdf2e6b3913ea7c56fec73d740e)]
+- ✏️ conversation file upload doc [[a4064e6](https://github.com/chatvolt/chatvolt/commit/a4064e66ea728fc8df5abf863da593ee7c358f65)]
+
+
+<a name="0.1.339"></a>
+## 0.1.339 (2024-04-16)
+
+### Miscellaneous
+
+-  Feature/chat with converstaion attachments ([#378](https://github.com/chatvolt/chatvolt/issues/378)) [[4fb88c2](https://github.com/chatvolt/chatvolt/commit/4fb88c26a8878698201cc0adc62f0018de9d7820)]
+
+
+<a name="0.1.338"></a>
+## 0.1.338 (2024-04-15)
+
+### Fixed
+
+- 🐛 show form url only if published [[b3e3d07](https://github.com/chatvolt/chatvolt/commit/b3e3d07fe521aeb25783385a14d6e511945c77a9)]
+
+
+<a name="0.1.337"></a>
+## 0.1.337 (2024-04-15)
+
+### Fixed
+
+- 🐛 rollback useDeepCompareEFfect + fix mapping props [[7e69544](https://github.com/chatvolt/chatvolt/commit/7e69544a01eaa022bcff24c0ff29cf8f6dca3bad)]
+- 🐛 logos urls [[09c4f8b](https://github.com/chatvolt/chatvolt/commit/09c4f8bc0e4f7d4ce69fddae06536f50cdbe8245)]
+- 🐛 blog links + force light theme [[04fbd9b](https://github.com/chatvolt/chatvolt/commit/04fbd9b06ffa7f05feddb3fb5a4cd419df2e8534)]
+- 🐛 imports typpo [[369e4d0](https://github.com/chatvolt/chatvolt/commit/369e4d0c944b2a77cdb8f5055e03a2c238481300)]
+- 🐛 blog package name [[82c0915](https://github.com/chatvolt/chatvolt/commit/82c09159a0db9105d53c26cd0fe28d84721465bb)]
+
+### Miscellaneous
+
+- 🤖 add discord link to blog [[60c6c75](https://github.com/chatvolt/chatvolt/commit/60c6c753ed86381cf37978c49590d40a91dc8bc1)]
+-  add blog link to footer [[6ab3dd7](https://github.com/chatvolt/chatvolt/commit/6ab3dd765033e6f26580e883cd3e8988fe6ca1eb)]
+- 🎸 migrate blog in monorepo _ [[f7ce00e](https://github.com/chatvolt/chatvolt/commit/f7ce00eab63e023b15d25be134cfbf1f3e160ba8)]
+- 🤖 add missing meta tags [[bc8db3d](https://github.com/chatvolt/chatvolt/commit/bc8db3da7636f336df6c68e8b23fd3184e07fa21)]
+- 🤖 wording [[89e703a](https://github.com/chatvolt/chatvolt/commit/89e703a37caacf3c24ed546549f6f286d62b862c)]
+
+
+<a name="0.1.336"></a>
+## 0.1.336 (2024-04-13)
+
+### Miscellaneous
+
+- 🤖 update yt tool [[35acadf](https://github.com/chatvolt/chatvolt/commit/35acadfafbcf73059926b74518504e86f2ce1e26)]
+
+
+<a name="0.1.335"></a>
+## 0.1.335 (2024-04-12)
+
+### Fixed
+
+- 🐛 zIndex button [[eaccbfc](https://github.com/chatvolt/chatvolt/commit/eaccbfcffe1a9c94327d1817af20d784aa23d86f)]
+
+
+<a name="0.1.334"></a>
+## 0.1.334 (2024-04-12)
+
+### Fixed
+
+- 🐛 zIndex Select on chat-bubble [[e05968e](https://github.com/chatvolt/chatvolt/commit/e05968ea8441119cb45b12eef614f686f1f30eaf)]
+
+### Miscellaneous
+
+-  bump [[9b82e51](https://github.com/chatvolt/chatvolt/commit/9b82e51941976dde099195504a1387ec2d3f45b3)]
+- 🤖 upgrade to next@4.2 [[1c17ccb](https://github.com/chatvolt/chatvolt/commit/1c17ccb97294f809e64b197a1358e904fb90c907)]
+- 🎸 add model mixtral-8x22b [[f5df18a](https://github.com/chatvolt/chatvolt/commit/f5df18a81fee2f7b023629d8fab0d3cae4011f60)]
+
+
+<a name="0.1.333"></a>
+## 0.1.333 (2024-04-11)
+
+### Fixed
+
+- 🐛 enforce answer in same language [[44c3900](https://github.com/chatvolt/chatvolt/commit/44c390037aa9ccd64ee567f94856a1cf78397fa1)]
+
+### Miscellaneous
+
+- 🤖 reorder datasource options [[2e9fab1](https://github.com/chatvolt/chatvolt/commit/2e9fab15fcd0374e165bbbf45c525536bdcd6470)]
+
+
+<a name="0.1.332"></a>
+## 0.1.332 (2024-04-11)
+
+### Fixed
+
+- 🐛 RAG missing chunk with highest similarity score [[a477814](https://github.com/chatvolt/chatvolt/commit/a477814b4a6692cf61afc6845692e7d8ab917903)]
+
+
+<a name="0.1.331"></a>
+## 0.1.331 (2024-04-11)
+
+### Fixed
+
+- 🐛 remove forceSubmit() + default country code as &lt;Select/&gt; [[48c31d2](https://github.com/chatvolt/chatvolt/commit/48c31d2ec3693fb8a3408aa50787aec4c774b46a)]
+
+### Miscellaneous
+
+- 🎸 form improvements [[266bd26](https://github.com/chatvolt/chatvolt/commit/266bd26eb5bde2998fb1c46f9372486255639ba6)]
+
+
+<a name="0.1.330"></a>
+## 0.1.330 (2024-04-10)
+
+### Fixed
+
+- 🐛 broken build [[4edabf4](https://github.com/chatvolt/chatvolt/commit/4edabf4655bbe5b53d0150a602c7f900db0c19bb)]
+
+### Miscellaneous
+
+-  Release 0.1.329 [[28e7241](https://github.com/chatvolt/chatvolt/commit/28e7241323e14d789df7d67e54fa07eac6fee784)]
+- 🎸 improve code support in markdown [[9b1ff90](https://github.com/chatvolt/chatvolt/commit/9b1ff9007e8e79289c2c74cca75ee53f5fc74093)]
+
+
+<a name="0.1.328"></a>
+## 0.1.328 (2024-04-10)
+
+### Miscellaneous
+
+- 🎸 add openrouter headers for ranking [[76f3141](https://github.com/chatvolt/chatvolt/commit/76f314167f5c14e7428c0f27533cbe34d2b5d4df)]
+
+
+<a name="0.1.327"></a>
+## 0.1.327 (2024-04-10)
+
+### Miscellaneous
+
+- 🎸 add support for anthropic opus + sonnet [[63b27cb](https://github.com/chatvolt/chatvolt/commit/63b27cb5d39d13634bd27bd7afadcfdfe2108e8b)]
+
+
+<a name="0.1.326"></a>
+## 0.1.326 (2024-04-10)
+
+### Fixed
+
+- 🐛 wrong hex color prevent agent form updates [[a1ad8c8](https://github.com/chatvolt/chatvolt/commit/a1ad8c87d94ef4b928472f7c066d709da3c22e0c)]
+
+
+<a name="0.1.325"></a>
+## 0.1.325 (2024-04-09)
+
+### Fixed
+
+- 🐛 form editor not showing end screen [[135db92](https://github.com/chatvolt/chatvolt/commit/135db92c13e7a5d89d50139d6ca10d8670a05692)]
+
+
+<a name="0.1.324"></a>
+## 0.1.324 (2024-04-09)
+
+### Miscellaneous
+
+-  typos [[8473c11](https://github.com/chatvolt/chatvolt/commit/8473c114ea90579aaea1ce796fe3da253ed2d33a)]
+- 🎸 telegram integration ([#353](https://github.com/chatvolt/chatvolt/issues/353)) [[fbe84cc](https://github.com/chatvolt/chatvolt/commit/fbe84ccfce1afb4c1bb91357bd1e5241c0ef8315)]
+
+
+<a name="0.1.323"></a>
+## 0.1.323 (2024-04-08)
+
+### Fixed
+
+- ✏️ migrate docs wip [[1afbdfd](https://github.com/chatvolt/chatvolt/commit/1afbdfd1887e9259314b95d9d398ab936065d12e)]
+
+
+<a name="0.1.322"></a>
+## 0.1.322 (2024-04-08)
+
+### Fixed
+
+- 🐛 embeds css issue [[c9cfb35](https://github.com/chatvolt/chatvolt/commit/c9cfb351a6688851ac6e3ef9a79f75696923859e)]
+
+
+<a name="0.1.321"></a>
+## 0.1.321 (2024-04-08)
+
+### Fixed
+
+- 🐛 dashboard width on safari [[bb81249](https://github.com/chatvolt/chatvolt/commit/bb81249a5829dca4b5922e259058416e989fe546)]
+
+
+<a name="0.1.320"></a>
+## 0.1.320 (2024-04-08)
+
+### Fixed
+
+- 🐛 transparent background for widgets [[a1a7c09](https://github.com/chatvolt/chatvolt/commit/a1a7c0955a0a4142323fcce4fde3f16436d42247)]
+- ✏️ init reference section [[943b4a2](https://github.com/chatvolt/chatvolt/commit/943b4a22c2fa5ed1cfb821e86a4381608c341982)]
+
+
+<a name="0.1.319"></a>
+## 0.1.319 (2024-04-08)
+
+### Fixed
+
+- 🐛 disable @tailwindcss/forms [[ac4e36d](https://github.com/chatvolt/chatvolt/commit/ac4e36d397f911607a3e866424ba4617739c923a)]
+
+### Miscellaneous
+
+-  bump [[296a321](https://github.com/chatvolt/chatvolt/commit/296a321e6671173af98113abdc587a1d5f104723)]
+
+
+<a name="0.1.317"></a>
+## 0.1.317 (2024-04-08)
+
+### Fixed
+
+- ✏️ improve documentation [[dc38590](https://github.com/chatvolt/chatvolt/commit/dc3859013af902f29565852326c4e595ef764161)]
+
+### Miscellaneous
+
+- 🤖 move docs to monorepo [[132c7bb](https://github.com/chatvolt/chatvolt/commit/132c7bb40fe2974de27a06abc675e81ddb59ae5e)]
+- 🤖 refacto widget folder + tailwind config package [[775165a](https://github.com/chatvolt/chatvolt/commit/775165a0dd25a0d021fee5e1fd3e6377aef05dfc)]
+- 🎸 Form lifecycle events [[cba69fe](https://github.com/chatvolt/chatvolt/commit/cba69fe7728d4d25556e5227a69e6627f14f17b4)]
+
+
+<a name="0.1.316"></a>
+## 0.1.316 (2024-04-07)
+
+### Fixed
+
+- 🐛 patch yt summary tool transcriptBodyRenderer error [[24a7b8f](https://github.com/chatvolt/chatvolt/commit/24a7b8f69c196a4c9358143ea18b11e5c0dfd8f2)]
+
+
+<a name="0.1.315"></a>
+## 0.1.315 (2024-04-07)
+
+### Fixed
+
+- 🐛 chat message overflow [[aef0422](https://github.com/chatvolt/chatvolt/commit/aef0422a9328f50fee65a47fd6efcf6b0847053d)]
+
+### Miscellaneous
+
+-  bump version [[3036f81](https://github.com/chatvolt/chatvolt/commit/3036f81d0534982b0f17161499bb03fec8974565)]
+
+
+<a name="0.1.314"></a>
+## 0.1.314 (2024-04-07)
+
+### Miscellaneous
+
+- 🎸 Form web component + install tab [[5774ee1](https://github.com/chatvolt/chatvolt/commit/5774ee1f96d3f5f5b04cd44b456159bf9ce25a68)]
+
+
+<a name="0.1.313"></a>
+## 0.1.313 (2024-04-07)
+
+### Miscellaneous
+
+- 🎸 display chat message creation date [[1820d06](https://github.com/chatvolt/chatvolt/commit/1820d06e4c2f6e68131e1c7a9603967a6053c1a6)]
+
+
+<a name="0.1.312"></a>
+## 0.1.312 (2024-04-07)
+
+### Fixed
+
+- 🐛 agent without tool error [[d5a10fa](https://github.com/chatvolt/chatvolt/commit/d5a10fa5cb88abc786636bf49fcf076ad274aa56)]
+
+### Miscellaneous
+
+- 🎸 better form inbox integration [[4be753e](https://github.com/chatvolt/chatvolt/commit/4be753e29332a6675a1518137c8fbc319b961388)]
+
+
+<a name="0.1.311"></a>
+## 0.1.311 (2024-04-06)
+
+### Fixed
+
+- 🐛 form tool show after n messages [[7a320f1](https://github.com/chatvolt/chatvolt/commit/7a320f1ad3726c2fd12d5cbafca769e5eead5db6)]
+
+
+<a name="0.1.310"></a>
+## 0.1.310 (2024-04-06)
+
+### Miscellaneous
+
+- 🎸 programmatically open/close chatbubble widget [[c07c881](https://github.com/chatvolt/chatvolt/commit/c07c8811b5de7002fa42915e2573b75bebdb4e5f)]
+
+
+<a name="0.1.309"></a>
+## 0.1.309 (2024-04-06)
+
+### Fixed
+
+- 🐛 disable dark mode toggle standard widget [[0a2754f](https://github.com/chatvolt/chatvolt/commit/0a2754f914f0525e7967b879216e8d82010b1d50)]
+
+
+<a name="0.1.308"></a>
+## 0.1.308 (2024-04-06)
+
+### Fixed
+
+- 🐛 wrong template field type [[5d546f6](https://github.com/chatvolt/chatvolt/commit/5d546f62ba82f62c58ebda07bc1e6878e170363f)]
+
+### Miscellaneous
+
+- 🤖 comment dashboard bubble context [[f7d4d03](https://github.com/chatvolt/chatvolt/commit/f7d4d0330c7921f425480f4c2cc65499cb24ea0b)]
+- 🎸 add skeleton [[bb1dcd3](https://github.com/chatvolt/chatvolt/commit/bb1dcd3fa685dbcff6ddaeded236074a0f38f1a9)]
+-  Release 0.1.307 [[77668d1](https://github.com/chatvolt/chatvolt/commit/77668d1bba69bcf6641d24757f8b3343fc884c5f)]
+
+
+<a name="0.1.306"></a>
+## 0.1.306 (2024-04-06)
+
+### Fixed
+
+- 🐛 form width in editor [[9daf3f2](https://github.com/chatvolt/chatvolt/commit/9daf3f2715fc27561785431e5d38c98c21b59f87)]
+
+
+<a name="0.1.305"></a>
+## 0.1.305 (2024-04-06)
+
+### Fixed
+
+- 🐛 better error message [[202884c](https://github.com/chatvolt/chatvolt/commit/202884c604429f10fd25178b24b69c88c46a7608)]
+- 🐛 agent icon url [[9712ec2](https://github.com/chatvolt/chatvolt/commit/9712ec21c95008eb1bb748745f66d6634cedf582)]
+
+
+<a name="0.1.304"></a>
+## 0.1.304 (2024-04-06)
+
+### Fixed
+
+- 🐛 form crash input without control [[7ea2275](https://github.com/chatvolt/chatvolt/commit/7ea22759872da2c804eb0ba5a493d81dfda2f68b)]
+
+
+<a name="0.1.303"></a>
+## 0.1.303 (2024-04-06)
+
+### Miscellaneous
+
+- 🤖 fix bubble icon [[98f8e78](https://github.com/chatvolt/chatvolt/commit/98f8e78af3ab59dcc4464d21ffa893e269e1b5f7)]
+
+
+<a name="0.1.302"></a>
+## 0.1.302 (2024-04-06)
+
+### Fixed
+
+- 🐛 typos [[63c627d](https://github.com/chatvolt/chatvolt/commit/63c627d291a6a17fb6a2b71dfffc9b75b66182fa)]
+
+### Miscellaneous
+
+- 🎸 form templates + improve number input validation [[56ec038](https://github.com/chatvolt/chatvolt/commit/56ec038574454c20f0de7c21a7208178a8a40a1b)]
+- 🎸 theming fix + improve structure ([#370](https://github.com/chatvolt/chatvolt/issues/370)) [[6e66ddf](https://github.com/chatvolt/chatvolt/commit/6e66ddf08a87970ba30ae4f2857d279d58a8665b)]
+
+
+<a name="0.1.301"></a>
+## 0.1.301 (2024-04-05)
+
+### Fixed
+
+- 🐛 metadata streaming [[aace82f](https://github.com/chatvolt/chatvolt/commit/aace82fbea403c437f862d856f8a32b78c08c45b)]
+
+
+<a name="0.1.300"></a>
+## 0.1.300 (2024-04-05)
+
+### Fixed
+
+- 🐛 tailwind styles missing on form widget [[7bcddaf](https://github.com/chatvolt/chatvolt/commit/7bcddafa7cde50ee7295f97a5d2c872d86cc8c0f)]
+
+
+<a name="0.1.299"></a>
+## 0.1.299 (2024-04-05)
+
+### Fixed
+
+- 🐛 widget should not use next deps [[b7a2230](https://github.com/chatvolt/chatvolt/commit/b7a22306b97463209a3c5fa6659fe712686d2757)]
+
+
+<a name="0.1.298"></a>
+## 0.1.298 (2024-04-05)
+
+### Miscellaneous
+
+-  new form builder ([#362](https://github.com/chatvolt/chatvolt/issues/362)) [[94d31ce](https://github.com/chatvolt/chatvolt/commit/94d31ce93be952ca388d5f4718876eb69274b988)]
+
+
+<a name="0.1.297"></a>
+## 0.1.297 (2024-04-01)
+
+### Miscellaneous
+
+- 🤖 enable experimental models [[c7498bb](https://github.com/chatvolt/chatvolt/commit/c7498bbc172d4ed6060419d1c281f0d69b41189f)]
+
+
+<a name="0.1.296"></a>
+## 0.1.296 (2024-04-01)
+
+### Fixed
+
+- 🐛 finetune rag [[56d2d5b](https://github.com/chatvolt/chatvolt/commit/56d2d5b26def8baca0e6337d3b6d18c05369c9c8)]
+
+
+<a name="0.1.295"></a>
+## 0.1.295 (2024-03-31)
+
+### Fixed
+
+- 🐛 remove rag logic if no datastore tool [[c4f7600](https://github.com/chatvolt/chatvolt/commit/c4f760068f19946446cc10e03d7975ce832db3d6)]
+
+
+<a name="0.1.294"></a>
+## 0.1.294 (2024-03-31)
+
+### Miscellaneous
+
+- 🤖 update prompt [[f5fa61e](https://github.com/chatvolt/chatvolt/commit/f5fa61eb014eb018b9b3e18ffc32538dcacc0e3b)]
+
+
+<a name="0.1.293"></a>
+## 0.1.293 (2024-03-31)
+
+### Fixed
+
+- 🐛 knowledge restriction trick [[f64b459](https://github.com/chatvolt/chatvolt/commit/f64b459b174b131ff4ed7b482f0925995e5391bc)]
+
+### Miscellaneous
+
+-  pricing [[3cbd834](https://github.com/chatvolt/chatvolt/commit/3cbd834c5168fde9be53f857f9ac70225f6d2b87)]
+
+
+<a name="0.1.292"></a>
+## 0.1.292 (2024-03-31)
+
+### Fixed
+
+- 🐛 rollback [[dc7f213](https://github.com/chatvolt/chatvolt/commit/dc7f2135eaaacf4d61b2483840c12e011a64ea37)]
+
+### Miscellaneous
+
+-  clean [[a5c210c](https://github.com/chatvolt/chatvolt/commit/a5c210c27d71452472238a41e976194f0b0ea7bb)]
+
+
+<a name="0.1.291"></a>
+## 0.1.291 (2024-03-31)
+
+### Fixed
+
+- 🐛 improve rag based completion performance [[84cb8e5](https://github.com/chatvolt/chatvolt/commit/84cb8e5951a51aaf24852cd96b14be029649189b)]
+- 🐛 topK [[126a9e9](https://github.com/chatvolt/chatvolt/commit/126a9e960b3f95ed6a4d44fcd595da8409748fac)]
+- 🐛 migrate api/browser to lp to run on lambda [[054e7ed](https://github.com/chatvolt/chatvolt/commit/054e7ed1424db9ef239edaad55c29ea8dc61ac0d)]
+
+
+<a name="0.1.290"></a>
+## 0.1.290 (2024-03-28)
+
+### Fixed
+
+- 🐛 browser api down [[af79c20](https://github.com/chatvolt/chatvolt/commit/af79c20b2767d1fe21633eb117819e7695e834b5)]
+
+
+<a name="0.1.289"></a>
+## 0.1.289 (2024-03-27)
+
+### Miscellaneous
+
+- 🎸 openrouter support [[a2bb07b](https://github.com/chatvolt/chatvolt/commit/a2bb07b20bfcc84eb5761c4bae629b1a29957093)]
+
+
+<a name="0.1.288"></a>
+## 0.1.288 (2024-03-27)
+
+### Fixed
+
+- 🐛 Force disable markdown output for unsupported channels [[1edac27](https://github.com/chatvolt/chatvolt/commit/1edac27c89c31ebb25960a5ad0ba322e22c77dd5)]
+- 🐛 lower similarity score threshold [[483cc7d](https://github.com/chatvolt/chatvolt/commit/483cc7d9ced595c1b43f0d2f9be26df0884b5564)]
+
+### Miscellaneous
+
+- 🤖 update pricing [[a63f661](https://github.com/chatvolt/chatvolt/commit/a63f661a2e90a5dc3f72613e528e99b791301465)]
+
+
+<a name="0.1.287"></a>
+## 0.1.287 (2024-03-26)
+
+### Fixed
+
+- 🐛 crisp human out of sync [[88a0745](https://github.com/chatvolt/chatvolt/commit/88a074551f46b51cf40b18e6bc83e7697e872a28)]
+- 🐛 lower similarity score treshold [[ef3dea7](https://github.com/chatvolt/chatvolt/commit/ef3dea7ef00faf4fadc69c00832e4e33071499f9)]
+- 🐛 custom css not applying on standard web compononent [[18e003b](https://github.com/chatvolt/chatvolt/commit/18e003bc27c23025e318e34c6b30104b2096b37e)]
+
+### Miscellaneous
+
+-  bump [[5e42be6](https://github.com/chatvolt/chatvolt/commit/5e42be6c1d2211ab3572b76996e360c95c731c49)]
+
+
 <a name="0.1.286"></a>
 ## 0.1.286 (2024-03-19)
 

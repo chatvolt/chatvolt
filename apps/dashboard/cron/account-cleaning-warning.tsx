@@ -50,7 +50,7 @@ import prisma from '@chatvolt/prisma/client';
 
       await mailer.sendMail({
         from: {
-          name: 'Chatvolt',
+          name: 'Chatvolt AI',
           address: process.env.EMAIL_FROM!,
         },
         to: email,

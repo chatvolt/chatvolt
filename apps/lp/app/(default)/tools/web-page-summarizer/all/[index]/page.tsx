@@ -5,8 +5,8 @@ import React from 'react';
 import { youtubeSummaryTool } from '@chatvolt/lib/config';
 import { Prisma } from '@chatvolt/prisma';
 import prisma from '@chatvolt/prisma/client';
+import Cta from '@chatvolt/ui/lp/cta';
 
-import Cta from '@/components/cta';
 import Section from '@/components/ui/section';
 import AllPagination from '@/components/web-page-summarizer/all-pagination';
 

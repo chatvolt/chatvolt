@@ -23,11 +23,11 @@ const handler: AppEventHandler<
 
   await mailer.sendMail({
     from: {
-      name: 'Chatvolt',
+      name: 'Chatvolt AI',
       address: process.env.EMAIL_FROM!,
     },
     to: event.adminEmail!,
-    subject: `❓ Assistance requested from Agent ${agent?.name || ''}`,
+    subject: `⚠️ Assistance requested from Agent ${agent?.name || ''}`,
     html: render(
       <HelpRequest
         visitorEmail={event?.customerEmail}

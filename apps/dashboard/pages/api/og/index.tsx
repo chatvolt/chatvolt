@@ -51,7 +51,7 @@ export default async function handler(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const image = searchParams.get('image');
   const title =
-    searchParams.get('title') || `Custom GPT Agent For Your Startup`;
+    searchParams.get('title') || `Custom AI Assistant for Your Business`;
 
   return new ImageResponse(
     (

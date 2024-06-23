@@ -1,3 +1,5 @@
+import axios from 'axios';
+import cuid from 'cuid';
 import type { Schema as JSONSchema } from 'jsonschema';
 
 import createToolParser from '@chatvolt/lib/create-tool-parser';
@@ -10,7 +12,8 @@ import {
   FormToolSchema,
   ToolResponseSchema,
 } from '@chatvolt/lib/types/dtos';
-import { Form } from '@chatvolt/prisma';
+import { ConversationChannel, Form, Prisma } from '@chatvolt/prisma';
+import prisma from '@chatvolt/prisma/client';
 
 import {
   CreateToolHandler,
@@ -20,20 +23,13 @@ import {
 
 export type FormToolPayload = Record<string, unknown>;
 
-export const toJsonSchema = ((tool: FormToolSchema, config) => {
+export const toJsonSchema = ((tool: FormToolSchema) => {
   const form = tool.form as Form;
-  const useDraftConfig = !!config?.toolConfig?.useDraftConfig;
-  const formConfig = (
-    useDraftConfig ? form?.draftConfig : form?.publishedConfig
-  ) as FormConfigSchema;
-
   return {
-    name: `isFormValid_${slugify(form.name)}`,
-    description:
-      'Trigger only when all the required field have been answered by the user. Each field is provided by the user not by the AI. Never fill a field if not provided by the user.',
-    parameters: (formConfig as any)?.schema,
+    name: `${slugify(form.name)}-form`,
+    description: `${(tool.config as any)?.trigger}`,
   };
-}) as ToolToJsonSchema;
+}) as any;
 
 export const createHandler =
   (tool: FormToolSchema, config: CreateToolHandlerConfig<{ type: 'form' }>) =>
@@ -45,15 +41,39 @@ export const createHandler =
       useDraftConfig ? form?.draftConfig : form?.publishedConfig
     ) as FormConfigSchema;
 
-    await EventDispatcher.dispatch({
-      type: 'blablaform-submission',
-      conversationId,
-      formId: tool.formId,
-      formValues: payload,
-    });
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/forms/${tool.formId}`,
+      {
+        conversationId,
+        formId: tool.formId,
+        formValues: payload,
+      }
+    );
 
     return {
       data: 'Form submitted successfully',
+    };
+  };
+
+export const createHandlerV2 =
+  (
+    tool: FormToolSchema,
+    config: CreateToolHandlerConfig<{ type: 'form' }>,
+    channel?: ConversationChannel
+  ) =>
+  async (): Promise<ToolResponseSchema> => {
+    const messageId = cuid();
+
+    const form = tool.form as Form;
+
+    return {
+      data: `Please fill the following form in order to continue. (Reply in the same language as the user): ${process.env.NEXT_PUBLIC_DASHBOARD_URL}/forms/${form.id}?conversationId=${config?.conversationId}&messageId=${messageId}`,
+      messageId,
+      metadata: {
+        isFormSubmitted: false,
+        shouldDisplayForm: true,
+        formId: form.id,
+      },
     };
   };
 

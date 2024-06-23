@@ -88,23 +88,25 @@ function MobileNavigation() {
             <MobileNavLink href="/pricing">Pricing</MobileNavLink>
 
             <MobileNavLink
-              href="https://chatvolt.getrewardful.com/"
+              href="https://pages.chatvolt.com.br/affiliates"
               target={'_blank'}
             >
               Affiliates
             </MobileNavLink>
-            <MobileNavLink href="/help" target={'_blank'}>
+            
+            {/* <MobileNavLink href="/help" target={'_blank'}>
               Help Center
             </MobileNavLink>
             <MobileNavLink href="https://docs.chatvolt.ai/" target={'_blank'}>
               API Docs
-            </MobileNavLink>
-            <MobileNavLink
-              href="https://github.com/chatvolt/chatvolt"
+            </MobileNavLink> */}
+
+            {/* <MobileNavLink
+              href="https://github.com/"
               target={'_blank'}
             >
               GitHub
-            </MobileNavLink>
+            </MobileNavLink> */}
 
             {/* <MobileNavLink href="#testimonials">Testimonials</MobileNavLink> */}
             {/* <MobileNavLink href="#pricing">Pricing</MobileNavLink> */}
@@ -126,11 +128,7 @@ export function Header() {
     }
   }, []);
 
-  let logoUrl = '';
-
-  if (hostname?.includes('chatbotgpt.ai')) {
-    logoUrl = '/logo-chatbotgpt-dark.png';
-  }
+  let logoUrl = '/app-logo-dark.png';
 
   return (
     <>
@@ -140,7 +138,7 @@ export function Header() {
           <div className="inline-flex items-center space-x-1">
             <CheckIcon className="w-4 font-bold text-yellow-400" />
 
-            <span>Founded in France. We respect your privacy.</span>
+            <span>Founded in Brazil. We respect your privacy.</span>
           </div>
           <div className="inline-flex items-center space-x-1">
             <div className="inline-flex items-center">
@@ -166,7 +164,7 @@ export function Header() {
                     width="80"
                     height="100"
                     // className={clsx(props.className)}
-                    // src="/logo-chatbotgpt-dark.png"
+                    // src="/app-logo-dark.png"
                     src={logoUrl}
                     alt=""
                   />
@@ -194,12 +192,12 @@ export function Header() {
                   sx={{ borderRadius: 100 }}
                   endDecorator={<ArrowForwardRoundedIcon />}
                 >
-                  Discover ResolveAI
+                  Discover Chatvolt
                 </Button> */}
 
                 {/* <NavLink href="/help">Help Center</NavLink> */}
                 <NavLink
-                  href="https://chatvolt.getrewardful.com/"
+                  href="https://pages.chatvolt.com.br/affiliates"
                   target={'_blank'}
                 >
                   Affiliates
@@ -209,7 +207,7 @@ export function Header() {
 
                 <Menu />
 
-                {/* <NavLink href="https://github.com/chatvolt/chatvolt" target={'_blank'}>
+                {/* <NavLink href="https://github.com/" target={'_blank'}>
                 GitHub
               </NavLink> */}
                 {/* <NavLink href="https://docs.chatvolt.ai/" target={'_blank'}>

@@ -1,10 +1,12 @@
 import { Prisma } from '@prisma/client';
+import axios from 'axios';
 import cuid from 'cuid';
 import type { Logger } from 'pino';
 import React from 'react';
 
 import { GenericTemplate, NewConversation, render } from '@chatvolt/emails';
 import guardAgentQueryUsage from '@chatvolt/lib/guard-agent-query-usage';
+import { sharp } from '@chatvolt/lib/image';
 import {
   ConversationChannel,
   ConversationStatus,
@@ -18,11 +20,13 @@ import {
 import prisma from '@chatvolt/prisma/client';
 
 import EventDispatcher from './events/dispatcher';
+import { fileBufferToDocs } from './loaders/file';
 import { ChatRequest } from './types/dtos';
+import { AcceptedAIEnabledMimeTypes } from './accepted-mime-types';
 import AgentManager from './agent';
 import { AnalyticsEvents, capture } from './analytics-server';
 import { formatOrganizationSession, sessionOrganizationInclude } from './auth';
-import { ModelConfig } from './config';
+import { channelConfig, ModelConfig } from './config';
 import ConversationManager from './conversation';
 import getRequestLocation from './get-request-location';
 import mailer from './mailer';
@@ -39,6 +43,13 @@ export const ChatConversationArgs =
         take: -24,
         orderBy: {
           createdAt: 'asc',
+        },
+      },
+      attachments: {
+        where: {
+          mimeType: {
+            in: AcceptedAIEnabledMimeTypes,
+          },
         },
       },
     },
@@ -110,7 +121,7 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
   if (data.isDraft) {
     // Only use datastore when drafting a reply
     agent.tools = agent.tools?.filter((each) => each?.type === 'datastore');
-    agent.modelName = 'gpt_3_5_turbo_16k';
+    agent.modelName = 'gpt_3_5_turbo';
     const lastFromHumanIndex = history
       .reverse()
       .findIndex((one) => one.from === MessageFrom.human);
@@ -166,6 +177,8 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
       each?.type === ToolType.request_human ||
       each?.type === ToolType.mark_as_resolved
     ) {
+      return false; // Disable for all channels as we swtiched back to UI buttons for now.
+
       // Disabled for the following channels
       if ([ConversationChannel.crisp].includes(channel as any)) {
         return false;
@@ -177,6 +190,11 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
     }
     return true;
   });
+
+  // Disable markdown output for unsupported channels
+  if (channelConfig[channel]?.isMarkdownCompatible === false) {
+    agent.useMarkdown = false;
+  }
 
   agent.tools = filteredTools;
 
@@ -244,7 +262,7 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
       await Promise.all([
         mailer.sendMail({
           from: {
-            name: 'Chatvolt',
+            name: 'Chatvolt AI',
             address: process.env.EMAIL_FROM!,
           },
           to: email,
@@ -274,17 +292,78 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
     throw err;
   }
 
+  // attachmentsForAI
+  const attachhmentsForAI = [
+    ...(data?.attachments || []),
+    ...(conversation?.attachments?.filter((each) =>
+      (data?.attachmentsForAI || [])?.includes(each?.id)
+    ) || []),
+  ];
+
+  const nonImageAttachmentsForAI = attachhmentsForAI.filter(
+    (each) => !each?.mimeType?.startsWith('image')
+  );
+  let _imageAttachmentsForAI = attachhmentsForAI
+    .filter((each) => each?.mimeType?.startsWith('image'))
+    .map((each) => each.url);
+
+  let imageAttachmentsForAI = [] as string[];
+
+  const encodeImageAsBase64 = async (url: string) => {
+    const image = await fetch(url);
+    const contentType = image.headers.get('Content-type');
+    const imageBuffer = await image.arrayBuffer();
+
+    return `data:${contentType};base64,${Buffer.from(
+      await sharp(imageBuffer)
+        .resize({
+          fit: sharp.fit.contain,
+          width: 100,
+        })
+        .toBuffer()
+    ).toString('base64')}`;
+  };
+
+  for (const each of _imageAttachmentsForAI) {
+    const base64 = await encodeImageAsBase64(each);
+    imageAttachmentsForAI.push(base64);
+  }
+
+  const attachmentsToText: string[] = [];
+  for (const attachment of nonImageAttachmentsForAI) {
+    const buffer = await axios
+      .get(attachment.url, {
+        responseType: 'arraybuffer',
+      })
+      .then((res) => res.data);
+
+    const doc = await fileBufferToDocs({
+      buffer,
+      mimeType: attachment.mimeType,
+    });
+
+    const text = doc.map((each) => each.pageContent).join(' ');
+
+    attachmentsToText.push(`FILENAME: ${attachment.name} CONTENT: ${text}`);
+  }
+
+  const input = !!attachmentsToText?.length
+    ? `${data.query}\n${attachmentsToText.join('\n###\n')}`
+    : data.query;
+
   const [chatRes] = await Promise.all([
     manager.query({
       ...data,
       conversationId,
-      input: data.query,
+      channel,
+      input,
       stream: data.streaming ? data.handleStream : undefined,
       history: history,
       abortController: data.abortController,
       filters: data.filters,
       toolsConfig: data.toolsConfig,
       retrievalQuery,
+      images: imageAttachmentsForAI,
     }),
     prisma.usage.update({
       where: {
@@ -298,7 +377,7 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
     }),
   ]);
 
-  const answerMsgId = cuid();
+  const answerMsgId = chatRes.messageId || cuid();
 
   if (!data.isDraft) {
     await conversationManager.createMessage({
@@ -335,7 +414,7 @@ async function handleChatMessage({ agent, conversation, ...data }: Props) {
     try {
       await mailer.sendMail({
         from: {
-          name: 'Chatvolt',
+          name: 'Chatvolt AI',
           address: process.env.EMAIL_FROM!,
         },
         to: ownerEmail,

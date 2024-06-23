@@ -1,17 +1,17 @@
 {
   "name": "@chatvolt/chat-bubble",
-  "version": "1.0.142",
+  "version": "1.0.144",
   "description": "Chatvolt Chat Bubble Widget",
   "main": "dist/chatbox/legacy.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chatvolt/chatvolt.git"
+    "url": "git+https://github.com/"
   },
   "author": "Chatvolt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chatvolt/chatvolt/issues"
+    "url": "https://github.com/"
   },
-  "homepage": "https://github.com/chatvolt/chatvolt#readme"
+  "homepage": "https://chatvolt.ai"
 }

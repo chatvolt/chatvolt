@@ -9,7 +9,6 @@ import Select from '@mui/joy/Select';
 import Stack from '@mui/joy/Stack';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { GetServerSidePropsContext } from 'next/types';
 import { useSession } from 'next-auth/react';
 import pDebounce from 'p-debounce';
 import { ReactElement } from 'react';
@@ -17,20 +16,17 @@ import * as React from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
-import ChatBox from '@app/components/ChatBox';
 import ChatSection from '@app/components/ChatSection';
-import ConversationList from '@app/components/ConversationList';
 import DatasourceViewer from '@app/components/DatasourceViewer';
 import EmptyMainChatCard from '@app/components/EmptyMainChatCard';
 import Layout from '@app/components/Layout';
-import useChat from '@app/hooks/useChat';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { ChainType } from '@chatvolt/lib/types';
 import { Source } from '@chatvolt/lib/types/document';
-import { withAuth } from '@chatvolt/lib/withAuth';
 import { AppDatasource, DatasourceType, Prisma } from '@chatvolt/prisma';
+import useChat from '@chatvolt/ui/hooks/useChat';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import { getChunk } from '../api/datasources/[id]/chunks/[chunkId]';
 import { searchRessources } from '../api/ressources';
@@ -69,10 +65,11 @@ export default function ChatPage() {
     handleLoadMoreMessages,
     setConversationId,
     conversationId: currentConversationId,
-    conversationStatus,
+    isStreaming,
     handleAbort,
     refreshConversation,
   } = useChat({
+    channel: 'dashboard',
     endpoint: `/api/chains/run`,
     queryBody: {
       filters: state.chatFilters,
@@ -209,6 +206,7 @@ export default function ChatPage() {
   };
 
   const handleCreateNewChat = () => {
+    handleAbort();
     setConversationId('');
     setState({
       selectedKnowledgeOptions: [],
@@ -302,14 +300,6 @@ export default function ChatPage() {
       component="main"
       className="MainContent"
       sx={(theme) => ({
-        px: {
-          // xs: 2,
-        },
-        pb: {
-          // xs: 2,
-          // sm: 2,
-          // md: 3,
-        },
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -360,6 +350,7 @@ export default function ChatPage() {
               userImgUrl={session?.user?.image!}
               refreshConversation={refreshConversation}
               autoFocus
+              isStreaming={isStreaming}
             />
 
             {datasourceViewId && (
@@ -392,11 +383,3 @@ ChatPage.getLayout = function getLayout(page: ReactElement) {
     </Layout>
   );
 };
-
-// export const getServerSideProps = withAuth(
-//   async (ctx: GetServerSidePropsContext) => {
-//     return {
-//       props: {},
-//     };
-//   }
-// );

@@ -15,16 +15,15 @@ import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import Input from '@app/components/Input';
-import useAgent from '@app/hooks/useAgent';
-import useStateReducer from '@app/hooks/useStateReducer';
-
 import getS3RootDomain from '@chatvolt/lib/get-s3-root-domain';
 import { RouteNames } from '@chatvolt/lib/types';
 import {
   CreateAgentSchema,
   GenerateUploadLinkRequest,
 } from '@chatvolt/lib/types/dtos';
+import useAgent from '@chatvolt/ui/hooks/useAgent';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Input from '@chatvolt/ui/Input';
 
 type Props = {};
 
@@ -173,7 +172,7 @@ function GeneralInput({}: Props) {
           </Stack>
         </Stack>
       )}
-      <Input control={control} label="Name (optional)" {...register('name')} />
+      <Input control={control} label="Name" {...register('name')} />
 
       <FormControl>
         <Input

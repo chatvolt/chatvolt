@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "version": "1.0.174",
+  "description": "Chatvolt Documentation",
+  "scripts": {
+    "dev": "mintlify dev --port 3333",
+    "check": "mintlify broken-links"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/"
+  },
+  "author": "Chatvolt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/"
+  },
+  "homepage": "https://github.com/",
+  "dependencies": {
+    "mintlify": "^4.0.139"
+  }
+}

@@ -22,27 +22,30 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   res.setHeader('Content-Type', 'text/plain');
 
   // only allow the site to be crawlable on the production deployment
-  if (process.env.VERCEL_ENV === 'production') {
-    res.write(`User-agent: *
-Allow: /
+//   if (process.env.VERCEL_ENV === 'production') {
+//     res.write(`User-agent: *
+// Allow: /
 
-Sitemap: ${host}/sitemap.xml
-Sitemap: ${host}/help/sitemap.xml
-${
-  host?.includes('chatvolt.ai')
-    ? `Sitemap: ${host}/api/tools/youtube-summary/sitemap`
-    : ''
-}
+// Sitemap: ${host}/sitemap.xml
+// ${
+//   host?.includes('chatvolt.ai')
+//     ? `Sitemap: ${host}/api/tools/youtube-summary/sitemap`
+//     : ''
+// }
 
-`);
-  } else {
-    res.write(`User-agent: *
-Disallow: /
+// `);
+//   } else {
+//     res.write(`User-agent: *
+// Disallow: /
 
-Sitemap: ${host}/sitemap.xml
-Sitemap: ${host}/help/sitemap.xml
-`);
-  }
+// Sitemap: ${host}/sitemap.xml
+// `);
+//   }
+
+  res.write(`User-agent: *
+Crawl-delay: 10
+Sitemap: https://www.chatvolt.ai/sitemap.xml`);
+
 
   res.end();
 

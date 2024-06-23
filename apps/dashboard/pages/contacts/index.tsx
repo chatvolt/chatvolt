@@ -18,8 +18,6 @@ import useSWR from 'swr';
 
 import ContactsTable from '@app/components/ContactsTable';
 import Layout from '@app/components/Layout';
-import Loader from '@app/components/Loader';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import {
   fetcher,
@@ -29,6 +27,8 @@ import {
 import { RouteNames } from '@chatvolt/lib/types';
 import { CreateMailInboxSchema } from '@chatvolt/lib/types/dtos';
 import { Form, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Loader from '@chatvolt/ui/Loader';
 
 import { getContacts } from '../api/contacts';
 

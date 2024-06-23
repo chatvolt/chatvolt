@@ -46,9 +46,9 @@ function CSLandingPage({}: Props) {
   return (
     <>
       <SEO
-        title="Resolve AI - Resolve 50% of your support tickets instantly"
-        description="Resolve AI brings a no-code platform to create custom AI chatbots trained on your data. Our solution makes customer support easy and simplifies team workflow."
-        baseUrl="https://www.resolveai.io"
+        title="Chatvolt AI: Revolutionizing Business Communication with Advanced Chatbots"
+        description="Discover Chatvolt's cutting-edge AI chatbots that transform how businesses interact and thrive. Experience the future of digital communication today!"
+        baseUrl="https://www.chatvolt.ai"
         ogImage="https://www.chatvolt.ai/api/og"
         uri="/"
       />
@@ -81,9 +81,9 @@ function CSLandingPage({}: Props) {
         dangerouslySetInnerHTML={{
           __html: `import Chatbox from 'https://cdn.jsdelivr.net/npm/@chatvolt/embeds@latest/dist/chatbox/index.js';
 
-  Chatbox.initBubble({
-    agentId: 'clq6g5cuv000wpv8iddswwvnd',
-  });`,
+            Chatbox.initBubble({
+              agentId: 'clw0wuhp6000hpbgjnpivm3ni',
+            });`,
         }}
       />
 

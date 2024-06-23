@@ -31,7 +31,6 @@ import useSWR from 'swr';
 
 import useContactsQuery from '@app/hooks/useGetContactsQuery';
 import useGetDatastoreQuery from '@app/hooks/useGetDatastoreQuery';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import formatPhoneNumber from '@chatvolt/lib/format-phone-number';
 import pagination from '@chatvolt/lib/pagination';
@@ -43,6 +42,7 @@ import {
   DatasourceType,
   Prisma,
 } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import ContactSettings from './ContactSettings';
 

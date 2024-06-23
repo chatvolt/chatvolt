@@ -5,6 +5,7 @@ import { NextApiResponse } from 'next';
 import { z } from 'zod';
 
 import { InboxTemplate, render } from '@chatvolt/emails';
+import sendTelegramMessage from '@chatvolt/integrations/whatsapp/lib/send-telegram-message';
 import sendWhatsAppMessage from '@chatvolt/integrations/whatsapp/lib/send-whatsapp-message';
 import { ApiError, ApiErrorType } from '@chatvolt/lib/api-error';
 import ConversationManager from '@chatvolt/lib/conversation';
@@ -42,7 +43,6 @@ export const sendMessage = async (
   const conversationId = req.query.conversationId as string;
   const payload = chatBodySchema.parse(req.body);
   const session = req.session;
-  let externalMessageId: string | undefined;
 
   const {
     id,
@@ -93,35 +93,73 @@ export const sendMessage = async (
           select: {
             name: true,
             picture: true,
+            customPicture: true,
+            image: true,
           },
         });
-        await CrispClient.website.sendMessageInConversation(
-          channelCredentials?.externalId, // websiteId
-          channelExternalId, // sessionId
-          {
-            type: 'text',
-            from: 'operator',
-            origin: 'chat',
-            content: payload.message,
-            user: {
-              type: 'website',
-              nickname: user?.name || 'Operator',
-              avatar: user?.picture || 'https://chatvolt.ai/logo.png',
-            },
-          }
-        );
 
-        // disable AI
-        await CrispClient.website.updateConversationMetas(
-          channelCredentials?.externalId, // websiteId
-          channelExternalId, // sessionId
-          {
-            data: {
-              aiStatus: AIStatus.disabled,
-              aiDisabledDate: new Date(),
-            },
-          }
-        );
+        const attachementCalls =
+          payload?.attachments?.map((attachement) => {
+            return CrispClient.website.sendMessageInConversation(
+              channelCredentials?.externalId, // websiteId
+              channelExternalId, // sessionId
+              {
+                type: 'file',
+                from: 'operator',
+                origin: 'chat',
+                content: {
+                  url: attachement.url,
+                  name: attachement.name,
+                  type: attachement.mimeType,
+                },
+                user: {
+                  type: 'website',
+                  nickname: user?.name || 'Operator',
+                  avatar:
+                    user?.picture ||
+                    user?.customPicture ||
+                    user?.image ||
+                    'https://chatvolt.ai/logo.png',
+                },
+              }
+            );
+          }) || [];
+
+        await Promise.all([
+          // send text content
+          CrispClient.website.sendMessageInConversation(
+            channelCredentials?.externalId, // websiteId
+            channelExternalId, // sessionId
+            {
+              type: 'text',
+              from: 'operator',
+              origin: 'chat',
+              content: payload.message,
+              user: {
+                type: 'website',
+                nickname: user?.name || 'Operator',
+                avatar:
+                  user?.picture ||
+                  user?.customPicture ||
+                  user?.image ||
+                  'https://chatvolt.ai/logo.png',
+              },
+            }
+          ),
+          // send attachements
+          ...attachementCalls,
+          // disable AI
+          CrispClient.website.updateConversationMetas(
+            channelCredentials?.externalId, // websiteId
+            channelExternalId, // sessionId
+            {
+              data: {
+                aiStatus: AIStatus.disabled,
+                aiDisabledDate: new Date(),
+              },
+            }
+          ),
+        ]);
       } catch (e) {
         console.error(e);
         throw Error(
@@ -153,6 +191,7 @@ export const sendMessage = async (
       }
       break;
     case 'website':
+    case 'form':
     case 'mail':
       if (payload.channel === 'mail' && !mailInbox) {
         throw new ApiError(ApiErrorType.NOT_FOUND);
@@ -291,6 +330,19 @@ export const sendMessage = async (
         throw Error(
           `could not send message through whatsapp ${(e as any)?.message}`
         );
+      }
+      break;
+    case 'telegram':
+      try {
+        await sendTelegramMessage({
+          message: payload.message,
+          chatId: channelExternalId!,
+          messageId: (metadata as any)?.messageId!,
+          attachments: payload.attachments!,
+          token: (channelCredentials?.config as any)?.http_token,
+        });
+      } catch (e) {
+        console.error(e);
       }
       break;
     default:

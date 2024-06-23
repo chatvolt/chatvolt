@@ -1,9 +1,13 @@
 {
   "name": "@chatvolt/embeds",
-  "version": "1.0.158",
+  "version": "1.0.218",
   "description": "Chatvolt Embeds",
   "main": "dist/chatbox/index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "rm -rf dist && mkdir -p dist && concurrently \"node esbuild.config.mjs\"",
+    "build": "rm -rf dist && mkdir -p dist && concurrently \"NODE_ENV=production node esbuild.config.mjs\"",
+    "embeds:publish": "pnpm build && npm version patch && npm publish"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chatvolt/chatvolt.git"
@@ -13,5 +17,23 @@
   "bugs": {
     "url": "https://github.com/chatvolt/chatvolt/issues"
   },
-  "homepage": "https://github.com/chatvolt/chatvolt#readme"
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/chatvolt/chatvolt#readme",
+  "dependencies": {
+    "@chatvolt/config-tailwind": "workspace:*",
+    "@chatvolt/lib": "workspace:*",
+    "@chatvolt/ui": "workspace:*",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.1",
+    "esbuild": "^0.20.0",
+    "esbuild-style-plugin": "^1.6.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "^3.3.6"
+  },
+  "devDependencies": {
+    "@chatvolt/tsconfig": "workspace:*"
+  }
 }

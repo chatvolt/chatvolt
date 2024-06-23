@@ -3,8 +3,8 @@ import { cache } from 'react';
 import React from 'react';
 
 import { SummaryPageProps } from '@chatvolt/lib/types';
+import Cta from '@chatvolt/ui/lp/cta';
 
-import Cta from '@/components/cta';
 import HeroProduct from '@/components/hero-product';
 import PromoAlert from '@/components/promo-alert';
 import LatestVideoSummaries from '@/components/youtube-summarizer/latest-summaries';
@@ -47,13 +47,14 @@ export default async function WebPageSummarizer() {
         <div className="-mt-24 mb-24">
           {/* <YoutubeSummarizerForm /> */}
 
-          <div className="px-4">
+          {/* <div className="px-4">
             <LatestVideoSummaries
               summaries={summaries || []}
               baseUrl={'/ai-news'}
               label="Latest News"
             />
-          </div>
+          </div> */}
+          
         </div>
         <Cta />
       </div>

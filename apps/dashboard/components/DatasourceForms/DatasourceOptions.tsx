@@ -24,16 +24,40 @@ type DatsourceOption = {
 
 const options: DatsourceOption[] = [
   {
+    type: DatasourceType.web_page,
+    label: 'Web Page',
+    description: 'Crawl text from a single web page',
+    icon: undefined,
+  },
+  {
     type: DatasourceType.web_site,
-    label: 'Web Site',
+    label: 'Web Site [All pages]',
     description: 'Crawl all pages of a web site',
     icon: undefined,
     isPremium: true,
   },
   {
+    type: 'file' as any,
+    label: 'File',
+    description: 'It can be: PDF, CSV, JSON, Text, PowerPoint, Word, Excel',
+    disabled: false,
+  },
+  {
+    type: DatasourceType.qa,
+    label: 'Q&A',
+    description: 'Improve Answers with explicit Q&A pairs',
+    disabled: false,
+  },
+  {
+    type: DatasourceType.text,
+    label: 'Text',
+    description: 'Paste some text',
+    icon: undefined,
+  },
+  {
     type: 'google_drive_folder' as any,
-    label: 'Google Drive™',
-    description: 'Talk to your Google Drive files',
+    label: 'Beta: Google Drive™',
+    description: 'Talk to your Google Drive files. (only for beta-testers)',
     isPremium: true,
     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Drive_icon_%282020%29.svg/1024px-Google_Drive_icon_%282020%29.svg.png?20221103153031',
   },
@@ -53,30 +77,6 @@ const options: DatsourceOption[] = [
     icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg',
     disabled: false,
     isPremium: true,
-  },
-  {
-    type: DatasourceType.qa,
-    label: 'Q&A',
-    description: 'Improve Answers with explicit Q&A pairs',
-    disabled: false,
-  },
-  {
-    type: DatasourceType.text,
-    label: 'Text',
-    description: 'Paste some text',
-    icon: undefined,
-  },
-  {
-    type: 'file' as any,
-    label: 'File',
-    description: 'It can be: PDF, CSV, JSON, Text, PowerPoint, Word, Excel',
-    disabled: false,
-  },
-  {
-    type: DatasourceType.web_page,
-    label: 'Web Page',
-    description: 'Crawl text from a single web page',
-    icon: undefined,
   },
 ];
 

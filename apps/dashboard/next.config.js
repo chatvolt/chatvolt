@@ -61,6 +61,23 @@ const nextConfig = {
         destination: '/settings/profile',
         permanent: true,
       },
+      {
+        source: '/privacy',
+        destination: 'https://docs.chatvolt.ai/privacy/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/terms',
+        destination: 'https://docs.chatvolt.ai/privacy/terms',
+        permanent: true,
+      },
+      {
+        source: '/lgpd',
+        destination: 'https://docs.chatvolt.ai/privacy/lgpd',
+        permanent: true,
+      },
+      
+
     ];
   },
   async rewrites() {
@@ -74,26 +91,55 @@ const nextConfig = {
           source: '/api/integrations/crisp/config-update',
           destination: '/api/integrations/crisp/config',
         },
+
+//----------EN:
         {
           source: '/',
           destination: '/use-cases/customer-support',
-          has: [
-            {
-              type: 'host',
-              value: 'www.resolveai.io',
-            },
-          ],
+          has: [{type: 'host', value: 'www.chatvolt.ai'}],
+        },
+        {
+          source: '/',
+          destination: '/use-cases/customer-support',
+          has: [{type: 'host', value: 'localhost'}],
+        },
+//---
+        {
+          source: '/pricing',
+          destination: '/use-cases/customer-support/pricing',
+          has: [{type: 'host', value: 'www.chatvolt.ai'}],
         },
         {
           source: '/pricing',
           destination: '/use-cases/customer-support/pricing',
-          has: [
-            {
-              type: 'host',
-              value: 'www.resolveai.io',
-            },
-          ],
+          has: [{type: 'host', value: 'localhost'}],
         },
+
+//----------BR:
+        {
+          source: '/br',
+          destination: '/use-cases/customer-support-ptbr',
+          has: [{type: 'host', value: 'www.chatvolt.ai'}],
+        },
+        {
+          source: '/br',
+          destination: '/use-cases/customer-support-ptbr',
+          has: [{type: 'host', value: 'localhost'}],
+        },
+        //---
+        {
+          source: '/br/pricing',
+          destination: '/use-cases/customer-support-ptbr/pricing',
+          has: [{type: 'host', value: 'www.chatvolt.ai'}],
+        },
+        {
+          source: '/br/pricing',
+          destination: '/use-cases/customer-support-ptbr/pricing',
+          has: [{type: 'host', value: 'localhost'}],
+        },
+//----------
+
+
         {
           source: '/sitemap.xml',
           destination: '/api/sitemaps/chatvolt',
@@ -101,26 +147,6 @@ const nextConfig = {
             {
               type: 'host',
               value: 'www.chatvolt.ai',
-            },
-          ],
-        },
-        {
-          source: '/sitemap.xml',
-          destination: '/api/sitemaps/chatbotgpt',
-          has: [
-            {
-              type: 'host',
-              value: 'www.chatbotgpt.ai',
-            },
-          ],
-        },
-        {
-          source: '/sitemap.xml',
-          destination: '/api/sitemaps/resolveai',
-          has: [
-            {
-              type: 'host',
-              value: 'www.resolveai.io',
             },
           ],
         },
@@ -136,33 +162,27 @@ const nextConfig = {
           source: '/api/tools/youtube-summary/sitemap/:slug(.*).xml',
           destination: '/api/tools/youtube-summary/sitemap/:slug',
         },
-        {
-          source: '/blog',
-          destination: 'https://chatvolt-blog.vercel.app/blog',
-        },
-        {
-          source: '/blog/:path*',
-          destination: 'https://chatvolt-blog.vercel.app/blog/:path*',
-        },
+        // {
+        //   source: '/blog',
+        //   destination: 'https://chatvolt-blog.vercel.app/blog',
+        // },
+        // {
+        //   source: '/blog/:path*',
+        //   destination: 'https://chatvolt-blog.vercel.app/blog/:path*',
+        // },
+
         {
           source: '/help',
-          destination: 'https://help-center-wine.vercel.app/help',
+          destination: 'https://docs.chatvolt.ai/',
         },
         {
           source: '/help/:path*',
-          destination: 'https://help-center-wine.vercel.app/help/:path*',
+          destination: 'https://docs.chatvolt.ai/:path*',
         },
+
         {
           source: '/@:path',
           destination: '/agents/@:path/standalone',
-        },
-        {
-          source: '/privacy',
-          destination: '/privacy.pdf',
-        },
-        {
-          source: '/terms',
-          destination: '/terms.pdf',
         },
         {
           source: '/.well-known/ai-plugin.json',

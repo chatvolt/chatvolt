@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "ModelName" AS ENUM ('gpt_3_5_turbo', 'gpt_4');
+CREATE TYPE "ModelName" AS ENUM ('gpt_3_5_turbo');
 
 -- AlterTable
 ALTER TABLE "agents" DROP COLUMN "model_name",

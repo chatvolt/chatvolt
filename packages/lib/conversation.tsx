@@ -196,6 +196,7 @@ export default class ConversationManager {
             attachments: {
               createMany: {
                 data: (attachments || [])?.map((attachment) => ({
+                  conversationId: this.conversationId,
                   ...attachment,
                 })),
               },
@@ -292,38 +293,52 @@ export default class ConversationManager {
         : {}),
     } satisfies Prisma.ConversationUpdateInput;
 
+    // Suponha que organizationId sempre exista e seja um identificador válido.
+    if (!this.organizationId) {
+      throw new Error('Organization ID is missing or invalid');
+    }
+
+    // Determine qual chave usar com base na disponibilidade e valide antes de usar.
+    const whereClause = this.channelExternalId
+      ? { organizationId: this.organizationId, channelExternalId: this.channelExternalId }
+      : { organizationId: this.organizationId, id: this.conversationId };
+
+    if (!whereClause.channelExternalId && !whereClause.id) {
+      throw new Error('Neither channelExternalId nor conversationId is available for the upsert operation');
+    }
+
+    console.log('zap>>> this.conversationId -------->', this.conversationId );
+    console.log('zap>>> this.channel -------->', this.channel );
+    console.log('zap>>> this.channelExternalId -------->', this.channelExternalId );
+    console.log('zap>>> this.organizationId -------->', this.organizationId );
+
+
     return prisma.conversation.upsert({
-      where: {
-        organizationId: this.organizationId!,
-        ...(this.channelExternalId
-          ? {
-              channelExternalId: this.channelExternalId,
-            }
-          : {
-              id: this.conversationId,
-            }),
-      },
+      where: whereClause,
       create: {
-        ...(ConversationPayload as Prisma.ConversationCreateInput),
+        // Dados para criação, assegurando que todos os campos necessários estão incluídos.
         id: this.conversationId,
         channel: this.channel,
         channelExternalId: this.channelExternalId,
         organization: {
-          connect: {
-            id: this.organizationId!,
-          },
+          connect: { id: this.organizationId },
         },
+        // Incluir outros campos de 'ConversationPayload' necessários.
+        ...(ConversationPayload as Prisma.ConversationCreateInput),
       },
       update: {
+        // Dados para atualização.
         ...ConversationPayload,
       },
       include: {
         messages: {
-          where: {
-            id: messageId,
-          },
+          where: { id: messageId },
         },
       },
     });
+
+
+
+
   }
 }

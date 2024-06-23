@@ -14,10 +14,9 @@ import axios from 'axios';
 import router, { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
-import useAgent from '@app/hooks/useAgent';
-import useStateReducer from '@app/hooks/useStateReducer';
-
 import { RouteNames } from '@chatvolt/lib/types';
+import useAgent from '@chatvolt/ui/hooks/useAgent';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import AgentGeneralSettingsTab from './AgentGeneralSettingsTab';
 import AgentModelSettingsTab from './AgentModelSettingsTab';

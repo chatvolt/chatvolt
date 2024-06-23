@@ -10,8 +10,6 @@ import React, { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
-import Input from '@app/components/Input';
-
 import config from '@chatvolt/lib/config';
 import {
   DatasourceBaseSchema,
@@ -19,6 +17,7 @@ import {
 } from '@chatvolt/lib/types/models';
 import { QAConfig } from '@chatvolt/lib/types/models';
 import { DatasourceType } from '@chatvolt/prisma';
+import Input from '@chatvolt/ui/Input';
 
 import Base from './Base';
 import type { DatasourceFormProps } from './types';

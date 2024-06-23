@@ -1,7 +1,8 @@
 import Script from 'next/script';
 
+import Cta from '@chatvolt/ui/lp/cta';
+
 import Clients from '@/components/clients';
-import Cta from '@/components/cta';
 import Features01 from '@/components/features-01';
 import Features02 from '@/components/features-02';
 import Features03 from '@/components/features-03';
@@ -19,7 +20,7 @@ export default function Home() {
           __html: `import Chatbox from 'https://cdn.jsdelivr.net/npm/@chatvolt/embeds@latest/dist/chatbox/index.js';
           
           Chatbox.initBubble({
-            agentId: 'clq6g5cuv000wpv8iddswwvnd',
+            agentId: 'clw0wuhp6000hpbgjnpivm3ni',
           });`,
         }}
       />

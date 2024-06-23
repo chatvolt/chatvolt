@@ -9,14 +9,14 @@ export default function CSPricingPage() {
     <>
       <SEO
         title="Plans for Teams of All Sizes"
-        description="Choose an affordable plan with Chatvolt. Our offerings include Discover, Startup, Pro, and Enterprise levels, each packed with features for engaging your audience, creating customer loyalty, and driving sales. Free plan included!"
+        description="Choose an affordable plan with Chatvolt. Our offerings include Discover, Growth, Pro, and Enterprise levels, each packed with features for engaging your audience, creating customer loyalty, and driving sales. Free plan included!"
         uri={'/pricing'}
       />
       <Header />
       <main className="flex flex-col min-h-full mb-auto bg-black">
         <PricingSection />
 
-        <PartnerLogos />
+        {/*<PartnerLogos />*/}
       </main>
       <Footer disableProductColumn />
     </>

@@ -32,7 +32,23 @@ import { prisma } from '@chatvolt/prisma/client';
             },
           },
         },
+
+        NOT: { //Alex, IA-BrasilAI, FSTech, AmchamAI, MKTSeven, Demonstrações e Herreira
+          id: {
+            in: ['clvw692rf000bpbr8oz12ffs3', 'clvw7o7h9000npbr83zu1sckt', 'clvwa2fmq0019pbr8tpuagwvs', 'clw6lt2pw0010pb9q4e9clq6a', 'clwasftlm001k143gmjqx2ap6', 'clwtgm5fr0003q9d52nd26f84', 'clx9n1jsc000a10avjvx8ervl'],
+          },
+        },
+
       },
+
+      // datastore: { //exclui: Endeavor e IA-BrasilAI
+      //   NOT: {
+      //     id: {
+      //       in: ['clw0m77tc0001qhga9dczercq', 'clvy7z66f001dpbyd93xpjd0p', ],
+      //     },
+      //   },
+      // },
+
     },
     select: {
       id: true,

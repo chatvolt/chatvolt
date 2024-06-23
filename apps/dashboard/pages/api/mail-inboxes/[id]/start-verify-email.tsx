@@ -69,11 +69,11 @@ export const startVerifyEmail = async (
 
   await mailer.sendMail({
     from: {
-      name: 'Chatvolt',
+      name: 'Chatvolt AI',
       address: process.env.EMAIL_FROM!,
     },
     to: item.customEmail,
-    subject: `Custom Email Verification`,
+    subject: `📧 Custom Email Verification`,
     html: render(
       <GenericTemplate
         title={'Custom Email Verification'}

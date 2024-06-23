@@ -50,11 +50,11 @@ const createReport = async (org: Organization) => {
 
   await mailer.sendMail({
     from: {
-      name: 'Chatvolt',
+      name: 'Chatvolt AI',
       address: process.env.EMAIL_FROM!,
     },
     to: ownerEmail,
-    subject: `🎯 Your Daily Leads`,
+    subject: `👨‍👨‍👧‍👦 Your Daily Leads`,
     attachments: [
       {
         filename: 'leads.csv',

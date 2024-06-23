@@ -11,51 +11,17 @@ import cors from '@chatvolt/lib/middlewares/cors';
 import pipe from '@chatvolt/lib/middlewares/pipe';
 import rateLimit from '@chatvolt/lib/middlewares/rate-limit';
 import roles from '@chatvolt/lib/middlewares/roles';
-import { ToolSchema, UpdateAgentSchema } from '@chatvolt/lib/types/dtos';
+import {
+  agentInclude,
+  ToolSchema,
+  UpdateAgentSchema,
+} from '@chatvolt/lib/types/dtos';
 import { AppNextApiRequest } from '@chatvolt/lib/types/index';
 import validate from '@chatvolt/lib/validate';
 import { AgentVisibility, MembershipRole, Prisma } from '@chatvolt/prisma';
 import { prisma } from '@chatvolt/prisma/client';
 
 const handler = createLazyAuthHandler();
-
-export const agentInclude: Prisma.AgentInclude = {
-  organization: {
-    select: {
-      id: true,
-      subscriptions: {
-        select: {
-          id: true,
-        },
-        where: {
-          status: {
-            in: ['active'],
-          },
-        },
-      },
-    },
-  },
-  tools: {
-    include: {
-      datastore: {
-        include: {
-          _count: {
-            select: {
-              datasources: {
-                where: {
-                  status: {
-                    in: ['running', 'pending'],
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      form: true,
-    },
-  },
-};
 
 export const getAgent = async (
   req: AppNextApiRequest,
@@ -78,6 +44,18 @@ export const getAgent = async (
     agent?.organizationId !== session?.organization?.id
   ) {
     throw new ApiError(ApiErrorType.UNAUTHORIZED);
+  }
+
+  if (
+    !session?.organization?.id ||
+    agent?.organizationId !== session?.organization?.id
+  ) {
+    // remove sentitive data from agent (http tool may store credentials)
+    agent?.tools?.forEach((tool) => {
+      if (tool.type === 'http') {
+        tool.config = {};
+      }
+    });
   }
 
   return agent;
@@ -192,6 +170,11 @@ export const updateAgent = async (
           },
           data: {
             ...(tool?.type === 'http'
+              ? {
+                  config: tool.config,
+                }
+              : {}),
+            ...(tool?.type === 'form'
               ? {
                   config: tool.config,
                 }

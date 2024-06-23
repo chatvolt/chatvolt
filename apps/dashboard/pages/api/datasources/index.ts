@@ -14,7 +14,7 @@ import {
   respond,
 } from '@chatvolt/lib/createa-api-handler';
 import { DatastoreManager } from '@chatvolt/lib/datastores';
-import generateFunId from '@chatvolt/lib/generate-fun-id';
+import generateIdByEmail from '@chatvolt/lib/generate-id-by-email';
 import getS3RootDomain from '@chatvolt/lib/get-s3-root-domain';
 import guardDataProcessingUsage from '@chatvolt/lib/guard-data-processing-usage';
 import runMiddleware from '@chatvolt/lib/run-middleware';
@@ -98,7 +98,7 @@ export const upsertDatasource = async (
       name:
         (req.body as any)?.fileName ||
         file?.originalname ||
-        `${generateFunId()}.${mime.extension(file.mimetype)}`,
+        `${generateIdByEmail(session?.user?.email)}.${mime.extension(file.mimetype)}`,
       config: {
         mime_type: file?.mimetype,
         custom_id: req.body?.custom_id,
@@ -228,7 +228,7 @@ export const upsertDatasource = async (
     create: {
       id,
       type: data.type,
-      name: data.name || generateFunId(),
+      name: data.name || generateIdByEmail(session?.user?.email),
       config: {
         ...data.config,
         tags,

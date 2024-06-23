@@ -2,13 +2,12 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
-import Input from '@app/components/Input';
-
 import {
   DatasourceSchema,
   DatasourceWebPage,
 } from '@chatvolt/lib/types/models';
 import { DatasourceType } from '@chatvolt/prisma';
+import Input from '@chatvolt/ui/Input';
 
 import Base from './Base';
 import type { DatasourceFormProps } from './types';

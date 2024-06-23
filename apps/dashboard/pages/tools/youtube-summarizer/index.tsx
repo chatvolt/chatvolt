@@ -27,7 +27,6 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { z } from 'zod';
 
-import Input from '@app/components/Input';
 import { Footer } from '@app/components/landing-page/Footer';
 import PoweredByCard from '@app/components/PoweredByCard';
 import SEO from '@app/components/SEO';
@@ -43,6 +42,7 @@ import { SummaryPageProps } from '@chatvolt/lib/types';
 import { YoutubeSummarySchema } from '@chatvolt/lib/types/dtos';
 import { YOUTUBE_VIDEO_URL_RE } from '@chatvolt/lib/youtube-api/lib';
 import { Prisma } from '@chatvolt/prisma';
+import Input from '@chatvolt/ui/Input';
 
 import { getLatestVideos } from '../../api/tools/youtube-summary';
 
@@ -164,7 +164,7 @@ export default function Youtube() {
             </Stack>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex-wrap items-center space-y-2 min-w-full md:flex md:space-y-0 md:space-x-2"
+              className="flex-wrap items-center min-w-full space-y-2 md:flex md:space-y-0 md:space-x-2"
             >
               <Stack spacing={2} sx={{ width: '100%', alignItems: 'center' }}>
                 <Stack sx={{ width: '100%' }} spacing={1}>
@@ -228,7 +228,7 @@ export default function Youtube() {
             </form>
           </Stack>
 
-          {(getLatestVideosQuery?.data?.length || 0) > 0 && (
+          {/* {(getLatestVideosQuery?.data?.length || 0) > 0 && (
             <Stack sx={{ mt: 10, width: '100%' }} spacing={2}>
               <Typography level="body-lg" sx={{ textAlign: 'center' }}>
                 Latest Video Summaries
@@ -310,7 +310,7 @@ export default function Youtube() {
                 </Link>
               </Stack>
             </Stack>
-          )}
+          )} */}
 
           <PoweredByCard
             sx={{

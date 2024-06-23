@@ -5,12 +5,18 @@ import IconButton, { iconButtonClasses } from '@mui/joy/IconButton';
 import Sheet from '@mui/joy/Sheet';
 import { ColorPaletteProp } from '@mui/joy/styles';
 import Table from '@mui/joy/Table';
+import Tooltip from '@mui/joy/Tooltip'; // Importe Tooltip
 import Typography from '@mui/joy/Typography';
 import Link from 'next/link';
 import * as React from 'react';
 
 import { RouteNames } from '@chatvolt/lib/types';
-import { Datastore } from '@chatvolt/prisma';
+import { Datastore as PrismaDatastore } from '@chatvolt/prisma';
+
+interface Datastore extends PrismaDatastore {
+  agentCount?: number;
+  agentNames?: string;
+}
 
 export default function DatastoreTable({ items }: { items: Datastore[] }) {
   return (
@@ -41,9 +47,8 @@ export default function DatastoreTable({ items }: { items: Datastore[] }) {
             <tr>
               <th style={{ width: 120, padding: 12 }}>Name</th>
               <th style={{ width: 120, padding: 12 }}>Nb Datasources</th>
-              {/* <th style={{ width: 220, padding: 12 }}>Provider</th> */}
               <th style={{ width: 220, padding: 12 }}>Visibility</th>
-              {/* <th style={{ width: 120, padding: 12 }}>Subscription</th> */}
+              <th style={{ width: 120, padding: 12 }}>In Use</th>
               <th style={{ width: 160, padding: 12 }}> </th>
             </tr>
           </thead>
@@ -57,7 +62,6 @@ export default function DatastoreTable({ items }: { items: Datastore[] }) {
                         className="truncate hover:underline"
                         fontWeight={'bold'}
                         color="primary"
-                        // fontSize={'md'}
                       >
                         {datastore.name}
                       </Typography>
@@ -69,18 +73,6 @@ export default function DatastoreTable({ items }: { items: Datastore[] }) {
                     {(datastore as any)?._count?.datasources}
                   </Typography>
                 </td>
-                {/* <td>
-                  <Chip
-                    variant="soft"
-                    size="sm"
-                    sx={{
-                      textTransform: 'capitalize2',
-                    }}
-                    color={'neutral'}
-                  >
-                    qdrant
-                  </Chip>
-                </td> */}
                 <td>
                   <Chip
                     variant="soft"
@@ -94,6 +86,17 @@ export default function DatastoreTable({ items }: { items: Datastore[] }) {
                   >
                     {datastore.visibility}
                   </Chip>
+                </td>
+                <td>
+                  <Tooltip title={datastore.agentNames || 'No agents'}>
+                    <Chip
+                      variant="soft"
+                      size="sm"
+                      color={datastore.agentCount ? 'success' : 'danger'}
+                    >
+                      {datastore.agentCount ? `${datastore.agentCount} agent${datastore.agentCount > 1 ? 's' : ''}` : 'Unused'}
+                    </Chip>
+                  </Tooltip>
                 </td>
                 <td>
                   <Link

@@ -38,13 +38,13 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import Layout from '@app/components/Layout';
 import UsageLimitModal from '@app/components/UsageLimitModal';
 import useGetDatastoreQuery from '@app/hooks/useGetDatastoreQuery';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { XPBNPLabels } from '@chatvolt/lib/config';
 import guardDataProcessingUsage from '@chatvolt/lib/guard-data-processing-usage';
 import { RouteNames } from '@chatvolt/lib/types';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { prisma } from '@chatvolt/prisma/client';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 const schemaTweets = {
   type: 'object',

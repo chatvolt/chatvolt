@@ -26,7 +26,6 @@ import { toast } from 'react-hot-toast';
 import useSWR from 'swr';
 import { z } from 'zod';
 
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getServiceProviders } from '@app/pages/api/service-providers';
 
 import { getNotebooks } from '@chatvolt/integrations/notion/api/notebooks';
@@ -35,6 +34,7 @@ import {
   DatasourceNotion,
   DatasourceSchema,
 } from '@chatvolt/lib/types/models';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import Base from './Base';
 import { DatasourceFormProps } from './types';
@@ -141,7 +141,8 @@ function Nested() {
             />
           </FormControl>
 
-          <Alert color="warning" startDecorator={<BugReportRoundedIcon />}>
+
+          {/* <Alert color="warning" startDecorator={<BugReportRoundedIcon />}>
             {`Can't see your notebooks? There is currently an issue with the Notion API that requires you to manually link a page to our integration. For guidance on how to do this, please watch the video below.`}
           </Alert>
           <Box
@@ -152,7 +153,9 @@ function Nested() {
             }}
             autoPlay
             controls
-          />
+          /> */}
+
+
         </>
       )}
     </>

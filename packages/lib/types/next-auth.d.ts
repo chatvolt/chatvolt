@@ -51,6 +51,10 @@ declare global {
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
       >;
+      'stripe-buy-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
     }
   }
 }

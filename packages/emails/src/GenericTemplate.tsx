@@ -57,7 +57,7 @@ type Props = {
 //       id: '2',
 //       text: 'How can I help you?',
 //       from: 'human',
-//       fromName: 'Georges',
+//       fromName: 'Marcos',
 //       fromPicture:
 //         'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
 //     },
@@ -77,7 +77,7 @@ export const GenericTemplate = (props: Props) => {
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="200"
                 height="auto"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>
@@ -111,7 +111,7 @@ export const GenericTemplate = (props: Props) => {
                               src={`${message?.fromPicture}`}
                               width="30"
                               height="30"
-                              alt="Vercel"
+                              alt="Chatvolt AI"
                               className="rounded-full"
                             />
                           </Column>

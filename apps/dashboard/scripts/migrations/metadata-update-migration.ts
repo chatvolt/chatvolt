@@ -40,9 +40,9 @@ import { prisma } from '@chatvolt/prisma/client';
 
   const batches = arraySplitChunks(ids, 1000);
 
-  console.log('DATABASE_URL', process.env.DATABASE_URL);
-  console.log('QDRANT_API_URL', process.env.QDRANT_API_URL);
-  console.log(`getS3RootDomain()`, getS3RootDomain());
+  //console.log('DATABASE_URL', process.env.DATABASE_URL);
+  //console.log('QDRANT_API_URL', process.env.QDRANT_API_URL);
+  //console.log(`getS3RootDomain()`, getS3RootDomain());
   console.log(`${ids.length} Datasources to process`);
   console.log(`${batches.length} Batch to process`);
 

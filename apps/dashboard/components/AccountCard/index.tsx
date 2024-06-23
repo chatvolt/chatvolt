@@ -23,7 +23,6 @@ import Select from '@mui/joy/Select';
 import Stack from '@mui/joy/Stack';
 import { SxProps } from '@mui/joy/styles/types';
 import Typography from '@mui/joy/Typography';
-import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -35,15 +34,12 @@ import useProduct, { ProductType } from '@app/hooks/useProduct';
 import { getOrganizations } from '@app/pages/api/organizations';
 
 import accountConfig from '@chatvolt/lib/account-config';
+import dayjs from '@chatvolt/lib/date';
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { RouteNames } from '@chatvolt/lib/types';
 import { Prisma, SubscriptionPlan } from '@chatvolt/prisma';
 
-import ColorSchemeToggle from '../Layout/ColorSchemeToggle';
-
 import SelectOrganizationInput from './SelectOrganizationInput';
-
-dayjs.extend(relativeTime);
 
 type RenderOrgOptionProps = {
   name: string;
@@ -171,7 +167,7 @@ function AccountCard({}: Props) {
                 accountConfig?.[session?.data?.organization?.currentPlan!]
                   ?.limits?.maxAgentsQueries
               }
-              label={'Queries'}
+              label={'Credits'}
             />
             <UsageGauge
               value={

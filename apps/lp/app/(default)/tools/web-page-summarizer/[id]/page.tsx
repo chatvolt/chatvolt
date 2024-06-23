@@ -7,8 +7,8 @@ import slugify from '@chatvolt/lib/slugify';
 import { SummaryPageProps, WebPageSummary } from '@chatvolt/lib/types';
 import { parseId } from '@chatvolt/lib/web-page-summarizer';
 import prisma from '@chatvolt/prisma/client';
+import Cta from '@chatvolt/ui/lp/cta';
 
-import Cta from '@/components/cta';
 import Summary from '@/components/web-page-summarizer/summary';
 
 type Props = {

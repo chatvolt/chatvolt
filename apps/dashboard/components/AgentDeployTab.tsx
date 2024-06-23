@@ -12,11 +12,11 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
-import useAgent from '@app/hooks/useAgent';
 import useModal from '@app/hooks/useModal';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { AgentVisibility, DatastoreVisibility } from '@chatvolt/prisma';
+import useAgent from '@chatvolt/ui/hooks/useAgent';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import SettingCard from './ui/SettingCard';
 import UsageLimitModal from './UsageLimitModal';
@@ -76,6 +76,13 @@ const WhatsAppSettings = dynamic(
   }
 );
 
+const TelegramSettings = dynamic(
+  () => import('@app/components/TelegramSettings'),
+  {
+    ssr: false,
+  }
+);
+
 type Props = {
   agentId: string;
 };
@@ -95,6 +102,7 @@ function AgentDeployTab(props: Props) {
   const standalonePageModal = useModal();
   const zendeskModal = useModal();
   const whatsappModal = useModal();
+  const telegramModal = useModal();
   const shopifyModal = useModal();
 
   const { query, mutation } = useAgent({
@@ -115,8 +123,7 @@ function AgentDeployTab(props: Props) {
         disableSubmitButton
         cardProps={{
           sx: {
-            maxWidth: 'md',
-            mx: 'auto',
+            maxWidth: '100%',
           },
         }}
       >
@@ -128,7 +135,7 @@ function AgentDeployTab(props: Props) {
         >
           {[
             {
-              name: 'Web / Bubble - Embed in a chat bubble',
+              name: 'Chat bubble [HTML] embedded on your website',
               // icon: <LanguageRoundedIcon sx={{ fontSize: 32 }} />,
               icon: (
                 <IconButton
@@ -148,16 +155,16 @@ function AgentDeployTab(props: Props) {
               publicAgentRequired: true,
             },
             {
-              name: 'Web / Standard - Embed in a container on your website',
-              icon: <Typography sx={{ fontSize: 32 }}>📺</Typography>,
+              name: 'Chat box [HTML] embedded within a container on your website',
+              icon: <Typography sx={{ fontSize: 32 }}>📲</Typography>,
               action: () => {
                 iframeWidgetModal.open();
               },
               publicAgentRequired: true,
             },
             {
-              name: 'Web / Standalone - No-code web page hosted on Chatvolt',
-              icon: <Typography sx={{ fontSize: 32 }}>💅</Typography>,
+              name: 'Web URL [No-code] page hosted on Chatvolt',
+              icon: <Typography sx={{ fontSize: 32 }}>🌎</Typography>,
               action: () => {
                 standalonePageModal.open();
               },
@@ -165,7 +172,7 @@ function AgentDeployTab(props: Props) {
             },
             {
               hidden: false,
-              name: 'WhatsApp',
+              name: 'WhatsApp ⚡',
               icon: (
                 <Image
                   className="w-8"
@@ -182,7 +189,7 @@ function AgentDeployTab(props: Props) {
             },
             {
               hidden: false,
-              name: 'Shopify',
+              name: 'Shopify ⚡',
               icon: (
                 <Image
                   className="w-8"
@@ -197,75 +204,95 @@ function AgentDeployTab(props: Props) {
               },
               isPremium: true,
             },
-            {
-              name: 'Zapier',
-              isPremium: true,
-              icon: (
-                <img
-                  className="w-8"
-                  src="https://images.ctfassets.net/lzny33ho1g45/6YoKV9RS3goEx54iFv96n9/78100cf9cba971d04ac52d927489809a/logo-symbol.png"
-                  alt="zapier logo"
-                ></img>
-              ),
+            // {
+            //   name: 'Zapier ⚡',
+            //   isPremium: true,
+            //   icon: (
+            //     <img
+            //       className="w-8"
+            //       src="https://images.ctfassets.net/lzny33ho1g45/6YoKV9RS3goEx54iFv96n9/78100cf9cba971d04ac52d927489809a/logo-symbol.png"
+            //       alt="zapier logo"
+            //     ></img>
+            //   ),
 
-              action: () => {
-                window.open(
-                  'https://zapier.com/apps/chatvolt/integrations',
-                  '_blank'
-                );
-              },
-            },
+            //   action: () => {
+            //     window.open(
+            //       'https://zapier.com/apps/chatvolt/integrations',
+            //       '_blank'
+            //     );
+            //   },
+            // },
             {
-              name: 'Slack',
+              hidden: false,
+              name: 'Telegram ⚡',
               icon: (
                 <Image
                   className="w-8"
-                  src="/shared/images/logos/slack.png"
+                  src="/integrations/telegram/icon.svg"
                   width={100}
                   height={100}
-                  alt="slack logo"
-                ></Image>
-              ),
-              isPremium: true,
-              action: () => {
-                setState({ isSlackModalOpen: true });
-              },
-            },
-            {
-              name: 'Crisp',
-              isPremium: true,
-              icon: (
-                <Image
-                  className="w-20"
-                  src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Logo_de_Crisp.svg"
-                  width={20}
-                  height={20}
-                  alt="crisp logo"
-                ></Image>
-              ),
-              action: () => {
-                setState({ isCrispModalOpen: true });
-              },
-            },
-            {
-              name: 'WordPress',
-              icon: (
-                <Image
-                  className="w-8"
-                  src="https://upload.wikimedia.org/wikipedia/commons/0/09/Wordpress-Logo.svg"
-                  width={100}
-                  height={100}
-                  alt="Wordpress Logo"
+                  alt="Telegram Logo"
                 />
               ),
-              action: () => {
-                window.open(
-                  'https://wordpress.com/plugins/chatvolt',
-                  '_blank'
-                );
+              action: async () => {
+                telegramModal.open();
               },
-              publicAgentRequired: true,
+              isPremium: true,
             },
+            // {
+            //   name: 'Slack ⚡',
+            //   icon: (
+            //     <Image
+            //       className="w-8"
+            //       src="/shared/images/logos/slack.png"
+            //       width={100}
+            //       height={100}
+            //       alt="slack logo"
+            //     ></Image>
+            //   ),
+            //   isPremium: true,
+            //   action: () => {
+            //     setState({ isSlackModalOpen: true });
+            //   },
+            // },
+            
+            // {
+            //   name: 'Crisp ⚡',
+            //   isPremium: true,
+            //   icon: (
+            //     <Image
+            //       className="w-20"
+            //       src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Logo_de_Crisp.svg"
+            //       width={20}
+            //       height={20}
+            //       alt="crisp logo"
+            //     ></Image>
+            //   ),
+            //   action: () => {
+            //     setState({ isCrispModalOpen: true });
+            //   },
+            // },
+
+            // {
+            //   name: 'WordPress',
+            //   icon: (
+            //     <Image
+            //       className="w-8"
+            //       src="https://upload.wikimedia.org/wikipedia/commons/0/09/Wordpress-Logo.svg"
+            //       width={100}
+            //       height={100}
+            //       alt="Wordpress Logo"
+            //     />
+            //   ),
+            //   action: () => {
+            //     window.open(
+            //       'https://wordpress.com/plugins/chatvolt',
+            //       '_blank'
+            //     );
+            //   },
+            //   publicAgentRequired: true,
+            // },
+
             // {
             //   name: 'Zendesk',
             //   isPremium: false,
@@ -413,16 +440,31 @@ function AgentDeployTab(props: Props) {
             <StandalonePageWidgetSettings agentId={query?.data?.id!} />
           </standalonePageModal.component>
 
-          {/* <zendeskModal.component
-            title="Zendesk"
+          <telegramModal.component
+            title={
+              <Typography
+                startDecorator={
+                  <Image
+                    className="w-6"
+                    src="/integrations/telegram/icon.svg"
+                    width={100}
+                    height={100}
+                    alt="Telegram Logo"
+                  />
+                }
+              >
+                Telegram
+              </Typography>
+            }
             dialogProps={{
               sx: {
                 maxWidth: 'sm',
+                height: 'auto',
               },
             }}
           >
-            <ZendeskSettings agentId={props.agentId} />
-          </zendeskModal.component> */}
+            <TelegramSettings agentId={props.agentId} />
+          </telegramModal.component>
 
           <whatsappModal.component
             title={

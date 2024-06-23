@@ -1,0 +1,203 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Chatvolt AI - Connect custom data to large language models",
+  "logo": {
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#6132A9",
+    "light": "#C69EFF",
+    "dark": "#6132A9"
+  },
+  "topbarLinks": [
+    {
+      "name": "Home",
+      "url": "https://chatvolt.ai/"
+    },
+    {
+      "name": "Chat",
+      "url": "https://www.chatvolt.ai/@help"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Sign In",
+    "url": "https://app.chatvolt.ai/auth/signin"
+  },
+  "anchors": [
+    {
+      "name": "Agent",
+      "icon": "hat-wizard",
+      "url": "agent"
+    },
+    {
+      "name": "Datastore",
+      "icon": "brain",
+      "url": "datastore"
+    },
+    {
+      "name": "Form",
+      "icon": "table-list",
+      "url": "form"
+    },
+    {
+      "name": "Integrations",
+      "icon": "puzzle-piece",
+      "url": "integrations"
+    },
+    {
+      "name": "Widgets",
+      "icon": "html5",
+      "url": "widgets"
+    },
+    {
+      "name": "Developers API",
+      "icon": "rectangle-terminal",
+      "url": "api-reference"
+    },
+    {
+      "name": "Terms & Privacy",
+      "icon": "shield-halved",
+      "url": "privacy"
+    },
+    {
+      "name": "support@chatvolt.ai",
+      "icon": "comment-question",
+      "url": "mailto:support@chatvolt.ai"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Overview",
+      "pages": ["introduction", "platform"]
+    },
+    {
+      "group": "Agent",
+      "pages": [
+        "agent/get-started",
+        {
+          "group": "Tools",
+          "pages": [
+            "agent/tools/quick-start",
+            "agent/tools/datastore-tool",
+            "agent/tools/http-tool",
+            "agent/tools/form-tool",
+            "agent/tools/request-human-tool",
+            "agent/tools/mark-as-resolved-tool",
+            "agent/tools/lead-generation-tool"
+          ]
+        },
+        "agent/human-handoff",
+        "agent/fine-tuning",
+        "agent/conversation-file-upload",
+        "agent/answer-sources",
+        "agent/message-suggestions",
+        "agent/optimize-ai-answers",
+        "agent/rate-limit",
+        "agent/debug"
+      ]
+    },
+    {
+      "group": "Datastore",
+      "pages": ["datastore/get-started"]
+    },
+    {
+      "group": "Form",
+      "pages": ["form/get-started"]
+    },
+    {
+      "group": "Integration",
+      "pages": [
+        {
+          "group": "🧠 Train With",
+          "pages": ["integrations/google-drive"]
+        },
+        {
+          "group": "🚀 Install On",
+          "pages": [
+            "integrations/whatsapp",
+            "integrations/telegram"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Chatvolt API",
+      "pages": ["api-reference/authentication"]
+    },
+
+    {
+      "group": "Widgets",
+      "pages": [
+        {
+          "group": "Chatbot",
+          "pages": [
+            "widgets/chatbot/bubble",
+            "widgets/chatbot/standard",
+            "widgets/chatbot/reference"
+          ]
+        },
+        {
+          "group": "Form",
+          "pages": [
+            "widgets/form/hosted-form",
+            "widgets/form/standard",
+            "widgets/form/usage-with-chatbot",
+            "widgets/form/fields",
+            "widgets/form/reference"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Endpoints",
+      "pages": [
+        "api-reference/endpoint/agents/query",
+        "api-reference/endpoint/agents/create",
+        "api-reference/endpoint/agents/get",
+        "api-reference/endpoint/agents/update",
+        "api-reference/endpoint/agents/delete",
+        "api-reference/endpoint/datasources/create",
+        "api-reference/endpoint/datasources/get",
+        "api-reference/endpoint/datasources/delete",
+        "api-reference/endpoint/datastores/query",
+        "api-reference/endpoint/datastores/create",
+        "api-reference/endpoint/datastores/get",
+        "api-reference/endpoint/datastores/update",
+        "api-reference/endpoint/datastores/delete"
+      ]
+    },
+    {
+      "group": "External Integrations",
+      "pages": ["integrations/langchain"]
+    },
+    {
+      "group": "Terms & Privacy",
+      "pages": [
+        "privacy/lgpd",
+        "privacy/br-lgpd",
+        "privacy/cookie-policy",
+        "privacy/br-cookie-policy",
+        "privacy/privacy-policy",
+        "privacy/br-privacy-policy",
+        "privacy/terms",
+        "privacy/br-terms"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/chatvolt",
+    "instagram": "https://www.instagram.com/chatvolt",
+    "youtube": "http://www.youtube.com/channel/UCcykx3LviF5onaiM7_hKZNA?sub_confirmation=1",
+    "linkedin": "https://www.linkedin.com/company/chatvolt"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "seo": {
+    "indexHiddenPages": true
+  }
+}

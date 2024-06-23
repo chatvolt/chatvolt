@@ -22,6 +22,10 @@ const nextConfig = {
   ],
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
+    serverComponentsExternalPackages: [
+      'puppeteer-core',
+      '@sparticuz/chromium-min',
+    ],
   },
   images: {
     remotePatterns: [
@@ -113,30 +117,30 @@ const nextConfig = {
         //   source: '/api/tools/youtube-summary/sitemap/:slug(.*).xml',
         //   destination: '/api/tools/youtube-summary/sitemap/:slug',
         // },
-        {
-          source: '/blog',
-          destination: 'https://chatvolt-blog.vercel.app/blog',
-        },
-        {
-          source: '/blog/:path*',
-          destination: 'https://chatvolt-blog.vercel.app/blog/:path*',
-        },
+        // {
+        //   source: '/blog',
+        //   destination: 'https://chatvolt-blog.vercel.app/blog',
+        // },
+        // {
+        //   source: '/blog/:path*',
+        //   destination: 'https://chatvolt-blog.vercel.app/blog/:path*',
+        // },
         {
           source: '/help',
-          destination: 'https://help-center-wine.vercel.app/help',
+          destination: 'https://docs.chatvolt.ai/',
         },
         {
           source: '/help/:path*',
-          destination: 'https://help-center-wine.vercel.app/help/:path*',
+          destination: 'https://docs.chatvolt.ai/:path*',
         },
 
         {
           source: '/privacy',
-          destination: '/privacy.pdf',
+          destination: 'https://docs.chatvolt.ai/privacy/privacy-policy',
         },
         {
           source: '/terms',
-          destination: '/terms.pdf',
+          destination: 'https://docs.chatvolt.ai/privacy/terms',
         },
       ],
     };

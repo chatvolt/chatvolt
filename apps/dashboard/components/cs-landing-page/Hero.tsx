@@ -62,17 +62,17 @@ export default function Hero() {
             </div> */}
 
             <h2 className="mb-4 text-lg font-bold text-violet-300 sm:text-2xl">
-              With our Autonomous Agent
+                Transform your
             </h2>
             <h1 className=" text-4xl font-bold !leading-snug tracking-tight text-white whitespace-pre-wrap font-display sm:text-7xl">
-              {`Resolve 50% \nof your support tickets instantly`}
+              {`Customer Service with AI`}
             </h1>
 
             <div className="flex flex-col mt-4 space-y-4">
               <div className="inline-flex items-center space-x-2">
                 <CheckBadgeIcon className="w-5 h-5 text-green-400" />
                 <p className="mx-auto max-w-md tracking-tight text-gray-200 text-md sm:text-xl sm:mx-0 sm:max-w-lg">
-                  Secure AI trained on your data
+                Unlock the Power of Secure AI Trained on Your Data
                 </p>
               </div>
               {/* <div className="inline-flex items-center space-x-2">
@@ -85,23 +85,30 @@ export default function Hero() {
               <div className="inline-flex items-center space-x-2">
                 <CheckBadgeIcon className="w-5 h-5 text-green-400" />
                 <p className="mx-auto max-w-md tracking-tight text-gray-200 text-md sm:text-xl sm:mx-0 sm:max-w-lg">
-                  No hallucinations or misleading answers
+                High Precision, No Hallucinations or Misleading Answers
                 </p>
               </div>
               <div className="inline-flex items-center space-x-2">
                 <CheckBadgeIcon className="w-5 h-5 text-green-400" />
                 <p className="mx-auto max-w-md tracking-tight text-gray-200 text-md sm:text-xl sm:mx-0 sm:max-w-lg">
-                  Seamless human handoff
+                Seamless Human Handoff for a Personalized Touch
                 </p>
               </div>
               <div className="inline-flex items-center space-x-2">
                 <CheckBadgeIcon className="w-5 h-5 text-green-400" />
                 <p className="mx-auto max-w-md tracking-tight text-gray-200 text-md sm:text-xl sm:mx-0 sm:max-w-lg">
-                  Plug and play in minutes.
+                Effortless Integration: Plug and Play for Instant Impact
+                </p>
+              </div>
+              <div className="inline-flex items-center space-x-2">
+                <CheckBadgeIcon className="w-5 h-5 text-green-400" />
+                <p className="mx-auto max-w-md tracking-tight text-gray-200 text-md sm:text-xl sm:mx-0 sm:max-w-lg">
+                Access top 20+ LLM providers with ease.
                 </p>
               </div>
             </div>
-            {/* <p className="mx-auto mt-6 max-w-md text-lg tracking-tight text-gray-200 sm:mx-0 sm:max-w-lg">
+
+          <p className="mx-auto mt-6 max-w-md text-lg tracking-tight text-gray-200 sm:mx-0 sm:max-w-lg">
               With our{' '}
               <strong className="text-violet-300">no-code platform</strong>, you
               can create a{' '}
@@ -109,8 +116,9 @@ export default function Hero() {
                 custom AI Autonomous Agent
               </strong>{' '}
               trained on your data in seconds.
-            </p> */}
+            </p> 
 
+{/*
             <Box
               className="justify-center sm:justify-start"
               sx={(theme) => ({
@@ -149,7 +157,7 @@ export default function Hero() {
                 </Typography>
               </Stack>
             </Box>
-
+*/}
             <Stack
               direction={{
                 xs: 'column',
@@ -167,9 +175,10 @@ export default function Hero() {
                   sx={{ borderRadius: 100 }}
                 >{`⚡️ Get Started Now`}</Button>
               </Link>
+
               <Link
                 target="_blank"
-                href={'https://calendar.app.google/js1tgwSh2CUvV4CA7'}
+                href={'https://book.chatvolt.ai/alexander'}
               >
                 <Button
                   variant="outlined"
@@ -180,26 +189,30 @@ export default function Hero() {
                   Book a Call
                 </Button>
               </Link>
+
             </Stack>
           </Stack>
 
           <div className="flex items-center w-full sm:w-2/3">
-            {/* <Image
+            <Image
               src="/landing-page/inputs.png"
-              width="500"
-              height="150"
+              width="800"
+              height="509"
               className="w-full"
               alt="Datasources"
-            /> */}
-            <div className="w-full h-[500px] overflow-hidden rounded-3xl bg-white">
+            />
+
+            {/* <div className="w-full h-[500px] overflow-hidden rounded-3xl bg-white">
               <iframe
-                src={`${appUrl}/agents/clq6g5cuv000wpv8iddswwvnd/iframe`}
+                src={`${appUrl}/agents/clw0wuhp6000hpbgjnpivm3ni/iframe`}
                 width="100%"
                 height="100%"
                 frameBorder="0"
                 allow="clipboard-write"
               ></iframe>
-            </div>
+            </div> */}
+
+
           </div>
         </div>
       </div>

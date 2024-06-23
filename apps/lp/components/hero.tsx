@@ -3,6 +3,8 @@ import { motion, stagger, useAnimate, Variants } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import config from '@chatvolt/lib/config';
+
 import Particles from './ui/particles';
 import Clients from './clients';
 import TestimonialBadge from './testimonial-badge';
@@ -11,7 +13,6 @@ import Stats from '@/components/stats';
 import { TextGenerateEffect } from '@/components/ui/TextGenerateEffect';
 // import HeroImage from '@/public/images/hero-image.png';
 import HeroImage from '@/public/images/dashboard-screenshot.png';
-import config from '@/utils/config';
 import {
   defaultChildVariants,
   defaultContainerVariants,
@@ -62,20 +63,20 @@ export default function Hero() {
       >
         {/* Section content */}
         <div className="px-4 sm:px-6">
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl mx-auto">
             <div className="pb-12 text-center md:pb-16">
               <motion.h1
-                className="pb-4 mx-auto max-w-2xl text-5xl font-extrabold text-transparent font-bricolage-grotesque md:text-8xl text-zinc-800"
+                className="max-w-2xl pb-4 mx-auto text-5xl font-extrabold text-transparent font-bricolage-grotesque md:text-8xl text-zinc-800"
                 variants={childTextVariants}
               >
                 <TextGenerateEffect
                   duration={0.5}
-                  // text="Custom GPT Agent For Your Startup"
+                  // text="Custom AI Assistant for Your Business"
                   text={[
                     'Your',
-                    'Suport',
+                    'Support',
                     'On',
-                    // <em className="inline-flex relative justify-center items-center italic text-zinc-900">
+                    // <em className="relative inline-flex items-center justify-center italic text-zinc-900">
                     //   {' '}
                     //   GPT Agent
                     //   <motion.svg
@@ -113,7 +114,7 @@ export default function Hero() {
                     // </em>,
                     <em
                       key="gpt-agent"
-                      className="inline-flex relative justify-center items-end not-italic"
+                      className="relative inline-flex items-end justify-center not-italic"
                     >
                       AutoPilot
                       <motion.svg
@@ -153,9 +154,9 @@ export default function Hero() {
                   ]}
                 ></TextGenerateEffect>
                 {/* Custom{' '}
-                <em className="inline-flex relative justify-center items-center italic text-zinc-900">
+                <em className="relative inline-flex items-center justify-center italic text-zinc-900">
                   {' '}
-                  GPT Agent
+                  AI Assistant
                   <svg
                     className="absolute fill-pink-300 w-[calc(100%+1rem)] -z-10"
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +172,7 @@ export default function Hero() {
                 for your startup */}
               </motion.h1>
               <motion.p
-                className="mx-auto mb-8 max-w-xl text-lg text-zinc-500 md:text-2xl"
+                className="max-w-xl mx-auto mb-8 text-lg text-zinc-500 md:text-2xl"
                 variants={childTextVariants}
 
                 // custom={2}
@@ -185,7 +186,7 @@ export default function Hero() {
 
               <div className="flex flex-col space-y-6">
                 <motion.div
-                  className="mx-auto space-y-4 max-w-xs sm:max-w-none sm:inline-flex sm:justify-center sm:space-y-0 sm:space-x-4"
+                  className="max-w-xs mx-auto space-y-4 sm:max-w-none sm:inline-flex sm:justify-center sm:space-y-0 sm:space-x-4"
                   variants={makeVariants({
                     ...defaultContainerVariants,
                     visible: {
@@ -264,12 +265,11 @@ export default function Hero() {
             //   className="w-full h-[300px] rounded-2xl"
             //   width="560"
             className="w-full rounded-3xl aspect-video"
-            src={`https://www.youtube.com/embed/-NkVS2l66Zs`}
+            src={`https://www.youtube.com/embed/xxx`}
             title="YouTube video player"
             frameBorder="0"
             allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           ></iframe>
-          {/* https://www.youtube.com/watch?v=-NkVS2l66Zs */}
         </motion.div>
         {/* <div className="mt-12">
           <Stats />

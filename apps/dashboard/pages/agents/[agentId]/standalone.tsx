@@ -18,12 +18,6 @@ import React, { ReactElement, useEffect, useMemo } from 'react';
 import superjson from 'superjson';
 import useSWR from 'swr';
 
-import ChatBoxFrame from '@app/components/ChatBoxFrame';
-import NewChatButton from '@app/components/ChatboxNewChatButton';
-import IFrameThemeProvider from '@app/components/IFrameThemeProvider';
-import SEO from '@app/components/SEO';
-import WidgetThemeProvider from '@app/components/WidgetThemeProvider';
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getAgent } from '@app/pages/api/agents/[id]';
 
 import pickColorBasedOnBgColor from '@chatvolt/lib/pick-color-based-on-bgcolor';
@@ -31,6 +25,10 @@ import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { AgentInterfaceConfig } from '@chatvolt/lib/types/models';
 import { Agent, Prisma } from '@chatvolt/prisma';
 import { prisma } from '@chatvolt/prisma/client';
+import NewChatButton from '@chatvolt/ui/Chatbox/NewChatButton';
+import ChatBoxLoader from '@chatvolt/ui/ChatBoxLoader';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import WidgetThemeProvider from '@chatvolt/ui/themes/embeds-provider';
 
 export default function AgentPage() {
   const router = useRouter();
@@ -292,130 +290,46 @@ export default function AgentPage() {
                 overflow: 'visible',
               }}
             >
+
+
               <svg
                 style={{ width: '100%', height: '100%' }}
                 viewBox="0 0 100 100"
                 preserveAspectRatio="xMidYMid slice"
               >
                 <defs>
-                  <radialGradient
-                    id="Gradient1"
-                    cx="50%"
-                    cy="50%"
-                    fx="0.441602%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="34s"
-                      values="0%;3%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(255, 0, 255, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(255, 0, 255, 0)"></stop>
+                  <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(240, 240, 240, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(240, 240, 240, 0)"></stop>
                   </radialGradient>
-                  <radialGradient
-                    id="Gradient2"
-                    cx="50%"
-                    cy="50%"
-                    fx="2.68147%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="23.5s"
-                      values="0%;3%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(255, 255, 0, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(255, 255, 0, 0)"></stop>
+                  <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(245, 245, 245, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(245, 245, 245, 0)"></stop>
                   </radialGradient>
-                  <radialGradient
-                    id="Gradient3"
-                    cx="50%"
-                    cy="50%"
-                    fx="0.836536%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="21.5s"
-                      values="0%;3%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(0, 255, 255, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(0, 255, 255, 0)"></stop>
+                  <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(230, 230, 245, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(230, 230, 245, 0)"></stop>
                   </radialGradient>
-                  <radialGradient
-                    id="Gradient4"
-                    cx="50%"
-                    cy="50%"
-                    fx="4.56417%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="23s"
-                      values="0%;5%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(0, 255, 0, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(0, 255, 0, 0)"></stop>
+                  <radialGradient id="Gradient4" cx="50%" cy="50%" fx="4.56417%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="23s" values="0%;5%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(240, 240, 240, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(240, 240, 240, 0)"></stop>
                   </radialGradient>
-                  <radialGradient
-                    id="Gradient5"
-                    cx="50%"
-                    cy="50%"
-                    fx="2.65405%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="24.5s"
-                      values="0%;5%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(0,0,255, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(0,0,255, 0)"></stop>
+                  <radialGradient id="Gradient5" cx="50%" cy="50%" fx="2.65405%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="24.5s" values="0%;5%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(235, 235, 245, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(235, 235, 245, 0)"></stop>
                   </radialGradient>
-                  <radialGradient
-                    id="Gradient6"
-                    cx="50%"
-                    cy="50%"
-                    fx="0.981338%"
-                    fy="50%"
-                    r=".5"
-                  >
-                    <animate
-                      attributeName="fx"
-                      dur="25.5s"
-                      values="0%;5%;0%"
-                      repeatCount="indefinite"
-                    ></animate>
-                    <stop offset="0%" stopColor="rgba(255,0,0, 1)"></stop>
-                    <stop offset="100%" stopColor="rgba(255,0,0, 0)"></stop>
+                  <radialGradient id="Gradient6" cx="50%" cy="50%" fx="0.981338%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="25.5s" values="0%;5%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stopColor="rgba(240, 240, 240, 1)"></stop>
+                    <stop offset="100%" stopColor="rgba(240, 240, 240, 0)"></stop>
                   </radialGradient>
                 </defs>
-                {/* <!--<rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient4)">
-	<animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite" />
-	<animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite" />
-	<animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="17s" repeatCount="indefinite"/>
-	</rect>
-	<rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient5)">
-	<animate attributeName="x" dur="23s" values="0%;-25%;0%" repeatCount="indefinite" />
-	<animate attributeName="y" dur="24s" values="25%;-25%;25%" repeatCount="indefinite" />
-	<animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="18s" repeatCount="indefinite"/>
-	</rect>
-	<rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient6)">
-	<animate attributeName="x" dur="25s" values="-25%;0%;-25%" repeatCount="indefinite" />
-	<animate attributeName="y" dur="26s" values="0%;-25%;0%" repeatCount="indefinite" />
-	<animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="19s" repeatCount="indefinite"/>
-	</rect>--> */}
+
                 <rect
                   x="13.744%"
                   y="1.18473%"
@@ -424,18 +338,8 @@ export default function AgentPage() {
                   fill="url(#Gradient1)"
                   transform="rotate(334.41 50 50)"
                 >
-                  <animate
-                    attributeName="x"
-                    dur="20s"
-                    values="25%;0%;25%"
-                    repeatCount="indefinite"
-                  ></animate>
-                  <animate
-                    attributeName="y"
-                    dur="21s"
-                    values="0%;25%;0%"
-                    repeatCount="indefinite"
-                  ></animate>
+                  <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
+                  <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
                   <animateTransform
                     attributeName="transform"
                     type="rotate"
@@ -453,18 +357,8 @@ export default function AgentPage() {
                   fill="url(#Gradient2)"
                   transform="rotate(255.072 50 50)"
                 >
-                  <animate
-                    attributeName="x"
-                    dur="23s"
-                    values="-25%;0%;-25%"
-                    repeatCount="indefinite"
-                  ></animate>
-                  <animate
-                    attributeName="y"
-                    dur="24s"
-                    values="0%;50%;0%"
-                    repeatCount="indefinite"
-                  ></animate>
+                  <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
+                  <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
                   <animateTransform
                     attributeName="transform"
                     type="rotate"
@@ -482,18 +376,8 @@ export default function AgentPage() {
                   fill="url(#Gradient3)"
                   transform="rotate(139.903 50 50)"
                 >
-                  <animate
-                    attributeName="x"
-                    dur="25s"
-                    values="0%;25%;0%"
-                    repeatCount="indefinite"
-                  ></animate>
-                  <animate
-                    attributeName="y"
-                    dur="12s"
-                    values="0%;25%;0%"
-                    repeatCount="indefinite"
-                  ></animate>
+                  <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+                  <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
                   <animateTransform
                     attributeName="transform"
                     type="rotate"
@@ -504,6 +388,10 @@ export default function AgentPage() {
                   ></animateTransform>
                 </rect>
               </svg>
+
+
+
+
             </div>
           </Stack>
           <Stack
@@ -513,11 +401,11 @@ export default function AgentPage() {
               overflow: 'hidden',
             }}
           >
-            <ChatBoxFrame
+            <ChatBoxLoader
               agentId={agent?.id}
               layout={(props: any) => {
                 return (
-                  <div className="flex px-4 pb-4 w-full h-full">
+                  <div className="flex w-full h-full px-4 pb-4">
                     <div className="absolute top-4 right-4">
                       <NewChatButton />
                     </div>
@@ -544,7 +432,7 @@ export default function AgentPage() {
 }
 
 AgentPage.getLayout = function getLayout(page: ReactElement) {
-  return <WidgetThemeProvider name="standalone">{page}</WidgetThemeProvider>;
+  return <WidgetThemeProvider prefix="standalone">{page}</WidgetThemeProvider>;
 };
 
 // export async function getStaticPaths() {

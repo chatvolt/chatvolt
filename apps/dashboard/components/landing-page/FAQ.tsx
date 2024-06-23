@@ -1,39 +1,41 @@
 const faqs = [
   {
     id: 1,
-    question: 'What should my data look like?',
-    answer:
-      'You can upload one or multiple files in 1 datastore (PDF, CSV, JSON, Text, PowerPoint, Word, Excel), or add a link to your website to be scraped. 1 chatbot is associated with 1 datastore.',
-  },
-  {
-    id: 2,
-    question: 'Does it use ChatGPT ?',
-    answer:
-      'Yes, your chatbot uses ChatGPT (gpt-4). We are planning to support other models in the future.',
-  },
-  {
-    id: 3,
-    question: 'Where is my data stored ?',
-    answer:
-      'The content of the document is hosted on secure AWS servers in Europe.',
-  },
-  {
-    id: 4,
     question: 'Does it support other languages?',
     answer:
       'Yes, Chatvolt supports about +100 languages. You can have your sources in any language and ask it questions in any language.',
   },
   {
-    id: 5,
+    id: 2,
     question: 'How can I add my chatbot to my website?',
     answer:
       'You can embed an iframe or add a chat bubble to the bottom right/left of your website.',
   },
   {
+    id: 3,
+    question: 'Where is my data stored ?',
+    answer:
+      'The content of the document is hosted on secure AWS servers in USA.',
+  },
+
+  {
+    id: 4,
+    question: 'What should my data look like?',
+    answer:
+      'You have the flexibility to upload a wide variety of file types to a datastore, including PDF, CSV, JSON, text documents, PowerPoint presentations, Word documents, and Excel spreadsheets, as well as the ability to add links to your website or YouTube channel. These contents will be converted into training data, enhancing the capabilities of your system.',
+  },
+  {
+    id: 5,
+    question: 'Does it use ChatGPT ?',
+    answer:
+      'Yes, your chatbot can be configured to integrate a variety of cutting-edge language models, including ChatGPT 3.5 Turbo, ChatGPT 4 Turbo, Google Gemini, Google Gemma, Microsoft WizardLM 2, Microsoft Phi 3, Cohere Command-R, Claude 3, Mistral, Dolphin, OpenChat, and Meta LLama. Additionally, we offer the innovative Volt-Networks, which combines multiple models to generate more comprehensive and accurate responses.',
+  },
+
+  {
     id: 6,
     question: 'Can I give my chatbots instructions?',
     answer:
-      'Yes, you can edit the base prompt and give your chatbot a name, personality traits and instructions on how to answer questions ex. (only answer in French).',
+      'Yes, in addition to training your chatbot with specific data, you can also fully customize the base prompt by choosing a name, defining its personality, and setting any instructions and rules you prefer. Additionally, you will have access to an exclusive feature from Chatvolt that uses artificial intelligence to assist you in constructing your chatbot`s prompt, ensuring an optimized setup tailored to your needs.',
   },
 
   // More questions...
@@ -47,15 +49,7 @@ export default function FAQ() {
           Frequently asked questions
         </h2>
         <p className="max-w-2xl mt-6 text-base leading-7 text-gray-300">
-          Have a different question and can’t find the answer you’re looking
-          for? Reach out to our support team by{' '}
-          <a
-            href="mailto:support@chatvolt.ai"
-            className="font-semibold text-indigo-400 hover:text-indigo-300"
-          >
-            sending us an email
-          </a>{' '}
-          and we’ll get back to you as soon as we can.
+            If you have any questions not covered in this FAQ, we invite you to engage with Franklin, our advanced chatbot, developed using Chatvolt`s innovative AI technology. Franklin is equipped to clarify your queries and, if necessary, will direct your question straight to our specialized team.
         </p>
         <div className="mt-20">
           <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-3 lg:gap-x-10">

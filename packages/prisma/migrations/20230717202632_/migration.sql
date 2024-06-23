@@ -6,5 +6,3 @@
 -- the enum.
 
 
-ALTER TYPE "AgentModelName" ADD VALUE 'gpt_3_5_turbo_16k';
-ALTER TYPE "AgentModelName" ADD VALUE 'gpt_4_32k';

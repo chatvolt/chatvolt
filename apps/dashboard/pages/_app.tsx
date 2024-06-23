@@ -1,6 +1,6 @@
 import '@chatvolt/lib/env';
-import '@app/styles/globals.css';
-import '@app/styles/preflight.css';
+import '@chatvolt/ui/styles/globals.css';
+import '@chatvolt/ui/styles/preflight.css';
 import '@app/styles/nprogress.css';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -15,9 +15,9 @@ import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import Analytics from '@app/components/Analytics';
-import DashboardThemeProvider from '@app/components/DashboardThemeProvider';
 import DefaultSEOTags from '@app/components/DefaultSEOTags';
 import SynchTailwindColorMode from '@app/components/SynchTailwindColorMode';
+import { NavbarProvider } from '@app/hooks/useNavbar';
 import {
   getProductFromHostname,
   ProductContext,
@@ -26,6 +26,8 @@ import {
 import useUTMTracking from '@app/hooks/useUTMTracking';
 
 import { NextPageWithLayout, RouteNames } from '@chatvolt/lib/types';
+import theme from '@chatvolt/ui/themes/dashboard';
+import ThemeProvider from '@chatvolt/ui/themes/provider';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -75,17 +77,19 @@ export default function App({
 
   return (
     <ProductContext.Provider value={product}>
-      <DashboardThemeProvider {...otherProps}>
+      <ThemeProvider {...otherProps} theme={theme}>
         <TopProgressBar />
         <SessionProvider>
           <Analytics>
             <Toaster />
             <DefaultSEOTags />
             <SynchTailwindColorMode />
-            {getLayout(<Component {...pageProps} />)}
+            <NavbarProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </NavbarProvider>
           </Analytics>
         </SessionProvider>
-      </DashboardThemeProvider>
+      </ThemeProvider>
     </ProductContext.Provider>
   );
 }

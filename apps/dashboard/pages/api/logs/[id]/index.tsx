@@ -67,6 +67,7 @@ export const getConversation = async (
           contact: {
             select: {
               id: true,
+              firstName: true,
               phoneNumber: true,
               email: true,
             },
@@ -89,6 +90,7 @@ export const getConversation = async (
               },
             },
           },
+          submission: true,
         },
       },
     },
@@ -195,11 +197,11 @@ export const updateInboxConversation = async (
     // SEND Email
     await mailer.sendMail({
       from: {
-        name: 'Chatvolt',
+        name: 'Chatvolt AI',
         address: process.env.EMAIL_FROM!,
       },
       to: updated?.assignees?.[0]?.user?.email!,
-      subject: `You've been assigned a conversation`,
+      subject: `⚠️ You've been assigned a conversation`,
       html: render(
         <GenericTemplate
           title={'Conversation Assigned'}

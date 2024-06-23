@@ -125,11 +125,11 @@ import prisma from '@chatvolt/prisma/client';
 
   await mailer.sendMail({
     from: {
-      name: 'Chatvolt',
+      name: 'Chatvolt AI',
       address: process.env.EMAIL_FROM!,
     },
     to: process.env.ADMIN_EMAIL,
-    subject: `📊 Weekly Admin Stats - Chatvolt`,
+    subject: `📊 Weekly Admin Stats - Chatvolt AI`,
     html: render(<AdminStats data={latestData as any} prevData={prevData} />),
   });
 

@@ -8,7 +8,13 @@ export default function SideDrawer({
     <Box
       {...props}
       sx={[
-        { position: 'fixed', zIndex: 1200, width: '100%', height: '100%' },
+        {
+          position: 'fixed',
+          zIndex: 1200,
+          width: '100%',
+          height: '100%',
+          minHeight: '100%',
+        },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
       ]}
     >
@@ -25,9 +31,8 @@ export default function SideDrawer({
       <Sheet
         sx={{
           minWidth: 256,
-          width: 'max-content',
+          width: { xs: '75%', sm: 300 }, // Ajuste para dispositivos móveis
           height: '100%',
-          p: 2,
           boxShadow: 'lg',
           bgcolor: 'common.surface',
         }}

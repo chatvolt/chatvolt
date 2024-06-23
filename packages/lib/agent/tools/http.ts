@@ -57,9 +57,6 @@ export const createHandler =
     toolHandlerConfig?: CreateToolHandlerConfig<{ type: 'http' }>
   ) =>
   async (payload: HttpToolPayload): Promise<HttpToolResponseSchema> => {
-    console.log('HTTP Tool Config', httpTool?.config);
-    console.log('HTTP Tool Payload', payload);
-
     const config = httpTool?.config;
 
     if (config?.withApproval) {
@@ -119,7 +116,7 @@ export const createHandler =
       const { data } = await axios(url, reqConfig);
       const MAX_TOKENS =
         ModelConfig[
-          toolHandlerConfig?.modelName || AgentModelName.gpt_3_5_turbo_16k
+          toolHandlerConfig?.modelName || AgentModelName.gpt_3_5_turbo
         ].maxTokens * 0.7;
 
       const totalTokens = countTokensEstimation({ text: data.toString() });

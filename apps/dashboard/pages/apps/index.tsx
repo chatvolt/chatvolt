@@ -32,12 +32,12 @@ import useSWR from 'swr';
 import { z } from 'zod';
 
 import Layout from '@app/components/Layout';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { RouteNames } from '@chatvolt/lib/types';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { prisma } from '@chatvolt/prisma/client';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 const SlackBotModal = dynamic(
   () => import('@app/components/SlackSettingsModal'),
@@ -121,7 +121,9 @@ export default function DatasourcesPage() {
           variant="outlined"
           className="max-w-full p-0 mt-8 overflow-hidden w-[382px]"
         >
-          <Box className="relative w-full px-2 py-12 text-center">
+
+          {/* <Box className="relative w-full px-2 py-12 text-center">
+
             <Typography
               level="h2"
               fontWeight={'bold'}
@@ -145,7 +147,8 @@ export default function DatasourcesPage() {
                 ></Image>
               </Link>
             </Stack>
-          </Box>
+
+          </Box> */}
 
           <Divider />
 

@@ -5,15 +5,9 @@ import Link from 'next/link';
 
 import { cn } from '@chatvolt/ui/utils/cn';
 
-import Particles from './ui/particles';
-import Clients from './clients';
 import TestimonialBadge from './testimonial-badge';
 
-import Stats from '@/components/stats';
 import { TextGenerateEffect } from '@/components/ui/TextGenerateEffect';
-// import HeroImage from '@/public/images/hero-image.png';
-import HeroImage from '@/public/images/dashboard-screenshot.png';
-import config from '@/utils/config';
 import {
   defaultChildVariants,
   defaultContainerVariants,
@@ -69,7 +63,7 @@ export default function Hero(props: {
       >
         {/* Section content */}
         <div className="px-4 sm:px-6">
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl mx-auto">
             <div className="pb-12 text-center md:pb-16">
               {props?.name && (
                 <motion.div
@@ -109,9 +103,9 @@ export default function Hero(props: {
                   text={props.title}
                 ></TextGenerateEffect>
                 {/* Custom{' '}
-                <em className="inline-flex relative justify-center items-center italic text-zinc-900">
+                <em className="relative inline-flex items-center justify-center italic text-zinc-900">
                   {' '}
-                  GPT Agent
+                  AI Assistant
                   <svg
                     className="absolute fill-pink-300 w-[calc(100%+1rem)] -z-10"
                     xmlns="http://www.w3.org/2000/svg"
@@ -216,7 +210,6 @@ export default function Hero(props: {
             priority
           /> */}
 
-            {/* https://www.youtube.com/watch?v=-NkVS2l66Zs */}
 
             {props.imageUrl && (
               // <div className="overflow-hidden border-b-2 border-solid border-b-zinc-900">

@@ -27,7 +27,6 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { z } from 'zod';
 
-import Input from '@app/components/Input';
 import { Footer } from '@app/components/landing-page/Footer';
 import PoweredByCard from '@app/components/PoweredByCard';
 import SEO from '@app/components/SEO';
@@ -45,6 +44,7 @@ import { YoutubeSummarySchema } from '@chatvolt/lib/types/dtos';
 import { YOUTUBE_VIDEO_URL_RE } from '@chatvolt/lib/youtube-api/lib';
 import { LLMTaskOutput, Prisma } from '@chatvolt/prisma';
 import prisma from '@chatvolt/prisma/client';
+import Input from '@chatvolt/ui/Input';
 
 type FormType = z.infer<typeof YoutubeSummarySchema>;
 

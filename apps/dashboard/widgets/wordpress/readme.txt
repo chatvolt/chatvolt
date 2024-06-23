@@ -16,7 +16,7 @@ Chatvolt is a no-code platform for building ChatGPT Chat Bots trained on custom 
 
 **Important Note:** The remote file hosted at `https://cdn.jsdelivr.net/npm/@chatvolt/chat-bubble@latest` is used to embed Chatvolt into your WordPress website. It is safe and integral to the functionality of the plugin, providing a smooth and secure chat experience for your users.
 
-[youtube https://www.youtube.com/watch?v=Pa-cyPJzt5k]
+[youtube https://www.youtube.com/watch?v=xxx]
 
 == Installation ==
 

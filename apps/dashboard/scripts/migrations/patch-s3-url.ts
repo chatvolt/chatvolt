@@ -5,8 +5,8 @@ import { QdrantManager } from '@chatvolt/lib/datastores/qdrant';
 import { prisma } from '@chatvolt/prisma/client';
 
 (async () => {
-  console.log('process.env', process.env.DATABASE_URL);
-  console.log('process.env', process.env.QDRANT_API_URL);
+  //console.log('process.env', process.env.DATABASE_URL);
+  //console.log('process.env', process.env.QDRANT_API_URL);
   const prevUrl = 'https://chatvolt.s3.amazonaws.com';
   const newUrl = 'https://s3.chatvolt.ai';
   const datasources = await prisma.appDatasource.findMany({

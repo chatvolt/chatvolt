@@ -21,9 +21,7 @@ import useSWRMutation from 'swr/mutation';
 
 import EmailInboxesTable from '@app/components/EmailInboxesTable';
 import Layout from '@app/components/Layout';
-import Loader from '@app/components/Loader';
 import UsageLimitModal from '@app/components/UsageLimitModal';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import {
   fetcher,
@@ -33,6 +31,8 @@ import {
 import { RouteNames } from '@chatvolt/lib/types';
 import { CreateMailInboxSchema } from '@chatvolt/lib/types/dtos';
 import { Form, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Loader from '@chatvolt/ui/Loader';
 
 import { createEmailInbox, getEmailInboxes } from '../api/mail-inboxes';
 

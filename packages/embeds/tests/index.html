@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script
+      defer
+      src="./dist/chatbox/legacy.js"
+      id="clrz0tn6h000108kxfyomdzxg"
+      data-name="chatvolt-chat-bubble"
+    ></script> -->
+    <script type="module">
+      import Chatbox from './dist/chatbox/index.js';
+      import Form from './dist/form/index.js';
+
+      window.widget = await Chatbox.initBubble({
+        agentId: 'clrz0tn6h000108kxfyomdzxg',
+        // contact: {
+        //   firstName: 'Marcos',
+        //   lastName: 'Chatvolt',
+        //   email: 'marcos+test@chatvolt.ai',
+        //   phoneNumber: '+33612345644',
+        //   userId: '42424242',
+        // },
+
+        interface: {
+          iconUrl:
+            'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png',
+          primaryColor: '#f0f',
+          // isInitMessagePopupDisabled: true,
+          // initialMessages: [
+          //   'Hello Marcos how are you doing today?',
+          //   'How can I help you ?',
+          // ],
+          // bubbleIconStyle: {
+          //   // padding: '4px'
+          //   padding: '5px',
+          // },
+        },
+      });
+
+      setTimeout(() => {
+        // widget.open();
+        // widget.createNewConversation();
+      }, 2000);
+
+      Chatbox.initStandard({
+        id: '4242',
+        agentId: 'clrz0tn6h000108kxfyomdzxg',
+        // styles: {
+        //   height: '600px',
+        // },
+        // contact: {
+        //   firstName: 'StandardMarcos',
+        //   lastName: 'StandardChatvolt',
+        //   email: 'standardMarcos+test@chatvolt.ai',
+        //   phoneNumber: '+33612345678',
+        //   userId: '44444444',
+        // },
+        interface: {
+          primaryColor: '#f00',
+          initialMessages: [
+            'Hello Marcos how are you doing today?',
+            'How can I help you ?',
+          ],
+        },
+
+        // context: `The user you are talking to is Marcos. Start by Greeting him by his name.`,
+      });
+
+      Form.initStandard({
+        formId: 'clupr4or2000108l41a4b75jw',
+        onEnd: function (data) {
+          console.log(JSON.stringify(data, null, 2));
+        },
+      });
+
+      // Chatbox.initStandard({
+      //   id: '4444',
+      //   agentId: 'clrz0tn6h000108kxfyomdzxg',
+      //   // styles: {
+      //   //   height: '600px',
+      //   // },
+      //   // contact: {
+      //   //   firstName: 'StandardMarcos',
+      //   //   lastName: 'StandardChatvolt',
+      //   //   email: 'standardMarcos+test@chatvolt.ai',
+      //   //   phoneNumber: '+33612345678',
+      //   //   userId: '44444444',
+      //   // },
+      //   interface: {
+      //     primaryColor: '#f00',
+      //     initialMessages: [
+      //       'Hello Marcos how are you doing today?',
+      //       'How can I help you ?',
+      //     ],
+      //   },
+
+      //   // context: `The user you are talking to is Marcos. Start by Greeting him by his name.`,
+      // });
+    </script>
+  </head>
+  <body style="background: rgba(255, 0, 0, 0.2)">
+    <h1>WebChatbubble:</h1>
+
+    <chatvolt-chatbox-standard
+      id="4242"
+      style="width: 100%; height: 650px"
+    ></chatvolt-chatbox-standard>
+
+    <button onclick="window.widget.createNewConversation()">
+      New Conversation
+    </button>
+
+    <chatvolt-form-standard
+      style="width: 500px; margin: 25px auto"
+    ></chatvolt-form-standard>
+
+    <!-- <chatvolt-chatbox-standard
+      id="4444"
+      style="width: 100%; height: 650px"
+    ></chatvolt-chatbox-standard> -->
+
+    <!-- use webcomponent directly ⬇️ -->
+    <!-- <chatvolt-chatbox-standard style="width: 100%; height: 650px" /> -->
+  </body>
+</html>

@@ -22,13 +22,13 @@ import useSWR from 'swr';
 
 import SettingsLayout from '@app/components/SettingsLayout';
 import SettingCard from '@app/components/ui/SettingCard';
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getApiKeys } from '@app/pages/api/accounts/api-keys';
 
 import accountConfig from '@chatvolt/lib/account-config';
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { Prisma, SubscriptionPlan } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 export default function ApiKeysPage() {
   const router = useRouter();
@@ -125,7 +125,7 @@ export default function ApiKeysPage() {
                 </Link>
               }
             >
-              Learn more about the Datatberry API
+              Learn more about the Chatvolt API
             </Alert>
             {getApiKeysQuery?.data?.map((each) => (
               <>

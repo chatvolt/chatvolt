@@ -35,16 +35,16 @@ const baseUrl = process.env.VERCEL_URL
 
 export const VercelInviteUserEmail = ({
   username = '',
-  userImage = `${baseUrl}/static/vercel-user.png`,
-  invitedByUsername = 'bukinoshita',
-  invitedByEmail = 'bukinoshita@example.com',
+  userImage = `${baseUrl}/static/user.png`,
+  invitedByUsername = 'Chatvolt',
+  invitedByEmail = 'team@chatvolt.ai',
   teamName = 'My Project',
   teamImage = `${baseUrl}/static/vercel-team.png`,
-  inviteLink = 'https://vercel.com/teams/invite/foo',
-  inviteFromIp = '204.13.186.218',
+  inviteLink = 'https://app.chatvolt.ai/auth/signin',
+  inviteFromIp = '1.1.1.1',
   inviteFromLocation = 'São Paulo, Brazil',
 }: VercelInviteUserEmailProps) => {
-  const previewText = `Join ${invitedByUsername} on Vercel`;
+  const previewText = `Join ${teamName} on Chatvolt AI`;
 
   return (
     <Html>
@@ -57,7 +57,7 @@ export const VercelInviteUserEmail = ({
               <Img
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="100"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>

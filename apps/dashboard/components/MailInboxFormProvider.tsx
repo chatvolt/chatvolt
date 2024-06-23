@@ -19,13 +19,13 @@ import useMailInbox, {
   UseMailInboxQuery,
 } from '@app/hooks/useMailInbox';
 import useRefinement, { Refinement } from '@app/hooks/useRefinements';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import {
   EmailAliasSchema,
   UpdateMailInboxSchema,
 } from '@chatvolt/lib/types/dtos';
 import { MailInbox, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 // interface ConnectFormProps<TFieldValues extends FieldValues> {
 //   children(children: UseFormReturn<TFieldValues>): ReactElement;

@@ -2,20 +2,16 @@ import { CloseRounded } from '@mui/icons-material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import ChecklistRoundedIcon from '@mui/icons-material/ChecklistRounded';
-import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InboxRoundedIcon from '@mui/icons-material/InboxRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Notifications from '@mui/icons-material/Notifications';
-import QuickreplyIcon from '@mui/icons-material/Quickreply';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
 import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
 import {
-  Button,
-  ColorPaletteProp,
+  Breadcrumbs,
   Dropdown,
   IconButton,
-  Input,
   ListItemDecorator,
   Menu,
   MenuButton,
@@ -41,9 +37,12 @@ import Skeleton from '@mui/joy/Skeleton';
 import Stack from '@mui/joy/Stack';
 import Tab, { tabClasses } from '@mui/joy/Tab';
 import Typography from '@mui/joy/Typography';
+import { useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { ReactElement, useCallback, useEffect, useMemo } from 'react';
+import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import toast from 'react-hot-toast';
@@ -52,17 +51,11 @@ import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import useSWRMutation from 'swr/mutation';
 
-import ChatBox from '@app/components/ChatBox';
 import { ConversationExport } from '@app/components/ConversationExport';
-import CopyButton from '@app/components/CopyButton';
 import DraftReplyInput from '@app/components/DarftReplyInput';
 import ImproveAnswerModal from '@app/components/ImproveAnswerModal';
 import InboxConversationSettings from '@app/components/InboxConversationSettings';
 import Layout from '@app/components/Layout';
-import { updateConversationStatus } from '@app/components/ResolveButton';
-import { handleEvalAnswer } from '@app/hooks/useChat';
-import useFileUpload from '@app/hooks/useFileUpload';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 // import { client as crispClient } from '@chatvolt/lib/crisp';
 import relativeDate from '@chatvolt/lib/relative-date';
@@ -71,6 +64,7 @@ import {
   generateActionFetcher,
   HTTP_METHOD,
 } from '@chatvolt/lib/swr-fetcher';
+import { RouteNames } from '@chatvolt/lib/types';
 import { AIStatus } from '@chatvolt/lib/types/crisp';
 import {
   EvalSchema,
@@ -85,6 +79,11 @@ import {
   MessageFrom,
   Prisma,
 } from '@chatvolt/prisma';
+import ChatBox from '@chatvolt/ui/Chatbox';
+import { updateConversationStatus } from '@chatvolt/ui/Chatbox/Actions/ResolveButton';
+import { handleEvalAnswer } from '@chatvolt/ui/hooks/useChat';
+import useFileUpload from '@chatvolt/ui/hooks/useFileUpload';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import { getAgents } from '../api/agents';
 import { updateStatus } from '../api/conversations/update-status';
@@ -191,7 +190,14 @@ const tabToParams = (tab: string): Record<string, unknown> => {
 
 export default function LogsPage() {
   const { data: session } = useSession();
+  const theme = useTheme();
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 750px)');
   const router = useRouter();
+
+  const toggleFilters = () => {
+    setFiltersVisible(!filtersVisible);
+  };
 
   const targetConversationId = router.query.targetConversationId as string;
 
@@ -501,68 +507,43 @@ export default function LogsPage() {
             value={props.email}
           ></Input>
         )} */}
-
-        {/* {props.email && props.status === ConversationStatus.HUMAN_REQUESTED && (
-          <Button
-            size="sm"
-            color="neutral"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = `mailto:${props.email}`;
-            }}
-          >
-            Reply
-          </Button>
-        )} */}
-
-        {/* <Button
-          size="sm"
-          loading={isLoading}
-          color={
-            {
-              [ConversationStatus.RESOLVED]: 'danger',
-              [ConversationStatus.UNRESOLVED]: 'success',
-              [ConversationStatus.HUMAN_REQUESTED]: 'success',
-            }[props.status] as ColorPaletteProp
-          }
-          onClick={handleStatusChange}
-          endDecorator={
-            {
-              [ConversationStatus.RESOLVED]: (
-                <ArrowCircleRightRoundedIcon fontSize="sm" />
-              ),
-              [ConversationStatus.UNRESOLVED]: (
-                <CheckCircleRoundedIcon fontSize="sm" />
-              ),
-              [ConversationStatus.HUMAN_REQUESTED]: (
-                <CheckCircleRoundedIcon fontSize="sm" />
-              ),
-            }[props.status]
-          }
-        >
-          {
-            {
-              [ConversationStatus.RESOLVED]: 'Unresolve',
-              [ConversationStatus.UNRESOLVED]: 'Resolve',
-              [ConversationStatus.HUMAN_REQUESTED]: 'Resolve',
-            }[props.status]
-          }
-        </Button> */}
       </Stack>
     );
   }
 
   return (
-    <Stack gap={1} sx={{ height: 'calc(100vh - 175px)' }}>
-      {/* <Alert
-        variant="soft"
-        color="neutral"
-        startDecorator={<InfoRoundedIcon />}
+    <Stack
+      gap={1}
+      sx={{
+        position: 'relative',
+        maxHeight: 'calc(100dvh - 50px)',
+      }}
+    >
+      <Breadcrumbs
+        size="sm"
+        aria-label="breadcrumbs"
+        separator={<ChevronRightRoundedIcon />}
+        sx={{
+          '--Breadcrumbs-gap': '1rem',
+          '--Icon-fontSize': '16px',
+          fontWeight: 'lg',
+          color: 'neutral.400',
+          px: 0,
+        }}
       >
-        View all Agents conversations across all channels. Evaluate and improve
-        answers.
-      </Alert> */}
-
+        <Link href={RouteNames.HOME}>
+          <HomeRoundedIcon />
+        </Link>
+        <Link href={RouteNames.AGENTS}>
+          <Typography
+            fontSize="inherit"
+            color="neutral"
+            className="hover:underline"
+          >
+            Inbox
+          </Typography>
+        </Link>
+      </Breadcrumbs>
       <JoyTabs
         aria-label="tabs"
         value={(router.query.tab as string) || Tabs.all}
@@ -610,257 +591,308 @@ export default function LogsPage() {
           </Tab>
         </TabList>
       </JoyTabs>
-      {/* <Divider  /> */}
+      
+      
+      
+      
+      {/* Auto Hide Filter */}
+      
       <Stack
-        width="100%"
-        pl={1}
-        gap={1}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          '@media (max-width: 750px)': {
-            flexDirection: 'column',
-          },
-        }}
-      >
-        <Stack
+          width="100%"
+          pl={1}
+          gap={1}
           sx={{
-            flexDirection: 'row', // Default direction
-            gap: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             '@media (max-width: 750px)': {
-              flexDirection: 'column', // Change direction for screens <= 600px
-              height: 'auto',
+              flexDirection: 'column',
             },
           }}
         >
-          <Dropdown>
-            <MenuButton
-              slots={{ root: IconButton }}
-              slotProps={{
-                root: { variant: 'outlined', color: 'neutral', size: 'sm' },
-              }}
-            >
-              <MoreVertIcon />
-            </MenuButton>
-            <Menu placement="bottom-start" size="sm">
-              <MenuItem
-                disabled={markAllReadMutation.isMutating}
-                onClick={async () => {
-                  const confirmed = window.confirm(
-                    'All messages that match the filters will be marked as read. Are you sure?'
-                  );
-
-                  if (!confirmed) return;
-
-                  await toast.promise(markAllReadMutation.trigger(), {
-                    loading: 'Updating...',
-                    success: 'Updated',
-                    error: 'Something went wrong',
-                  });
-
-                  getConversationsQuery.mutate();
-                  getConversationQuery.mutate();
+          <Stack
+            sx={{
+              flexDirection: 'row', // Default direction
+              gap: 1,
+              '@media (max-width: 750px)': {
+                flexDirection: 'column', // Change direction for screens <= 600px
+                height: 'auto',
+              },
+            }}
+          >
+            <Dropdown>
+              <MenuButton
+                slots={{ root: IconButton }}
+                slotProps={{
+                  root: { variant: 'outlined', color: 'neutral', size: 'sm' },
                 }}
               >
-                <ListItemDecorator>
-                  <TaskAltRoundedIcon />
-                </ListItemDecorator>
-                Mark all messages as read
-              </MenuItem>
-              <MenuItem
-                disabled={updateStatusAllMutation.isMutating}
-                onClick={async () => {
-                  const confirmed = window.confirm(
-                    'All conversations that match the filters will be marked as resolved. Are you sure?'
-                  );
+                {isMobile ? 'Options & Filters' : <MoreVertIcon />}
+              </MenuButton>
+              <Menu placement="bottom-start" size="sm">
+                <MenuItem
+                  disabled={markAllReadMutation.isMutating}
+                  onClick={async () => {
+                    const confirmed = window.confirm(
+                      'All messages that match the filters will be marked as read. Are you sure?'
+                    );
 
-                  if (!confirmed) return;
+                    if (!confirmed) return;
 
-                  await toast.promise(
-                    updateStatusAllMutation.trigger({
-                      status: ConversationStatus.RESOLVED,
-                    }),
-                    {
+                    await toast.promise(markAllReadMutation.trigger(), {
                       loading: 'Updating...',
                       success: 'Updated',
                       error: 'Something went wrong',
-                    }
-                  );
+                    });
 
-                  getConversationsQuery.mutate();
-                  getConversationQuery.mutate();
-                }}
+                    getConversationsQuery.mutate();
+                    getConversationQuery.mutate();
+                  }}
+                >
+                  <ListItemDecorator>
+                    <TaskAltRoundedIcon />
+                  </ListItemDecorator>
+                  Mark all messages as read
+                </MenuItem>
+                <MenuItem
+                  disabled={updateStatusAllMutation.isMutating}
+                  onClick={async () => {
+                    const confirmed = window.confirm(
+                      'All conversations that match the filters will be marked as resolved. Are you sure?'
+                    );
+
+                    if (!confirmed) return;
+
+                    await toast.promise(
+                      updateStatusAllMutation.trigger({
+                        status: ConversationStatus.RESOLVED,
+                      }),
+                      {
+                        loading: 'Updating...',
+                        success: 'Updated',
+                        error: 'Something went wrong',
+                      }
+                    );
+
+                    getConversationsQuery.mutate();
+                    getConversationQuery.mutate();
+                  }}
+                >
+                  <ListItemDecorator>
+                    <TaskAltRoundedIcon />
+                  </ListItemDecorator>
+                  Resolve all conversations
+                </MenuItem>
+                {isMobile && (
+                  <MenuItem onClick={toggleFilters}>
+                    <ListItemDecorator>
+                      <TaskAltRoundedIcon />
+                    </ListItemDecorator>
+                    Filters (Show|Hide)
+                  </MenuItem>
+                )}
+              </Menu>
+            </Dropdown>
+
+            <Stack
+              sx={{
+                display: isMobile && !filtersVisible ? 'none' : 'flex',
+                flexDirection: 'row', // Default direction
+                gap: 1,
+                '@media (max-width: 750px)': {
+                  flexDirection: 'column', // Change direction for screens <= 600px
+                  height: 'auto',
+                },
+              }}
+            >
+              <SelectQueryParamFilter<EvalSchema>
+                filterName="assigneeId"
+                placeholder="Filter by Assignee"
               >
-                <ListItemDecorator>
-                  <TaskAltRoundedIcon />
-                </ListItemDecorator>
-                Resolve all conversations
-              </MenuItem>
-            </Menu>
-          </Dropdown>
+                {currentMembership && (
+                  <Option value={currentMembership.id} sx={{ fontSize: 14 }}>
+                    Me
+                  </Option>
+                )}
+                {getMembershipsQuery?.data
+                  ?.filter((each) => each.userId !== session?.user?.id)
+                  ?.map((each) => (
+                    <Option key={each.id} value={each.id} sx={{ fontSize: 14 }}>
+                      {each?.user?.email || each?.user?.name}
+                    </Option>
+                  ))}
+              </SelectQueryParamFilter>
 
-          <SelectQueryParamFilter<EvalSchema>
-            filterName="assigneeId"
-            placeholder="Filter by Assignee"
-          >
-            {currentMembership && (
-              <Option value={currentMembership.id} sx={{ fontSize: 14 }}>
-                Me
-              </Option>
-            )}
-            {getMembershipsQuery?.data
-              ?.filter((each) => each.userId !== session?.user?.id)
-              ?.map((each) => (
-                <Option key={each.id} value={each.id} sx={{ fontSize: 14 }}>
-                  {each?.user?.email || each?.user?.name}
+              <SelectQueryParamFilter<ConversationChannel>
+                filterName="channel"
+                placeholder="Filter by Channel"
+              >
+                <Option
+                  key={ConversationChannel.mail}
+                  value={ConversationChannel.mail}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.mail}
                 </Option>
-              ))}
-          </SelectQueryParamFilter>
+                <Option
+                  key={ConversationChannel.website}
+                  value={ConversationChannel.website}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.website}
+                </Option>
+                <Option
+                  key={ConversationChannel.whatsapp}
+                  value={ConversationChannel.whatsapp}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.whatsapp}
+                </Option>
+                <Option
+                  key={ConversationChannel.telegram}
+                  value={ConversationChannel.telegram}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.telegram}
+                </Option>
 
-          <SelectQueryParamFilter<ConversationChannel>
-            filterName="channel"
-            placeholder="Filter by Channel"
-          >
-            <Option
-              key={ConversationChannel.mail}
-              value={ConversationChannel.mail}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.mail}
-            </Option>
-            <Option
-              key={ConversationChannel.website}
-              value={ConversationChannel.website}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.website}
-            </Option>
-            <Option
-              key={ConversationChannel.whatsapp}
-              value={ConversationChannel.whatsapp}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.whatsapp}
-            </Option>
+                <Option
+                  key={ConversationChannel.api}
+                  value={ConversationChannel.api}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.api}
+                </Option>
+                <Option
+                  key={ConversationChannel.form}
+                  value={ConversationChannel.form}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.form}
+                </Option>
+                <Option
+                  key={ConversationChannel.dashboard}
+                  value={ConversationChannel.dashboard}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.dashboard}
+                </Option>
 
-            <Option
-              key={ConversationChannel.api}
-              value={ConversationChannel.api}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.api}
-            </Option>
-            <Option
-              key={ConversationChannel.form}
-              value={ConversationChannel.form}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.form}
-            </Option>
-            <Option
-              key={ConversationChannel.dashboard}
-              value={ConversationChannel.dashboard}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.dashboard}
-            </Option>
+                <Option
+                  key={ConversationChannel.crisp}
+                  value={ConversationChannel.crisp}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.crisp}
+                </Option>
+                <Option
+                  key={ConversationChannel.slack}
+                  value={ConversationChannel.slack}
+                  sx={{ fontSize: 14 }}
+                >
+                  {ConversationChannel.slack}
+                </Option>
+              </SelectQueryParamFilter>
 
-            <Option
-              key={ConversationChannel.crisp}
-              value={ConversationChannel.crisp}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.crisp}
-            </Option>
-            <Option
-              key={ConversationChannel.slack}
-              value={ConversationChannel.slack}
-              sx={{ fontSize: 14 }}
-            >
-              {ConversationChannel.slack}
-            </Option>
-          </SelectQueryParamFilter>
+              <SelectQueryParamFilter<string>
+                filterName="agentId"
+                placeholder="Filter by Agent"
+              >
+                {getAgentsQuery.data?.map((each) => (
+                  <Option key={each.id} value={each.id}>
+                    {`🤖 ${each.name}`}
+                  </Option>
+                ))}
+              </SelectQueryParamFilter>
 
-          <SelectQueryParamFilter<string>
-            filterName="agentId"
-            placeholder="Filter by Agent"
-          >
-            {getAgentsQuery.data?.map((each) => (
-              <Option key={each.id} value={each.id}>
-                {`🤖 ${each.name}`}
-              </Option>
-            ))}
-          </SelectQueryParamFilter>
-
-          <SelectQueryParamFilter<EvalSchema>
-            filterName="eval"
-            placeholder="Filter by Evaluation"
-          >
-            <Option
-              key={MessageEval.good}
-              value={MessageEval.good}
-              sx={{ fontSize: 14 }}
-            >
-              🟢 Good
-            </Option>
-            <Option
-              key={MessageEval.bad}
-              value={MessageEval.bad}
-              sx={{ fontSize: 14 }}
-            >
-              🔴 Bad
-            </Option>
-          </SelectQueryParamFilter>
-          <SelectQueryParamFilter<EvalSchema>
-            filterName="priority"
-            placeholder="Filter by Priority"
-          >
-            <Option
-              key={ConversationPriority.LOW}
-              value={ConversationPriority.LOW}
-              sx={{ fontSize: 14 }}
-            >
-              Low
-            </Option>
-            <Option
-              key={ConversationPriority.MEDIUM}
-              value={ConversationPriority.MEDIUM}
-              sx={{ fontSize: 14 }}
-            >
-              Medium
-            </Option>
-            <Option
-              key={ConversationPriority.HIGH}
-              value={ConversationPriority.HIGH}
-              sx={{ fontSize: 14 }}
-            >
-              High
-            </Option>
-          </SelectQueryParamFilter>
+              <SelectQueryParamFilter<EvalSchema>
+                filterName="eval"
+                placeholder="Filter by Evaluation"
+              >
+                <Option
+                  key={MessageEval.good}
+                  value={MessageEval.good}
+                  sx={{ fontSize: 14 }}
+                >
+                  🟢 Good
+                </Option>
+                <Option
+                  key={MessageEval.bad}
+                  value={MessageEval.bad}
+                  sx={{ fontSize: 14 }}
+                >
+                  🔴 Bad
+                </Option>
+              </SelectQueryParamFilter>
+              <SelectQueryParamFilter<EvalSchema>
+                filterName="priority"
+                placeholder="Filter by Priority"
+              >
+                <Option
+                  key={ConversationPriority.LOW}
+                  value={ConversationPriority.LOW}
+                  sx={{ fontSize: 14 }}
+                >
+                  Low
+                </Option>
+                <Option
+                  key={ConversationPriority.MEDIUM}
+                  value={ConversationPriority.MEDIUM}
+                  sx={{ fontSize: 14 }}
+                >
+                  Medium
+                </Option>
+                <Option
+                  key={ConversationPriority.HIGH}
+                  value={ConversationPriority.HIGH}
+                  sx={{ fontSize: 14 }}
+                >
+                  High
+                </Option>
+              </SelectQueryParamFilter>
+            </Stack>
+          </Stack>
+          <Stack direction="row" spacing={2} sx={{ display: isMobile ? 'none' : 'flex' }}>
+            <ConversationExport
+              channel={router.query.channel as ConversationChannel}
+              agentId={router.query.agentId as string}
+              priority={router.query.priority as ConversationPriority}
+              assigneeId={router.query.assigneeId as string}
+            />
+          </Stack>
         </Stack>
-        <Stack direction="row" spacing={2}>
-          <ConversationExport />
-        </Stack>
-      </Stack>
 
+
+
+
+
+      
       <Sheet
         variant="outlined"
         sx={(theme) => ({
-          height: '100%',
+          position: 'relative',
+          height: 'calc(100dvh - 50px)',
+          maxHeight: 'calc(100dvh - 50px)',
+          overflow: 'hidden',
           borderRadius: 'sm',
           ml: 1,
         })}
       >
-        <Stack direction={'row'} sx={{ height: '100%' }}>
+
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }} // Muda a direção para 'column' em dispositivos móveis e 'row' em PCs 
+          sx={{ height: '100%' }}
+        >
           <Stack
             direction={'column'}
             sx={(theme) => ({
               [theme.breakpoints.down('sm')]: {
-                width: '100px',
+                width: '100%',
+                height: '25vh', // Define a altura como 35% da altura da tela em dispositivos móveis
               },
               [theme.breakpoints.up('sm')]: {
                 width: '300px',
+                height: '100%', // Em PCs, altura total
               },
             })}
           >
@@ -927,15 +959,6 @@ export default function LogsPage() {
                           backgroundColor: theme.palette.action.hover,
                           borderRadius: 0,
                         },
-
-                        // backgroundColor: {
-                        //   [ConversationStatus.RESOLVED]:
-                        //     theme.palette.success.softActiveBg,
-                        //   [ConversationStatus.UNRESOLVED]:
-                        //     theme.palette.danger.softActiveBg,
-                        //   [ConversationStatus.HUMAN_REQUESTED]:
-                        //     theme.palette.warning.softActiveBg,
-                        // }[each?.status] as ColorPaletteProp,
 
                         ...(state.currentConversationId === each.id && {
                           backgroundColor: theme.palette.action.hover,
@@ -1068,7 +1091,13 @@ export default function LogsPage() {
                               level="body-sm"
                               className="pr-4 line-clamp-2"
                             >
-                              {each?.messages?.[0]?.text}
+                              {/* last human message */}
+                              {each?.messages?.[each?.messages.length - 1]
+                                ?.from === 'human'
+                                ? each?.messages?.[each?.messages.length - 1]
+                                    ?.text
+                                : each?.messages?.[each?.messages.length - 2]
+                                    ?.text}
                             </Typography>
                           </Stack>
                           <Stack
@@ -1137,9 +1166,15 @@ export default function LogsPage() {
             </List>
           </Stack>
 
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" sx={{ display: { xs: 'none', sm: 'block' } }} /> {/* Esconde o divisor em dispositivos móveis */}
+
           <Box
-            sx={{ width: '100%', height: '100%', overflow: 'hidden', pb: 9 }}
+            sx={{
+              width: { xs: '100%', sm: 'calc(100% - 300px)' }, // Ajusta a largura conforme o dispositivo
+              height: '100%',
+              overflow: 'hidden',
+              pb: 9,
+            }}
           >
             {getConversationQuery.data && (
               <>
@@ -1166,25 +1201,6 @@ export default function LogsPage() {
                   startDecorator={<Notifications />}
                   endDecorator={
                     <Stack direction="row" spacing={1}>
-                      {/* {!isHumanHandoffButtonHidden && (
-                        <Button
-                          variant="solid"
-                          color={state.isAiEnabled ? 'primary' : 'warning'}
-                          size="md"
-                          loading={conversationUpdater.isMutating}
-                          endDecorator={
-                            state.isAiEnabled ? (
-                              <CommentRoundedIcon fontSize="sm" />
-                            ) : (
-                              <SmartToyIcon fontSize="sm" />
-                            )
-                          }
-                          onClick={toggleAi}
-                        >
-                          {state.isAiEnabled ? 'Reply' : 'Re-Enable AI'}
-                        </Button>
-                      )} */}
-
                       <BannerActions
                         status={getConversationQuery?.data?.status}
                         email={getConversationQuery?.data?.lead?.email!}
@@ -1209,7 +1225,15 @@ export default function LogsPage() {
               </>
             )}
 
-            <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
+            <Stack
+              direction="row"
+              sx={{
+                position: 'relative',
+                height: '100%',
+                minHeight: '100%',
+                width: '100%',
+              }}
+            >
               <ChatBox
                 messages={
                   getConversationQuery?.data?.messages?.map((each) => ({
@@ -1219,9 +1243,11 @@ export default function LogsPage() {
                     metadata: each.metadata as any,
                     createdAt: each.createdAt,
                     eval: each.eval,
+                    conversationId: each.conversationId || '',
                     approvals: each.approvals || [],
                     sources: (each.sources as any) || [],
                     attachments: each.attachments || [],
+                    submission: each.submission!,
                     iconUrl: (each?.from === 'human'
                       ? each?.user?.customPicture || each?.user?.picture
                       : each?.agent?.iconUrl) as string,
@@ -1234,8 +1260,8 @@ export default function LogsPage() {
                   })) || []
                 }
                 isLoadingConversation={getConversationQuery?.isLoading}
-                onSubmit={(message, attachments) => {
-                  return handleOperatorChat(message, attachments);
+                onSubmit={({ query, files }) => {
+                  return handleOperatorChat(query, files);
                 }}
                 readOnly={!!state.isAiEnabled || !state.currentConversationId}
                 handleEvalAnswer={handleEvalAnswer}
@@ -1267,18 +1293,28 @@ export default function LogsPage() {
                     }}
                   />
                 }
+                fromInbox
               />
 
-              <Divider orientation="vertical" />
-
+              <Divider
+                      orientation="vertical"
+                      sx={{
+                        [theme.breakpoints.down('sm')]: {
+                          display: 'none',
+                        },
+                      }}
+                    />
               <Stack
-                sx={(t) => ({
+                sx={{
                   maxWidth: '300px',
                   width: '100%',
                   height: '100%',
-                  // bgcolor: t.palette.background.paper,
+                  [theme.breakpoints.down('sm')]: {
+                    display: 'none',
+                  },
+                  // bgcolor: theme.palette.background.paper,
                   // p: 2,
-                })}
+                }}
               >
                 {state.currentConversationId && (
                   <InboxConversationSettings

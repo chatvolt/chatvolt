@@ -272,24 +272,52 @@ const KeyValueFieldArray = ({
                 {...methods.register(`${name}.${index}.value` as any)}
                 disabled={!!field.isUserProvided}
                 onChange={pDebounce((e) => {
-                  try {
-                    const Url = new URL(url);
-                    const searchParams = Url.search.replace('?', '').split('&');
-                    const [keyInUrl, valueInUrl] =
-                      searchParams[index].split('=');
+                  if (
+                    name.includes('queryParameters') ||
+                    name.includes('pathVariables')
+                  ) {
+                    try {
+                      const Url = new URL(url);
+                      const searchParams = Url.search
+                        .replace('?', '')
+                        .split('&');
+                      const [keyInUrl, valueInUrl] =
+                        searchParams[index].split('=');
 
-                    if (valueInUrl !== e.target.value) {
-                      searchParams[index] = `${keyInUrl}=${e.target.value}`;
+                      if (valueInUrl !== e.target.value) {
+                        searchParams[index] = `${keyInUrl}=${e.target.value}`;
+                      }
+
+                      Url.search = `?${searchParams.join('&')}`;
+
+                      methods.setValue(
+                        `${prefix}config.url`,
+                        decodeURI(Url.toString())
+                      );
+                    } catch (e) {
+                      console.log('error', e);
                     }
+                    try {
+                      const Url = new URL(url);
+                      const searchParams = Url.search
+                        .replace('?', '')
+                        .split('&');
+                      const [keyInUrl, valueInUrl] =
+                        searchParams[index].split('=');
 
-                    Url.search = `?${searchParams.join('&')}`;
+                      if (valueInUrl !== e.target.value) {
+                        searchParams[index] = `${keyInUrl}=${e.target.value}`;
+                      }
 
-                    methods.setValue(
-                      `${prefix}config.url`,
-                      decodeURI(Url.toString())
-                    );
-                  } catch (e) {
-                    console.log('error', e);
+                      Url.search = `?${searchParams.join('&')}`;
+
+                      methods.setValue(
+                        `${prefix}config.url`,
+                        decodeURI(Url.toString())
+                      );
+                    } catch (e) {
+                      console.log('error', e);
+                    }
                   }
                 }, 500)}
               />
@@ -440,7 +468,6 @@ type Props = {
 
 function HttpToolInput({ name }: Props) {
   const methods = useFormContext<HttpToolSchema | CreateAgentSchema>();
-  // Narrow down to prevent inference as string.
   const prefix: `tools.${number}.` | '' = name ? `${name}.` : '';
   const templatesModal = useModal();
   const [withApprovalChecked] = methods.watch([`${prefix}config.withApproval`]);
@@ -459,13 +486,7 @@ function HttpToolInput({ name }: Props) {
 
   return (
     <Stack>
-      <Stack
-        direction="row"
-        sx={{
-          mt: -3,
-          mb: -2,
-        }}
-      >
+      <Stack direction="row">
         <Button
           variant="outlined"
           onClick={templatesModal.open}
@@ -591,43 +612,83 @@ function HttpToolInput({ name }: Props) {
             },
           }}
         >
-          <Card>
-            <Stack gap={2} direction="row">
-              <Stack>
-                <Typography level="body-md">Random Cat Picture</Typography>
-                <Typography level="body-sm">
-                  Ask your agent to fetch a random cat picture from
-                  thecatapi.com
-                </Typography>
-              </Stack>
-              <Button
-                size="sm"
-                sx={{ ml: 'auto', alignSelf: 'center' }}
-                onClick={() => {
-                  methods.setValue(
-                    `${prefix}config`,
-                    {
-                      name: 'Random Cat Image',
-                      description: 'Useful for getting a random cat image',
-                      url: 'https://api.thecatapi.com/v1/images/search',
-                      method: 'GET',
-                      headers: [],
-                      queryParameters: [],
-                      body: [],
-                    },
-                    {
-                      shouldDirty: true,
-                      shouldValidate: true,
-                    }
-                  );
+          <Stack gap={1}>
+            <Card>
+              <Stack gap={2} direction="row">
+                <Stack>
+                  <Typography level="body-md">Random Cat Picture</Typography>
+                  <Typography level="body-sm">
+                    Ask your agent to fetch a random cat picture from
+                    thecatapi.com
+                  </Typography>
+                </Stack>
+                <Button
+                  size="sm"
+                  sx={{ ml: 'auto', alignSelf: 'center' }}
+                  onClick={() => {
+                    methods.setValue(
+                      `${prefix}config`,
+                      {
+                        name: 'Random Cat Image',
+                        description: 'Useful for getting a random cat image',
+                        url: 'https://api.thecatapi.com/v1/images/search',
+                        method: 'GET',
+                        headers: [],
+                        queryParameters: [],
+                        body: [],
+                      },
+                      {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      }
+                    );
 
-                  templatesModal.close();
-                }}
-              >
-                Select
-              </Button>
-            </Stack>
-          </Card>
+                    templatesModal.close();
+                  }}
+                >
+                  Select
+                </Button>
+              </Stack>
+            </Card>
+
+            <Card>
+              <Stack gap={2} direction="row">
+                <Stack>
+                  <Typography level="body-md">Random Cat Picture</Typography>
+                  <Typography level="body-sm">
+                    Ask your agent to fetch a random cat picture from
+                    thecatapi.com
+                  </Typography>
+                </Stack>
+                <Button
+                  size="sm"
+                  sx={{ ml: 'auto', alignSelf: 'center' }}
+                  onClick={() => {
+                    methods.setValue(
+                      `${prefix}config`,
+                      {
+                        name: 'Random Cat Image',
+                        description: 'Useful for getting a random cat image',
+                        url: 'https://api.thecatapi.com/v1/images/search',
+                        method: 'GET',
+                        headers: [],
+                        queryParameters: [],
+                        body: [],
+                      },
+                      {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      }
+                    );
+
+                    templatesModal.close();
+                  }}
+                >
+                  Select
+                </Button>
+              </Stack>
+            </Card>
+          </Stack>
         </templatesModal.component>
       </Stack>
     </Stack>

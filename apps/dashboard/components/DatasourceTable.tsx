@@ -31,7 +31,6 @@ import * as React from 'react';
 import useSWR from 'swr';
 
 import useGetDatastoreQuery from '@app/hooks/useGetDatastoreQuery';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import pagination from '@chatvolt/lib/pagination';
 import relativeDate from '@chatvolt/lib/relative-date';
@@ -42,6 +41,7 @@ import {
   DatasourceType,
   Prisma,
 } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 const SynchButton = ({
   datasource,
@@ -413,7 +413,7 @@ export default function DatasourceTable({
           width: '100%',
           borderRadius: 'md',
           overflow: 'auto',
-          minHeight: 0,
+          minHeight: '300px', // Sem isso quebra no Mac
         }}
       >
         <Table

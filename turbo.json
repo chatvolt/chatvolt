@@ -24,6 +24,7 @@
     },
     "lint": {},
     "typecheck": {},
+    "check": {},
     "sendDailyLeads": {
       "dependsOn": ["@chatvolt/prisma#prisma:generate"],
       "cache": false

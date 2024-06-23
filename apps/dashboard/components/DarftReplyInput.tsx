@@ -18,16 +18,15 @@ import MenuItem from '@mui/joy/MenuItem';
 import React, { RefObject, useEffect } from 'react';
 import useSWR from 'swr';
 
-import useChat from '@app/hooks/useChat';
-import useStateReducer from '@app/hooks/useStateReducer';
 import { getAgents } from '@app/pages/api/agents';
 
 import { fetchEventSource } from '@chatvolt/lib/fetch-event-source';
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { SSE_EVENT } from '@chatvolt/lib/types';
 import { Prisma } from '@chatvolt/prisma';
-
-import Loader from './Loader';
+import useChat from '@chatvolt/ui/hooks/useChat';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Loader from '@chatvolt/ui/Loader';
 
 interface MenuItem {
   name: string;
@@ -41,19 +40,19 @@ interface MenuSection {
 }
 
 enum ActionsSystemPrompt {
-  grammar = `Check for grammatical errors and correct them if any are found, send back the same user query without doing anything.`,
+  grammar = `Check for grammatical errors and correct them if any are found, send back the same user query without doing anything. MANDATORY: REPLY IN THE SAME LANGUAGE AS THE USER'S MESSAGE.`,
   summarize = `The user has provided detailed text that needs to be made more concise. Extract the key points and main ideas
    from the text. Create a succinct summary that captures the essence of the message but is significantly shorter in length. 
-   The summary should be clear, coherent, and retain all critical information.`,
+   The summary should be clear, coherent, and retain all critical information. MANDATORY: REPLY IN THE SAME LANGUAGE AS THE USER'S MESSAGE.`,
   casual = `The user's message may come across as overly formal or stiff. Your task is to transform the message into one that 
   is casual and relaxed. Use conversational language and a friendly tone, akin to how one might chat with a friend or a casual acquaintance.
-   Ensure the message remains true to the user's original intent.`,
+   Ensure the message remains true to the user's original intent. MANDATORY: REPLY IN THE SAME LANGUAGE AS THE USER'S MESSAGE.`,
   formal = `The user's text may be casual or informal and needs to be professionalized. Please elevate the language to a formal register
    suitable for a professional or academic environment. Employ appropriate terminology, polite expressions, and a respectful tone while 
-   preserving the original message's intent and information content.`,
+   preserving the original message's intent and information content. MANDATORY: REPLY IN THE SAME LANGUAGE AS THE USER'S MESSAGE.`,
   fun = `The user's message is to be reimagined in a fun, lighthearted manner. Inject humor, playfulness, and a spirited tone into the content.
    Get creative and add an element of entertainment to the message while ensuring that the fundamental message is still communicated effectively
-    to the audience.`,
+    to the audience. MANDATORY: REPLY IN THE SAME LANGUAGE AS THE USER'S MESSAGE.`,
 }
 
 type Props = {

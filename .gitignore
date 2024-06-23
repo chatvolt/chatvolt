@@ -39,11 +39,11 @@ migration.ts
 dist
 packages/chat-bubble/chat-bubble*
 
-.dev/chatvolt/data/*
+.dev/appchatvolt/data/*
 
 .pnpm-store/
 
-.dev/chatvolt/app.env
+.dev/appchatvolt/app.env
 .config
 .cache
 .npm

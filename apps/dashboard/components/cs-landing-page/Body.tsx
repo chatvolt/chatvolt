@@ -102,51 +102,51 @@ function Body({ hero2 }: Props) {
         {hero2 ? <Hero2 /> : <Hero />}
       </div>
 
-      <PartnerLogos />
+      {/*<PartnerLogos />*/}
 
       <Feature
         label="Productivity Boost"
-        title={'Drastically cut down on support inquiries'}
+        title={'Drastically reduce support and service costs'}
         items={[
           {
-            name: 'Always available',
-            description: `GPT-4 powered AI agents are available 24/7/365 to answer your customers' questions.`,
+            name: 'Continuous availability',
+            description: `Our AI agents, powered by the best LLMs in the market, are available 24/7, ready to sell, assist, and clarify doubts of your customers on any subject they have been trained for.`,
             icon: Battery100Icon,
           },
 
           {
-            name: 'Delegate routine queries',
+            name: 'Delegation of routine inquiries',
             description:
-              'Our AI will handles routine queries and common issues, allowing your support team to focus on more complex, high-priority tasks.',
+              'Our AI manages routine queries and common issues that make up the majority of inquiries, freeing up your support team to focus on more complex and high-priority tasks.',
             icon: ArrowTrendingUpIcon,
           },
           {
-            name: "Enhance customer's satisfaction",
+            name: "Increase customer satisfaction",
             description:
-              'By resolving minor concerns before they reach your human agents, our AI not only streamlines your support workflow but also enhances customer satisfaction through prompt, accurate responses.',
+              'With quick, accurate responses, always presented in an extremely polite manner, you will see a significant increase in your customers satisfaction.',
             icon: FaceSmileIcon,
           },
         ]}
-        mediaUrl="/landing-page/demo-resolve.mp4"
+        mediaUrl="/landing-page/productivity_boost.png"
         inversed
       />
 
       <Feature
         label="Tailored to your business"
-        title={'Trustworthy AI trained on your data'}
+        title={'Reliable AI, trained based on your data'}
         // description={
         //   "Chatvolt's AI is trained on your data to provide the best answers to your customers."
         // }
         items={[
           {
-            name: 'Load data from any source',
-            description: `Easily connect your data or upload documents. `,
+            name: 'Import data from any source',
+            description: `Easily connect your data, applications, upload documents, and even learn from the content of your website or YouTube channel.`,
             icon: CloudArrowUpIcon,
           },
           {
             name: 'Multilingual',
             description:
-              'We handle translations of your content in +100 languages automatically.',
+              'Conduct training in your language and let us handle translations of your content in over 100 languages automatically.',
             icon: LanguageIcon,
           },
           // {
@@ -156,73 +156,74 @@ function Body({ hero2 }: Props) {
           //   icon: CheckBadgeIcon,
           // },
           {
-            name: 'Sources included',
+            name: 'Embedded sources',
             description:
-              'Every response is backed by sources extracted from the uploaded document.',
+              'Each response is supported by sources extracted from the information and documents of your submitted training.',
             icon: LinkIcon,
           },
         ]}
-        mediaUrl="/landing-page/datasources3.png"
+        mediaUrl="/landing-page/tailored_business.png"
       />
 
       <Languages />
 
       <Feature
         label="You are in control"
-        title={'Smart Human Handoff'}
+        title={'Smart Transition to Human Assistance'}
         // description="Our AI technology adeptly navigates complex issues, funneling them to your human support teams for a personalized touch—amplifying customer satisfaction."
         items={[
           {
             name: 'Focus on complex issues',
-            description: `Our AI intuitively redirects the conversation to your human support team.`,
+            description: `Our AI intuitively redirects the conversation to your human support team as needed.`,
             icon: HandRaisedIcon,
           },
           {
             name: 'Conversation Summary',
-            description: `We send a comprehensive summary of the interaction to your support personnel, enabling them to pick up right where the AI left off.`,
+            description: `We provide a detailed summary of the interaction to your support team, allowing them to pick up exactly where the AI left off.`,
             icon: LightBulbIcon,
           },
           {
-            name: 'Your support team on steroids',
-            description: `Maintain high-quality customer engagement with the perfect blend of AI efficiency and human touch, ensuring that no query goes unanswered and every customer interaction is satisfactory.`,
+            name: 'Your reinforced support team',
+            description: `Maintain high-quality engagement with the customer, blending AI efficiency with a human touch, ensuring no question goes unanswered and every customer interaction is satisfactory.`,
             icon: BoltIcon,
           },
         ]}
         // description="When a query surpasses the scope of our autonomous agent, it intuitively redirects the conversation to your human support team. This ensures that your customers continue to receive personalized attention without any hitches. Our AI not only identifies the precise moment for handoff but also provides a comprehensive summary of the interaction to your support personnel, enabling them to pick up right where the AI left off. Maintain high-quality customer engagement with the perfect blend of AI efficiency and human touch, ensuring that no query goes unanswered and every customer interaction is satisfactory."
-        mediaUrl="/landing-page/demo-handoff.mp4"
+        //mediaUrl="/landing-page/demo-handoff.mp4"
+        mediaUrl="/landing-page/you_control.png"
         inversed
       />
 
       <Feature
         label="Tranform visitors into customers"
         title={'Generate Leads'}
-        description="Leverage the prowess of our autonomous customer support agent to not just resolve queries but also identify and nurture potential leads."
-        mediaUrl="/landing-page/demo-lead.jpg"
+        description="Maximize the capabilities of our autonomous customer support agent to not only resolve inquiries but also identify and register potential leads."
+        mediaUrl="/landing-page/visitors_customers.png"
       />
 
       <Feature
         label="Fine-tuning"
-        title={'Review and improve your AI'}
+        title={'Analysis and Optimization of Your AI'}
         // description="Our AI technology adeptly navigates complex issues, funneling them to your human support teams for a personalized touch—amplifying customer satisfaction."
         // description="Easily review your AI's performance in real-time, identify areas for enhancement, and iteratively train it to meet your support objectives. Our intuitive interface facilitates continuous improvement, making your autonomous agent increasingly adept at delivering exceptional customer experiences."
         items={[
           {
             name: 'Answers Rating',
-            description: `Customers can rate the answers provided by the AI, allowing you to identify areas for improvement.`,
+            description: `You can evaluate the responses provided by the AI, providing valuable feedback for the continuous improvement of your AI.`,
             icon: HandThumbUpIcon,
           },
           {
-            name: 'Review',
-            description: `Easily review your AI's performance and iteratively train it to meet your support objectives`,
+            name: 'Review and Enhancement',
+            description: `Easily review and enhance the responses generated by the AI.`,
             icon: MagnifyingGlassIcon,
           },
           {
-            name: 'Zero-inbox Goal',
-            description: `You have the option to manually mark a conversation as resolved, or let the AI do it for you. Zero-inbox means no more open tickets!`,
+            name: 'Automatic Resolution',
+            description: `You have the option to manually mark a conversation as resolved or let the AI do it for you.`,
             icon: CheckCircleIcon,
           },
         ]}
-        mediaUrl="/landing-page/inbox.jpg"
+        mediaUrl="/landing-page/inbox.png"
         inversed
       />
 
@@ -235,7 +236,7 @@ function Body({ hero2 }: Props) {
         
       /> */}
 
-      <Feature
+      {/* <Feature
         label="Deploy Anywhere"
         title={'Omnichannel'}
         // description="GPT-4 powered AI agents scale on demand to help you handle more requests faster so you can ditch deflection and containment KPIs and, instead, embrace resolution as the ultimate mark of success."
@@ -256,9 +257,9 @@ function Body({ hero2 }: Props) {
         }
         // description="Our autonomous agent seamlessly integrates across multiple communication platforms—be it email, chat, social media, or phone—providing a consistent and efficient support experience. No matter where your customers reach out, our AI-driven agent is there to assist, ensuring every interaction is handled with precision and understanding. Elevate your customer service to a new level of excellence, with streamlined operations and satisfied customers across all channels."
         mediaUrl="/landing-page/deploy.jpg"
-      />
+      /> */}
 
-      <Feature
+      {/* <Feature
         label="Amazing Experience"
         title={'More than a FAQ Chatbot'}
         // description="GPT-4 powered AI agents scale on demand to help you handle more requests faster so you can ditch deflection and containment KPIs and, instead, embrace resolution as the ultimate mark of success."
@@ -282,18 +283,18 @@ function Body({ hero2 }: Props) {
           },
         ]}
         inversed
-      />
+      /> */}
 
       <Integrations />
 
-      <Feature
+      {/* <Feature
         label="We respect your privacy"
-        title={'GDPR Compliant'}
+        title={'LGPD Compliant'}
         mediaUrl="/landing-page/eu-flag.png"
         items={[
           {
-            name: 'Founded in France',
-            description: `All servers and databases are located in Europe.`,
+            name: 'Founded in Brazil',
+            description: `All servers and databases are located in USA.`,
             icon: CircleStackIcon,
           },
           {
@@ -308,7 +309,7 @@ function Body({ hero2 }: Props) {
             icon: FaceSmileIcon,
           },
         ]}
-      />
+      /> */}
 
       <FAQ />
 

@@ -11,7 +11,7 @@ import { Middleware } from 'next-connect';
 import requestIp from 'request-ip';
 import { v4 as uuidv4 } from 'uuid';
 
-import generateFunId from '@chatvolt/lib/generate-fun-id';
+import generateIdByEmail from '@chatvolt/lib/generate-id-by-email';
 import logger from '@chatvolt/lib/logger';
 import { AppNextApiRequest } from '@chatvolt/lib/types/index';
 import {
@@ -64,7 +64,7 @@ const CustomPrismaProvider = (req: NextApiRequest) => (p: PrismaClient) => {
               role: 'OWNER',
               organization: {
                 create: {
-                  name: generateFunId(),
+                  name: generateIdByEmail(data.email),
                   apiKeys: {
                     create: {
                       key: uuidv4(),
@@ -217,14 +217,16 @@ export const authOptions = (req: NextApiRequest): AuthOptions => {
           });
         };
 
+        const defaultOrgId = user?.memberships?.[0]?.organizationId;
+                                    
         if (!found) {
-          // User has no access to this organization anymore, update the session
-          const defaultOrgId = user?.memberships?.[0]?.organizationId;
-
+          // User has no access to this organization anymore, and is not SuperADM Org > update the session
+          
           const updated = await handleUpdateOrg(defaultOrgId!);
-
           organization = updated.organization!;
+
         } else if (trigger === 'update' && newSession?.orgId) {
+          
           const found = user?.memberships?.find(
             (one) => one.organizationId === newSession?.orgId
           );
@@ -232,6 +234,7 @@ export const authOptions = (req: NextApiRequest): AuthOptions => {
           if (!found) {
             throw new Error('Unauthorized');
           }
+
 
           const updated = await handleUpdateOrg(newSession?.orgId!);
 

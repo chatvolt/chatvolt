@@ -24,7 +24,6 @@ import React, { useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 import useSWR from 'swr';
 
-import CopyButton from '@app/components/CopyButton';
 import useInboxConversation from '@app/hooks/useInboxConversation';
 import { getMemberships } from '@app/pages/api/memberships';
 
@@ -36,6 +35,7 @@ import {
   ConversationStatus,
   Prisma,
 } from '@chatvolt/prisma';
+import CopyButton from '@chatvolt/ui/CopyButton';
 
 import { convertToCountryName } from '../charts/GeoChart';
 import InboxConversationFormProvider from '../InboxConversationFormProvider';
@@ -87,7 +87,7 @@ function InboxConversationSettings({
   const location =
     query?.data?.participantsContacts?.[0]?.metadata ||
     query?.data?.participantsVisitors?.[0]?.metadata;
-
+    
   return (
     <InboxConversationFormProvider id={conversationId}>
       {({ methods }) => {
@@ -141,6 +141,14 @@ function InboxConversationSettings({
             {!isHumanHandoffButtonHidden && <Divider />}
 
             <FormControl>
+              <FormLabel>
+                {query?.data?.messages?.[0]?.user?.name || query?.data?.messages?.[0]?.contact?.firstName || ""}
+              </FormLabel>
+              <Divider />
+            </FormControl>
+
+            <FormControl>
+              
               <FormLabel>Status</FormLabel>
 
               <Controller

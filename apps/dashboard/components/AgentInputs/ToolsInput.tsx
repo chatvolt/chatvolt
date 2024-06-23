@@ -1,6 +1,8 @@
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import EditIcon from '@mui/icons-material/Edit';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import Alert from '@mui/joy/Alert';
 import Button from '@mui/joy/Button';
@@ -12,15 +14,13 @@ import Option from '@mui/joy/Option';
 import Select from '@mui/joy/Select';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import clsx from 'clsx';
 import cuid from 'cuid';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import useSWR from 'swr';
 
-import useDeepCompareEffect from '@app/hooks/useDeepCompareEffect';
 import useModal from '@app/hooks/useModal';
 import { getDatastores } from '@app/pages/api/datastores';
 
@@ -36,15 +36,16 @@ import {
   AppDatasource as Datasource,
   Form,
   Prisma,
-  Tool,
   ToolType,
 } from '@chatvolt/prisma';
+import useDeepCompareEffect from '@chatvolt/ui/hooks/useDeepCompareEffect';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import HttpToolForm, { HttpToolTestForm } from '../HttpToolForm';
 import LeadCaptureToolForm from '../LeadCaptureToolForm';
 import LeadCaptureToolFormInput from '../LeadCaptureToolForm/LeadCaptureToolFormInput';
 
-import FormToolInput from './FormToolInput';
+import { EditFormToolInput, NewFormToolInput } from './FormToolInput';
 import HttpToolInput from './HttpToolInput';
 type Props = {
   onHttpToolClick?: (index: number) => any;
@@ -58,62 +59,99 @@ const CreateDatastoreModal = dynamic(
 );
 
 type ToolCardProps = Partial<NormalizedTool> & {
-  children?: React.ReactNode;
-  onClick?: any;
+  type: ToolType;
+  mode: 'create' | 'edit';
+  onDelete?(): any;
+  onEdit?(): any;
+  onCreate?(): any;
   link?: string;
 };
 
-const ToolCard = (props: ToolCardProps) => {
-  return (
-    <Card
-      variant="outlined"
-      sx={{ borderRadius: 10, width: '100%' }}
-      size="sm"
-      onClick={props.onClick}
-    >
-      <Stack direction={'row'} alignItems={'center'} gap={2}>
-        {props.children}
+const editableTools = ['form', 'http', 'lead_capture'];
 
+const ToolCard = ({
+  name,
+  description,
+  type,
+  mode,
+  link,
+  onCreate,
+  onDelete,
+  onEdit,
+}: ToolCardProps) => {
+  return (
+    <Card variant="outlined" sx={{ borderRadius: 10, width: '100%' }} size="sm">
+      <Stack
+        direction={'row'}
+        alignItems={'center'}
+        justifyContent="space-between"
+        gap={2}
+      >
         <Stack
           direction={'column'}
           spacing={0}
           width={'100%'}
           sx={{ maxWidth: '85%' }}
         >
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-          >
+          <Stack direction="row" spacing={2} alignItems={'center'}>
             <Stack sx={{ minWidth: 0 }}>
-              {props.link ? (
-                <Link href={props.link} className="underline">
-                  <Typography level="body-md">{props.name}</Typography>
+              {link ? (
+                <Link href={link as unknown as URL}>
+                  <Typography level="body-md">{name}</Typography>
                 </Link>
               ) : (
-                <Typography
-                  level="body-md"
-                  className={clsx({
-                    underline: !!props.onClick,
-                    'cursor-pointer': !!props.onClick,
-                  })}
-                >
-                  {props.name}
-                </Typography>
+                <Typography level="body-md">{name}</Typography>
               )}
             </Stack>
-            {props.type && (
-              <Stack ml="auto">
+            {type && (
+              <Stack>
                 <Chip variant="soft" size="md" color="primary">
-                  {props.type}
+                  {type}
                 </Chip>
               </Stack>
             )}
           </Stack>
           <Typography className="truncate" level="body-sm">
-            {props.description}
+            {description}
           </Typography>
+        </Stack>
+        <Stack direction="row">
+          {mode === 'edit' && (
+            <>
+              {editableTools.includes(type) && (
+                <IconButton
+                  variant="plain"
+                  color="neutral"
+                  size="md"
+                  onClick={onEdit}
+                >
+                  <TuneRoundedIcon />
+                </IconButton>
+              )}
+
+              <IconButton
+                variant="plain"
+                color="danger"
+                size="md"
+                onClick={onDelete}
+              >
+                <RemoveCircleOutlineRoundedIcon />
+              </IconButton>
+            </>
+          )}
+
+          {mode === 'create' && (
+            <>
+              <IconButton
+                variant="plain"
+                color="success"
+                size="md"
+                onClick={onCreate}
+              >
+                <AddCircleOutlineRoundedIcon />
+              </IconButton>
+            </>
+          )}
         </Stack>
       </Stack>
     </Card>
@@ -121,22 +159,25 @@ const ToolCard = (props: ToolCardProps) => {
 };
 
 function ToolsInput({}: Props) {
-  const { watch, setValue, register, formState, getValues } =
+  const { watch, setValue, formState, getValues } =
     useFormContext<CreateAgentSchema>();
   const [isCreateDatastoreModalOpen, setIsCreateDatastoreModalOpen] =
     useState(false);
   const btnSubmitRef = useRef<HTMLButtonElement>(null);
   const isToolValidRef = useRef(false);
 
-  const [currentToolIndex, setCurrentToolIndex] = useState(-1);
+  const [state, setState] = useStateReducer({
+    currentToolIndex: -1,
+    currentToolId: '',
+  });
 
   const currentToolConfig = getValues([
-    `tools.${currentToolIndex}.config.url`,
-    `tools.${currentToolIndex}.config.body`,
-    `tools.${currentToolIndex}.config.headers`,
-    `tools.${currentToolIndex}.config.method`,
-    `tools.${currentToolIndex}.config.pathVariables`,
-    `tools.${currentToolIndex}.config.queryParameters`,
+    `tools.${state.currentToolIndex}.config.url`,
+    `tools.${state.currentToolIndex}.config.body`,
+    `tools.${state.currentToolIndex}.config.headers`,
+    `tools.${state.currentToolIndex}.config.method`,
+    `tools.${state.currentToolIndex}.config.pathVariables`,
+    `tools.${state.currentToolIndex}.config.queryParameters`,
   ]);
 
   const newDatastoreModal = useModal();
@@ -147,6 +188,7 @@ function ToolsInput({}: Props) {
     },
   });
   const newFormToolModal = useModal();
+  const editFormToolModal = useModal();
   const newLeadCaptureToolModal = useModal();
   const editLeadCaptureToolModal = useModal();
   const validateToolModal = useModal();
@@ -155,7 +197,10 @@ function ToolsInput({}: Props) {
     Prisma.PromiseReturnType<typeof getDatastores>
   >('/api/datastores', fetcher);
 
-  const tools = watch('tools') || [];
+  const tools = (watch('tools') || []) as Exclude<
+    ToolSchema,
+    { type: 'connector' } | { type: 'agent' }
+  >[];
 
   const formattedTools = tools.map(agentToolFormat);
 
@@ -168,7 +213,7 @@ function ToolsInput({}: Props) {
   const hasLeadCapture = !!tools.find(
     (tool) => tool.type === ToolType.lead_capture
   );
-  const getToolLink = (tool: Tool) => {
+  const getToolLink = (tool: Record<string, unknown>) => {
     switch (tool.type) {
       case ToolType.datastore:
         return `${RouteNames.DATASTORES}/${tool.datastoreId}`;
@@ -188,6 +233,40 @@ function ToolsInput({}: Props) {
     },
     [tools, setValue]
   );
+
+  const handleToolEdit = ({
+    tool,
+    index,
+  }: {
+    tool: { type: ToolType; id?: string };
+    index: number;
+  }) => {
+    setState({ currentToolIndex: index });
+    switch (tool.type) {
+      case 'http':
+        editApiToolForm.open();
+        break;
+      case 'lead_capture':
+        editLeadCaptureToolModal.open();
+        break;
+      case 'form':
+        editFormToolModal.open();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleDeleteTool = (toolId: string) => {
+    setValue(
+      'tools',
+      tools.filter((each) => each.id !== toolId),
+      {
+        shouldDirty: true,
+        shouldValidate: true,
+      }
+    );
+  };
 
   // config changed, allow re-test.
   useDeepCompareEffect(() => {
@@ -216,41 +295,16 @@ function ToolsInput({}: Props) {
             type={tool.type}
             name={tool.name!}
             description={tool.description!}
-            onClick={
-              tool.type === 'http'
-                ? () => {
-                    setCurrentToolIndex(index);
-                    editApiToolForm.open();
-                  }
-                : tool.type === 'lead_capture'
-                ? () => {
-                    setCurrentToolIndex(index);
-                    editLeadCaptureToolModal.open();
-                  }
-                : undefined
+            mode="edit"
+            onEdit={() =>
+              handleToolEdit({
+                tool: { type: tool.type, id: tool.id },
+                index,
+              })
             }
+            onDelete={() => handleDeleteTool(tool.id)}
             link={getToolLink(tool)}
-          >
-            <IconButton
-              variant="plain"
-              color="danger"
-              size="sm"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setValue(
-                  'tools',
-                  tools.filter((each) => each.id !== tool.id),
-                  {
-                    shouldDirty: true,
-                    shouldValidate: true,
-                  }
-                );
-              }}
-            >
-              <RemoveCircleOutlineRoundedIcon />
-            </IconButton>
-          </ToolCard>
+          />
         ))}
       </Stack>
 
@@ -258,115 +312,71 @@ function ToolsInput({}: Props) {
 
       <ToolCard
         id="datastore-tool"
+        type={ToolType.datastore}
         name={agentToolConfig.datastore.title}
         description={agentToolConfig.datastore.description}
-      >
-        <IconButton
-          size="sm"
-          variant="plain"
-          color="success"
-          onClick={() => {
-            newDatastoreModal.open();
-          }}
-        >
-          <AddCircleOutlineRoundedIcon />
-        </IconButton>
-      </ToolCard>
+        mode="create"
+        onCreate={newDatastoreModal.open}
+      />
 
       <ToolCard
         id="http-tool"
+        type={ToolType.http}
         name={agentToolConfig.http.title}
         description={agentToolConfig.http.description}
-      >
-        <IconButton
-          size="sm"
-          variant="plain"
-          color="success"
-          onClick={() => {
-            newApiToolForm.open();
-          }}
-        >
-          <AddCircleOutlineRoundedIcon />
-        </IconButton>
-      </ToolCard>
+        mode="create"
+        onCreate={newApiToolForm.open}
+      />
 
       <ToolCard
         id="form-tool"
+        type={ToolType.form}
         name={agentToolConfig.form.title}
         description={agentToolConfig.form.description}
-      >
-        <IconButton
-          size="sm"
-          variant="plain"
-          color="success"
-          onClick={() => {
-            newFormToolModal.open();
-          }}
-        >
-          <AddCircleOutlineRoundedIcon />
-        </IconButton>
-      </ToolCard>
+        mode="create"
+        onCreate={newFormToolModal.open}
+      />
 
       {!hasMarkAsResolved && (
         <ToolCard
           id="form-tool"
+          type={ToolType.mark_as_resolved}
           name={agentToolConfig.mark_as_resolved.title}
           description={agentToolConfig.mark_as_resolved.description}
-        >
-          <IconButton
-            size="sm"
-            variant="plain"
-            color="success"
-            onClick={() => {
-              handleAddTool({
-                type: ToolType.mark_as_resolved,
-              });
-            }}
-          >
-            <AddCircleOutlineRoundedIcon />
-          </IconButton>
-        </ToolCard>
+          mode="create"
+          onCreate={() => {
+            handleAddTool({
+              type: ToolType.mark_as_resolved,
+            });
+          }}
+        />
       )}
 
       {!hasRequestHuman && (
         <ToolCard
           id="form-tool"
+          type={ToolType.request_human}
+          mode="create"
           name={agentToolConfig.request_human.title}
           description={agentToolConfig.request_human.description}
-        >
-          <IconButton
-            size="sm"
-            variant="plain"
-            color="success"
-            onClick={() => {
-              handleAddTool({
-                type: ToolType.request_human,
-              });
-            }}
-          >
-            <AddCircleOutlineRoundedIcon />
-          </IconButton>
-        </ToolCard>
+          onCreate={() =>
+            handleAddTool({
+              type: ToolType.request_human,
+            })
+          }
+        />
       )}
 
-      {!hasLeadCapture && (
+      {/* {!hasLeadCapture && (
         <ToolCard
+          type={ToolType.lead_capture}
           id="form-tool"
           name={agentToolConfig.lead_capture.title}
           description={agentToolConfig.lead_capture.description}
-        >
-          <IconButton
-            size="sm"
-            variant="plain"
-            color="success"
-            onClick={() => {
-              newLeadCaptureToolModal.open();
-            }}
-          >
-            <AddCircleOutlineRoundedIcon />
-          </IconButton>
-        </ToolCard>
-      )}
+          mode="create"
+          onCreate={newLeadCaptureToolModal.open}
+        />
+      )} */}
 
       <newDatastoreModal.component
         title={agentToolConfig.datastore.title}
@@ -489,8 +499,16 @@ function ToolsInput({}: Props) {
           },
         }}
       >
-        <FormToolInput
-          onChange={(form: Form) => {
+        <NewFormToolInput
+          saveFormTool={({
+            form,
+            trigger,
+            messageCountTrigger,
+          }: {
+            form: Form;
+            trigger?: string;
+            messageCountTrigger?: number;
+          }) => {
             setValue(
               'tools',
               [
@@ -499,6 +517,7 @@ function ToolsInput({}: Props) {
                   type: ToolType.form,
                   formId: form.id,
                   form: form,
+                  config: { trigger, messageCountTrigger },
                 }),
               ],
               {
@@ -506,12 +525,30 @@ function ToolsInput({}: Props) {
                 shouldValidate: true,
               }
             );
-
             newFormToolModal.close();
           }}
         />
       </newFormToolModal.component>
 
+      <editFormToolModal.component
+        title={agentToolConfig.form.title}
+        description={agentToolConfig.form.description}
+        dialogProps={{
+          sx: {
+            maxWidth: 'sm',
+            height: 'auto',
+          },
+        }}
+      >
+        <EditFormToolInput
+          currentToolIndex={state.currentToolIndex}
+          onSubmit={() => {
+            editFormToolModal.close();
+            //  save.
+            btnSubmitRef?.current?.click();
+          }}
+        />
+      </editFormToolModal.component>
       <CreateDatastoreModal
         isOpen={isCreateDatastoreModalOpen}
         onSubmitSuccess={(newDatatore) => {
@@ -551,9 +588,9 @@ function ToolsInput({}: Props) {
           },
         }}
       >
-        {currentToolIndex >= 0 && (
+        {state.currentToolIndex >= 0 && (
           <Stack gap={2}>
-            <HttpToolInput name={`tools.${currentToolIndex}`} />
+            <HttpToolInput name={`tools.${state.currentToolIndex}`} />
             <validateToolModal.component
               title="Set up a request to your endpoint"
               description="Send a request to your endpoint to make sure it's working well."
@@ -567,7 +604,7 @@ function ToolsInput({}: Props) {
                 setToolValidState={(state: boolean) => {
                   isToolValidRef.current = state;
                 }}
-                name={`tools.${currentToolIndex}`}
+                name={`tools.${state.currentToolIndex}`}
                 handleCloseModal={validateToolModal.close}
               />
             </validateToolModal.component>
@@ -601,9 +638,11 @@ function ToolsInput({}: Props) {
           },
         }}
       >
-        {currentToolIndex >= 0 && (
+        {state.currentToolIndex >= 0 && (
           <Stack gap={2}>
-            <LeadCaptureToolFormInput name={`tools.${currentToolIndex}`} />
+            <LeadCaptureToolFormInput
+              name={`tools.${state.currentToolIndex}`}
+            />
             <Button
               type="button"
               loading={formState.isSubmitting}

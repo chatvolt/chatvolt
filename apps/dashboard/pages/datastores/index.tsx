@@ -22,13 +22,13 @@ import useSWR from 'swr';
 import DatastoreTable from '@app/components/DatastoreTable';
 import Layout from '@app/components/Layout';
 import UsageLimitModal from '@app/components/UsageLimitModal';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import accountConfig from '@chatvolt/lib/account-config';
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { RouteNames } from '@chatvolt/lib/types';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import { getDatastores } from '../api/datastores';
 
@@ -51,19 +51,20 @@ export default function DatasourcesPage() {
   });
 
   const getDatastoresQuery = useSWR<
-    Prisma.PromiseReturnType<typeof getDatastores>
-  >('/api/datastores', fetcher);
+  Prisma.PromiseReturnType<typeof getDatastores>
+>('/api/datastores?frontend=true', fetcher); // Adicione o parâmetro frontend=true
 
-  const handleClickNewDatastore = () => {
-    if (
-      (getDatastoresQuery?.data?.length || 0) >=
-      accountConfig[session?.organization?.currentPlan!]?.limits?.maxDatastores
-    ) {
-      setState({ isUsageModalOpen: true });
-    } else {
-      setState({ isCreateDatastoreModalOpen: true });
-    }
-  };
+const handleClickNewDatastore = () => {
+  if (
+    (getDatastoresQuery?.data?.length || 0) >=
+    accountConfig[session?.organization?.currentPlan!]?.limits?.maxDatastores
+  ) {
+    setState({ isUsageModalOpen: true });
+  } else {
+    setState({ isCreateDatastoreModalOpen: true });
+  }
+};
+
 
   return (
     <Box

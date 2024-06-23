@@ -49,7 +49,7 @@ export const FormSubmission = ({
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="50"
                 height="auto"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>
@@ -73,6 +73,17 @@ export const FormSubmission = ({
                       <Text className="m-0">
                         <strong> {values[key]}</strong>
                       </Text>
+
+                      {key === "phone" && (
+                        <Button
+                          className="bg-[#fff] rounded text-black text-[12px] font-semibold no-underline text-center border border-solid border-[#eaeaea] px-4 py-2 ml-2"
+                          href={`https://api.whatsapp.com/send?phone=${values[key].replace('+', '')}`}
+                          target="_blank"
+                        >
+                          Send WhatsApp Message
+                        </Button>
+                      )}
+
                     </Column>
                   </Row>
                 ))}
@@ -81,6 +92,7 @@ export const FormSubmission = ({
                   <>
                     <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
                     <Section className="text-center mt-[32px] mb-[32px]">
+                      <br />
                       <Button
                         className="bg-[#fff] rounded text-black text-[12px] font-semibold no-underline text-center border border-solid border-[#eaeaea] px-4 py-3"
                         href={ctaLink}

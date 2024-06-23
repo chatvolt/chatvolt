@@ -1,6 +1,7 @@
 import { NextApiResponse } from 'next';
 import z from 'zod';
 
+import { AcceptedAIEnabledMimeTypes } from '@chatvolt/lib/accepted-mime-types';
 import { ApiError, ApiErrorType } from '@chatvolt/lib/api-error';
 import { deleteFolderFromS3Bucket } from '@chatvolt/lib/aws';
 import {
@@ -32,14 +33,26 @@ export const getConversation = async (
       status: true,
       isAiEnabled: true,
       userId: true,
-      agent: true,
+      agent: {
+        include: {
+          tools: true,
+        },
+      },
       lead: true,
+      metadata: true,
       participantsVisitors: {
         include: {
           contact: true,
         },
       },
       participantsContacts: true,
+      attachments: {
+        where: {
+          mimeType: {
+            in: AcceptedAIEnabledMimeTypes,
+          },
+        },
+      },
       messages: {
         take: 50,
         include: {
@@ -75,6 +88,7 @@ export const getConversation = async (
               },
             },
           },
+          submission: true,
         },
         orderBy: {
           createdAt: 'desc',
@@ -125,7 +139,9 @@ export const updateConversation = async (
   try {
     const session = req.session;
     const conversationId = req.query.conversationId as string;
-    const updates = ConversationUpdateSchema.parse(req.body);
+    const { status, metadata, isAiEnabled } = ConversationUpdateSchema.parse(
+      req.body
+    );
 
     const conversation = await prisma.conversation.findUnique({
       where: {
@@ -144,6 +160,7 @@ export const updateConversation = async (
         },
       },
     });
+
     if (
       conversation?.agent?.visibility === AgentVisibility.private &&
       conversation?.agent?.organizationId !== session?.organization?.id
@@ -156,7 +173,16 @@ export const updateConversation = async (
         id: conversationId,
       },
       data: {
-        ...updates,
+        status,
+        isAiEnabled,
+        metadata: {
+          ...(metadata
+            ? {
+                ...(conversation?.metadata as Record<string, any>),
+                ...metadata,
+              }
+            : {}),
+        },
       },
       include: {
         lead: true,
@@ -195,7 +221,7 @@ export const updateConversation = async (
       const leadEmail = updated?.lead?.email!;
       const agent = updated?.agent!;
 
-      if (updates.status === ConversationStatus.RESOLVED) {
+      if (status === ConversationStatus.RESOLVED) {
         await EventDispatcher.dispatch({
           type: 'conversation-resolved',
           agent: agent,
@@ -203,7 +229,7 @@ export const updateConversation = async (
           messages: updated?.messages,
           adminEmail: onwerEmail,
         });
-      } else if (updates.status === ConversationStatus.HUMAN_REQUESTED) {
+      } else if (status === ConversationStatus.HUMAN_REQUESTED) {
         await EventDispatcher.dispatch({
           type: 'human-requested',
           agent: agent,

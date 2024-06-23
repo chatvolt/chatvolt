@@ -1,35 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/joy/Box';
-import debounce from 'p-debounce';
 import React, {
   ComponentProps,
   ReactElement,
   useCallback,
   useEffect,
-  useMemo,
+  useState,
 } from 'react';
-import {
-  FormProvider,
-  FormProviderProps,
-  useForm,
-  UseFormReturn,
-} from 'react-hook-form';
+import { FormProvider, useForm, UseFormReturn } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { SWRResponse } from 'swr';
 
 import useBlablaForm, {
   UseBlablaFormDeleteMutation,
   UseBlablaFormMutation,
   UseBlablaFormQuery,
 } from '@app/hooks/useBlablaForm';
-import useStateReducer from '@app/hooks/useStateReducer';
 
-import {
-  CUSTOMER_SUPPORT,
-  CUSTOMER_SUPPORT_V3,
-} from '@chatvolt/lib/prompt-templates';
 import { CreateFormSchema, FormConfigSchema } from '@chatvolt/lib/types/dtos';
 import { Form, Prisma, PromptType } from '@chatvolt/prisma';
+import AutoSaveForm from '@chatvolt/ui/AutoSaveForm';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Loader from '@chatvolt/ui/Loader';
 
 // interface ConnectFormProps<TFieldValues extends FieldValues> {
 //   children(children: UseFormReturn<TFieldValues>): ReactElement;
@@ -55,21 +46,36 @@ function BlablaFormForm(props: Props) {
   });
 
   const formId = props?.formId;
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
   const { query, mutation, deleteMutation } = useBlablaForm({ id: formId });
 
+  const defaultValues = {
+    name: query?.data?.name,
+    draftConfig: query?.data?.draftConfig as FormConfigSchema,
+    publishedConfig: query?.data?.publishedConfig as FormConfigSchema,
+    ...props.defaultValues,
+  };
+
   const methods = useForm<CreateFormSchema>({
-    resolver: zodResolver(CreateFormSchema),
-    defaultValues: {
-      name: query?.data?.name,
-      draftConfig: query?.data?.draftConfig as FormConfigSchema,
-      publishedConfig: query?.data?.publishedConfig as FormConfigSchema,
-      ...props.defaultValues,
+    mode: 'onChange',
+    // resolver: zodResolver(CreateFormSchema),
+    resolver: async (data, context, options) => {
+      // you can debug your validation schema here
+      // console.log('formData', data);
+      const validation = await zodResolver(CreateFormSchema)(
+        data,
+        context,
+        options
+      );
+      console.log('validation result', validation);
+      return validation;
     },
+    defaultValues,
   });
 
   const onSubmit = useCallback(
-    debounce(async (values: CreateFormSchema) => {
+    async (values: CreateFormSchema) => {
       try {
         setState({ isLoading: true });
         const form = await toast.promise(
@@ -97,46 +103,42 @@ function BlablaFormForm(props: Props) {
       } finally {
         setState({ isLoading: false });
       }
-    }, 1000),
+    },
     [setState, mutation.trigger, query.mutate, props?.onSubmitSucces]
   );
 
   useEffect(() => {
-    if (query?.data) {
+    if (query?.data && !hasLoadedOnce) {
       methods.reset(
         {
           ...(query.data as any),
         },
         {
-          keepDirtyValues: true,
-          keepDefaultValues: true,
+          // keepDefaultValues: true,
+          // keepValues: true,
+          // keepDirty: false,
         }
       );
+      setHasLoadedOnce(true);
     }
-  }, [query?.data]);
-
-  // useEffect(() => {
-  //   const subscription = watch(() => {
-  //     if (isDirty) {
-  //       handleSubmit(onSubmit)();
-  //     }
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, [isDirty, watch, handleSubmit, onSubmit]);
+  }, [query?.data, hasLoadedOnce]);
 
   // Weired bug, without this, the form is valid after a second update
   // console.log('isValid', methods.formState.isValid);
   console.log('errors', methods.formState.errors);
-  // console.log('dirtyFields', methods.formState.dirtyFields);
+
+  if (!hasLoadedOnce) {
+    return <Loader />;
+  }
 
   return (
     <FormProvider {...methods}>
+      <AutoSaveForm defaultValues={defaultValues} onSubmit={onSubmit} />
       <Box
         className="flex flex-col w-full h-full"
         {...props.formProps}
         component="form"
         onSubmit={methods.handleSubmit(onSubmit)}
-        onChange={methods.handleSubmit(onSubmit)}
       >
         {props.children({
           query,

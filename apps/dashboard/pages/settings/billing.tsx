@@ -10,6 +10,7 @@ import FormLabel from '@mui/joy/FormLabel';
 import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+import { Tab,Tabs } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Head from 'next/head';
@@ -17,6 +18,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { ReactElement } from 'react';
 import * as React from 'react';
 
@@ -31,8 +33,28 @@ import accountConfig from '@chatvolt/lib/account-config';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { Prisma, SubscriptionPlan } from '@chatvolt/prisma';
 
+
 export default function BillingSettingsPage() {
   const router = useRouter();
+  const { partner } = router.query;
+  const [currentPartner, setCurrentPartner] = useState<string | undefined>(undefined);
+  // Garante que 'partner' seja uma string ou undefined
+
+  useEffect(() => {
+    const partnerString = Array.isArray(partner) ? partner[0] : partner;
+    if (partnerString) {
+      // Salva o valor de partner no cookie
+      Cookies.set('chatvolt-partner', partnerString);
+      setCurrentPartner(partnerString);
+    } else {
+      // Recupera o valor do cookie se o parâmetro partner não estiver presente na URL
+      const savedPartner = Cookies.get('chatvolt-partner');
+      if (savedPartner) {
+        setCurrentPartner(savedPartner);
+      }
+    }
+  }, [partner]);
+
   const { data: session, status } = useSession();
 
   const handleClickManageSubscription = async () => {
@@ -49,19 +71,38 @@ export default function BillingSettingsPage() {
 
   const currentPlan = accountConfig[session?.organization?.currentPlan!];
 
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   if (!session?.organization) {
     return null;
   }
 
   return (
     <Stack>
-      <Box mb={4}>
-        <UserFree>
+
+      <UserFree>
+        <Box mb={4}>
           <Card variant="outlined" sx={{ bgcolor: 'black' }}>
-            <StripePricingTable />
+          <Tabs 
+              value={value} 
+              onChange={handleChange} 
+              aria-label="Pricing tables tabs"
+              sx={{ 
+                '.MuiTab-root': { color: 'grey' },
+                '.Mui-selected': { color: 'white' }
+              }}
+            >
+              <Tab label="USD" />
+              <Tab label="BRL" />
+            </Tabs>
+            {value === 0 && <StripePricingTable currency="USD" pricetable={currentPartner} />}
+            {value === 1 && <StripePricingTable currency="BRL" pricetable={currentPartner} />}
           </Card>
-        </UserFree>
-      </Box>
+        </Box>
+      </UserFree>
 
       <Stack
         gap={4}
@@ -102,25 +143,16 @@ export default function BillingSettingsPage() {
               >
                 <Typography>{`${currentPlan?.limits?.maxDatastores} Datastores`}</Typography>
               </Typography>
-              {session?.organization?.isPremium ? (
-                <Typography
-                  level="title-md"
-                  startDecorator={<CheckRoundedIcon color="success" />}
-                >
-                  <Typography>{`${
-                    currentPlan?.limits?.maxAgentsQueries
-                  } GPT-3.5 or ${
-                    currentPlan?.limits?.maxAgentsQueries / 2
-                  } GPT-4 Agent responses / month`}</Typography>
-                </Typography>
-              ) : (
-                <Typography
-                  level="title-md"
-                  startDecorator={<CheckRoundedIcon color="success" />}
-                >
-                  <Typography>{`${currentPlan?.limits?.maxAgentsQueries} GPT-3.5 responses / month`}</Typography>
-                </Typography>
-              )}
+
+              <Typography
+                level="title-md"
+                startDecorator={<CheckRoundedIcon color="success" />}
+              >
+                <Typography>{`${
+                  currentPlan?.limits?.maxAgentsQueries
+                } message credits/month`}</Typography>
+              </Typography>
+
               <Typography
                 level="title-md"
                 startDecorator={<CheckRoundedIcon color="success" />}

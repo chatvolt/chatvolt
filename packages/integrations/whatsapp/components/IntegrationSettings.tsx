@@ -285,7 +285,7 @@ function IntegrationSettings({ onSubmitSuccess, agentId }: Props) {
               Make sure you have{' '}
               <LinkButton
                 linkProps={{
-                  href: 'https://www.chatvolt.ai/help/whatsapp',
+                  href: 'https://docs.chatvolt.ai/integrations/whatsapp',
                   target: '_blank',
                 }}
                 buttonProps={{
@@ -464,7 +464,7 @@ function IntegrationSettings({ onSubmitSuccess, agentId }: Props) {
                     />
                   </li>
                   <li>
-                    Webhook fields: <kbd>check messages</kbd>
+                    Webhook fields: <kbd>messages</kbd>
                   </li>
                 </ul>
               </li>

@@ -5,6 +5,3 @@
 -- multiple migrations, each migration adding only one value to
 -- the enum.
 
-
-ALTER TYPE "AgentModelName" ADD VALUE 'gpt_4_turbo';
-ALTER TYPE "AgentModelName" ADD VALUE 'gpt_4_turbo_vision';

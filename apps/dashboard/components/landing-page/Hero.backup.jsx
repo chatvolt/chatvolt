@@ -70,7 +70,7 @@ export function Hero() {
           </Link>
           <Link
             target="_blank"
-            href={'https://calendar.app.google/js1tgwSh2CUvV4CA7'}
+            href={'https://book.chatvolt.ai/alexander'}
           >
             <Button
               variant="outlined"
@@ -85,7 +85,7 @@ export function Hero() {
         <div className="flex justify-center mt-10 gap-x-6">
           {/* <Button target="_blank" href="https://app.chatvolt.ai/signin">Start Building</Button> */}
           {/* <Button
-          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          href="https://www.youtube.com/watch?v=xxxx"
           variant="outline"
         >
           <svg

@@ -26,12 +26,12 @@ import AnalyticsCard from '@app/components/AnalyticsCard';
 import AreaChart from '@app/components/charts/AreaChart';
 import GeoChart from '@app/components/charts/GeoChart';
 import Layout from '@app/components/Layout';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { fetcher } from '@chatvolt/lib/swr-fetcher';
 import { RouteNames } from '@chatvolt/lib/types';
 import { withAuth } from '@chatvolt/lib/withAuth';
 import { Agent, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 import { getAgents } from '../api/agents';
 

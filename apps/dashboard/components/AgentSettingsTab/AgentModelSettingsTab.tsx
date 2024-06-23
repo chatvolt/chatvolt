@@ -12,7 +12,6 @@ import SettingCard from '@app/components/ui/SettingCard';
 import { CreateAgentSchema } from '@chatvolt/lib/types/dtos';
 import { Agent, AppDatasource as Datasource } from '@chatvolt/prisma';
 
-import Motion from '../Motion';
 import MotionBottom from '../MotionBottom';
 
 type Props = {

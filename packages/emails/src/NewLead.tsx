@@ -80,7 +80,7 @@ export const NewLead = ({
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="50"
                 height="auto"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>

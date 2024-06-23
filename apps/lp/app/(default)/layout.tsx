@@ -1,5 +1,5 @@
-import Footer from '@/components/ui/footer';
-import Header from '@/components/ui/header';
+import Footer from '@chatvolt/ui/lp/footer';
+import Header from '@chatvolt/ui/lp/header';
 
 export default function DefaultLayout({
   children,

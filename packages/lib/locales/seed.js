@@ -1,6 +1,6 @@
 const fs = require('fs');
 const OpenAI = require('openai');
-const OPENAI_API_KEY = 'XXXXXXX';
+const OPENAI_API_KEY = 'xxx';
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 const langs = [

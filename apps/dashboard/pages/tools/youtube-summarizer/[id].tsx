@@ -29,12 +29,12 @@ import PoweredByCard from '@app/components/PoweredByCard';
 import SEO from '@app/components/SEO';
 import TopBar from '@app/components/TopBar';
 import useConfetti from '@app/hooks/useConfetti';
-import useStateReducer from '@app/hooks/useStateReducer';
 
 import { generateActionFetcher, HTTP_METHOD } from '@chatvolt/lib/swr-fetcher';
 import { SummaryPageProps } from '@chatvolt/lib/types';
 import writeClipboard from '@chatvolt/lib/write-clipboard';
 import prisma from '@chatvolt/prisma/client';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
 
 var entities = {
   amp: '&',

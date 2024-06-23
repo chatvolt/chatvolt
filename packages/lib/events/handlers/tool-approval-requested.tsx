@@ -48,11 +48,11 @@ const handler: AppEventHandler<
 
   await mailer.sendMail({
     from: {
-      name: 'Chatvolt',
+      name: 'Chatvolt AI',
       address: process.env.EMAIL_FROM!,
     },
     to: ownerEmail!,
-    subject: `Approval Needed`,
+    subject: `⚠️ Approval Needed`,
     html: render(
       <ActionApprovalTemplate
         history={conversation.messages}

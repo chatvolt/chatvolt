@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  redis:
+    extends:
+      file: docker-compose.all.yml
+      service: redis
+  redis-ui:
+    extends:
+      file: docker-compose.all.yml
+      service: redis-ui
+volumes:
+  redis-data:
+  redis-conf:
+  p3x-redis-ui-settings:

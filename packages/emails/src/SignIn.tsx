@@ -42,8 +42,8 @@ export const SignIn = ({ url, host }: Props) => {
               Sign in to <strong>Chatvolt</strong>
             </Heading>
             <Text className="text-black text-[14px] text-center leading-[24px]">
-              Click the button below to sign in and continue enjoying our
-              services.
+              Please click the button below to access your Chatvolt account. 
+              This access is valid only once. If it expires, please visit our website and request access again.
             </Text>
             <Section className="text-center mt-[32px] mb-[32px]">
               <Button
@@ -53,19 +53,33 @@ export const SignIn = ({ url, host }: Props) => {
                 Sign In
               </Button>
             </Section>
+
+            {/* <Text className="text-black text-[14px] leading-[24px]">
+              or copy and paste this URL into your browser:<br />
+              <Link
+                href={url}
+                className="text-blue-600 no-underline"
+              >
+                {url}
+              </Link>
+            </Text> */}
+
+
+            <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-[12px] leading-[24px] mt-4">
-              If you have any issues with signing in, feel free to
+              If you encounter any issues with signing in, please do not hesitate to
               <Link href="mailto:support@chatvolt.ai" className="underline">
                 {' '}
                 contact us
               </Link>
               .
             </Text>
-            <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+            
             <Text className="text-[#666666] text-[12px] leading-[24px]">
-              If you were not expecting this sign-in link, you can ignore this
-              email. If you are concerned about your account s safety, please
-              reply to this email to get in touch with us.
+            In case you were not expecting to receive this sign-in link, 
+            you can simply ignore this email. If you have any worries 
+            about the safety of your account, please don't hesitate 
+            to reach out to us by replying to this email.
             </Text>
           </Container>
         </Body>

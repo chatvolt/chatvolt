@@ -7,10 +7,14 @@ import {
 import {
   ArrowPathIcon,
   ChartPieIcon,
+  ChatBubbleBottomCenterTextIcon,
   ChatBubbleLeftEllipsisIcon,
   CpuChipIcon,
   CursorArrowRaysIcon,
+  DocumentTextIcon,
   FingerPrintIcon,
+  LinkIcon,
+  RectangleGroupIcon,
   ServerIcon,
   SquaresPlusIcon,
   UserPlusIcon,
@@ -20,21 +24,50 @@ import { Fragment } from 'react';
 import products from '@chatvolt/lib/data/products';
 
 const solutions = [
-  ...products.map((product) => ({
-    name: product.name,
-    description: product.description,
-    href: `/products/${product.slug}`,
-    icon: (props: any) => (
-      <img {...props} src={product.logo} alt={`${product.name} Logo}`} />
-    ),
-  })),
-  // {
-  //   name: 'Embed Agent on your website',
-  //   description:
-  //     'Automate customer support with a ChatGPT Bot trained on your data',
-  //   href: '/#for-customer-support',
-  //   icon: ChatBubbleLeftEllipsisIcon,
-  // },
+
+  // ...products.map((product) => ({
+  //   name: product.name,
+  //   description: product.description,
+  //   href: `/products/${product.slug}`,
+  //   icon: (props: any) => (
+  //     <img {...props} src={product.logo} alt={`${product.name} Logo}`} />
+  //   ),
+  // })),
+
+  {
+    name: 'All the best LLMs are available',
+    description:
+      'ChatGPT 3.5 Turbo, ChatGPT 4 Turbo, Google Gemini, Google Gemma, Microsoft WizardLM 2, Microsoft Phi 3, Cohere Command-R, Claude 3, Mistral, Dolphin, OpenChat, and Meta LLama are some of the cutting-edge models we offer. In addition, we highlight Volt-Networks, our most advanced network, which integrates multiple models to produce responses that are not only comprehensive but also extremely precise.',
+    href: '/#best-llms',
+    icon: RectangleGroupIcon,
+  },
+
+  {
+    name: 'AI-Powered Prompt Generation',
+    description:
+      'Speed up and enhance prompt creation with our exclusive AI-driven prompt generation tool. Quickly generate personalized prompts, boosting the efficiency and creativity of your virtual assistants.',
+    href: '/#for-customer-support',
+    icon: DocumentTextIcon,
+  },
+
+  {
+    name: 'Embed Agent on your website',
+    description:
+      'Automate your customer support with an AI-based ChatBot, trained with your own data and integrated with the world`s most advanced language models.',
+    href: '/#for-customer-support',
+    icon: ChatBubbleLeftEllipsisIcon,
+  },
+
+  {
+    name: 'Integrate with platforms',
+    description:
+      'Easily integrate your chatbot with your Website, Notion, YouTube, Crisp, WhatsApp, Telegram, Shopify, and more (coming soon).',
+    href: '/#integrations',
+    icon: LinkIcon,
+  },
+
+
+
   // {
   //   name: 'Crisp Plugin',
   //   description:
@@ -93,29 +126,33 @@ const solutions = [
   //     />
   //   ),
   // },
-  {
-    name: 'Chatvolt API',
-    description: 'Acess the Chatvolt API to build your own workflows',
-    href: 'https://docs.chatvolt.ai/introduction',
-    icon: ServerIcon,
-  },
-  {
-    name: 'On Premise',
-    description: 'Install Chatvolt on your own infrastructure',
-    href: 'https://github.com/chatvolt/chatvolt',
-    icon: CpuChipIcon,
-  },
+
+
+  // {
+  //   name: 'Chatvolt API',
+  //   description: 'Acess the Chatvolt API to build your own workflows',
+  //   href: 'https://docs.chatvolt.ai/introduction',
+  //   icon: ServerIcon,
+  // },
+  // {
+  //   name: 'On Premise',
+  //   description: 'Install Chatvolt on your own infrastructure',
+  //   href: 'https://github.com/',
+  //   icon: CpuChipIcon,
+  // },
+
+
 ];
 const callsToAction = [
   {
     name: 'Watch demo',
-    href: 'https://www.youtube.com/watch?v=LPISZdaiDBM',
+    href: 'https://www.youtube.com/watch?v=ZfFBWM3K-lc',
     icon: PlayCircleIcon,
   },
   {
-    name: 'Book a Call',
-    href: 'https://calendar.app.google/js1tgwSh2CUvV4CA7',
-    icon: PhoneIcon,
+    name: 'Chat',
+    href: 'https://www.chatvolt.ai/@help',
+    icon: ChatBubbleBottomCenterTextIcon,
   },
 ];
 
@@ -165,6 +202,7 @@ export default function Example() {
                 <a
                   key={item.name}
                   href={item.href}
+                  target="_blank"
                   className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
                 >
                   <item.icon

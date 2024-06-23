@@ -27,7 +27,7 @@ interface ActionApprovalProps {
 }
 
 export const ActionApprovalTemplate = ({
-  agentName = 'Adam',
+  agentName = 'Franklin',
   approvals = [
     {
       name: 'cat picture generator',
@@ -65,7 +65,7 @@ export const ActionApprovalTemplate = ({
                 src={`https://www.chatvolt.ai/logo.png`}
                 width="200"
                 height="auto"
-                alt="Vercel"
+                alt="Chatvolt AI"
                 className="mx-auto my-0 w-10"
               />
             </Section>

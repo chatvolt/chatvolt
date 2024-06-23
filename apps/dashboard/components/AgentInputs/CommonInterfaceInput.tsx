@@ -1,9 +1,10 @@
-import { Divider } from '@mui/joy';
+import { Divider, FormControl, FormLabel } from '@mui/joy';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import Input from '@app/components/Input';
+import { SketchPicker } from '@chatvolt/ui/ColorPicker';
+import Input from '@chatvolt/ui/Input';
 
 import InitMessageInput from './InitMessageInput';
 import InterfaceConfigCheckbox from './InterfaceConfigCheckbox';
@@ -12,7 +13,7 @@ import SuggestionsInput from './SuggestionsInput';
 type Props = {};
 
 export default function CommonInterfaceInput(props: Props) {
-  const { watch, control, register } = useFormContext();
+  const { watch, control, register, setValue } = useFormContext();
   const { data: session } = useSession();
 
   const config = watch('interfaceConfig');
@@ -43,17 +44,36 @@ export default function CommonInterfaceInput(props: Props) {
       /> */}
       <InterfaceConfigCheckbox
         field="isBrandingDisabled"
-        label="Remove Chatvolt Branding (premium account required)"
-        disabled={!session?.organization?.isPremium}
+        label="Remove Chatvolt Branding (Pro plan required)"
+        disabled={
+          !session?.organization?.isPremium ||
+          session?.organization?.subscriptions?.[0]?.plan === 'level_1'
+        }
       />
       <SuggestionsInput />
-      <Input
+
+      <FormControl>
+        <FormLabel>Brand Color</FormLabel>
+        <SketchPicker
+          disableAlpha
+          color={config?.primaryColor || '42'}
+          onChange={(color) =>
+            setValue('interfaceConfig.primaryColor', color.hex, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
+        />
+      </FormControl>
+
+      {/* <Input
         control={control}
         defaultValue={config?.primaryColor || '#000000'}
         placeholder="#000000"
         label="Brand Color"
         {...register('interfaceConfig.primaryColor')}
-      />
+      /> */}
+
       <Divider />
     </>
   );

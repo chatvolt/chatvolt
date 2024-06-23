@@ -6,13 +6,12 @@ import Stack from '@mui/joy/Stack';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import Input from '@app/components/Input';
-
 import { RouteNames } from '@chatvolt/lib/types';
+import Input from '@chatvolt/ui/Input';
+import Loader from '@chatvolt/ui/Loader';
 
 import SettingCard from './ui/SettingCard';
 import BlablaFormProvider from './BlablaFormProvider';
-import Loader from './Loader';
 
 type Props = {
   formId: string;
@@ -29,16 +28,13 @@ function FormSettingsTab({ formId }: Props) {
         }
 
         return (
-          <Stack sx={{ width: '100%', maxWidth: 'md', mx: 'auto', gap: 2 }}>
+          <Stack sx={{ width: '100%', mx: 'auto', gap: 2 }}>
             <SettingCard
               title="General Settings"
-              // description="Deploy your agent with the following widgets or integrations"
               disableSubmitButton
               cardProps={{
                 sx: {
                   width: '100%',
-                  // maxWidth: 'md',
-                  // mx: 'auto',
                 },
               }}
             >

@@ -6,8 +6,8 @@ import React from 'react';
 import slugify from '@chatvolt/lib/slugify';
 import { SummaryPageProps } from '@chatvolt/lib/types';
 import prisma from '@chatvolt/prisma/client';
+import Cta from '@chatvolt/ui/lp/cta';
 
-import Cta from '@/components/cta';
 import YoutubeSummary from '@/components/youtube-summarizer/summary';
 
 type Props = {
@@ -44,14 +44,19 @@ export async function generateMetadata(
 
   const title = summary?.output?.metadata?.title;
   return {
-    title: `${summary?.output?.metadata?.title} - AI YouTube Video Summary | Chatvolt`,
+    title: `${summary?.output?.metadata?.title}`,
     description:
-      summary?.output?.metadata?.description ||
+      summary?.output?.en?.videoSummary?.split?.('.')?.[0] ||
       `Generate YouTube video summaries instantly for free with AI`,
     alternates: {
       canonical: `/tools/youtube-summarizer/${id}`,
     },
+    twitter: {
+      site: `/tools/youtube-summarizer/${id}`,
+    },
     openGraph: {
+      type: 'article',
+      url: `/tools/youtube-summarizer/${id}`,
       images: [
         `/api/og/youtube-summary?state=${encodeURIComponent(
           JSON.stringify({
@@ -63,9 +68,13 @@ export async function generateMetadata(
         ...previousImages,
       ],
     },
-    keywords: `${
-      summary?.output?.metadata?.keywords?.join(', ') || ''
-    } AI chatbot, No-code platform, AI Customer Support, Onboarding, Slack AI chatbot, Automation, Chatvolt, ChatGPT Plugin, Chat PDF, Chat with any document, Custom ChatGPT Bot, Chatbot GPT, Chatbot, ChatGPT Chatbot, WhatsApp ChatGPT Chatbot`,
+    other: {
+      'article:published_time': summary?.createdAt?.toISOString(),
+      'article:modified_time': new Date().toISOString(),
+    },
+    // keywords: `${
+    //   summary?.output?.metadata?.keywords?.join(', ') || ''
+    // } AI chatbot, No-code platform, AI Customer Support, Onboarding, Slack AI chatbot, Automation, Chatvolt, ChatGPT Plugin, Chat PDF, Chat with any document, Custom ChatGPT Bot, Chatbot GPT, Chatbot, ChatGPT Chatbot, WhatsApp ChatGPT Chatbot`,
   };
 }
 

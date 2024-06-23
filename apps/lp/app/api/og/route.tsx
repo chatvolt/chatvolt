@@ -46,7 +46,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const image = searchParams.get('image');
   const title =
-    searchParams.get('title') || `Custom GPT Agent For Your Startup`;
+    searchParams.get('title') || `Custom AI Assistant for Your Business`;
 
   return new ImageResponse(
     (

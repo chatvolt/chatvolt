@@ -1,7 +1,8 @@
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import { Alert, Box, Button, Link, Stack, Typography } from '@mui/joy';
 
-import ColorSchemeToggle from './Layout/ColorSchemeToggle';
+import DarkModeToggle from '@chatvolt/ui/DarkModeToggle';
+
 import Header from './Layout/Header';
 import Logo from './Logo';
 type Props = {
@@ -29,7 +30,7 @@ export default function TopBar(props: Props) {
         </Link>
 
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1.5 }}>
-          <ColorSchemeToggle />
+          <DarkModeToggle />
         </Box>
       </Header>
       <Alert
@@ -50,7 +51,7 @@ export default function TopBar(props: Props) {
           <Typography color="primary" sx={{ fontStyle: 'italic' }}>
             <strong>NEW</strong>
           </Typography>{' '}
-          Train a custom GPT Chatbot on YouTube videos
+          Train a custom AI Assistant Chatbot on YouTube videos
         </Typography>
         <Link
           target="_blank"

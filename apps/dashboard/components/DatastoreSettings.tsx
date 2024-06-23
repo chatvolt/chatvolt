@@ -28,9 +28,7 @@ import useSWRMutation from 'swr/mutation';
 import { z } from 'zod';
 
 import { DatastoreFormsMap } from '@app/components/DatastoreForms';
-import Input from '@app/components/Input';
 import useGetDatastoreQuery from '@app/hooks/useGetDatastoreQuery';
-import useStateReducer from '@app/hooks/useStateReducer';
 import { createDatastore } from '@app/pages/api/datastores';
 import { updateDatastore } from '@app/pages/api/datastores/[id]';
 
@@ -41,6 +39,8 @@ import { RouteNames } from '@chatvolt/lib/types';
 import { GenerateUploadLinkRequest } from '@chatvolt/lib/types/dtos';
 import { QdrantSchema as Schema } from '@chatvolt/lib/types/models';
 import { Datastore, DatastoreVisibility, Prisma } from '@chatvolt/prisma';
+import useStateReducer from '@chatvolt/ui/hooks/useStateReducer';
+import Input from '@chatvolt/ui/Input';
 
 import UsageLimitCard from './UsageLimitCard';
 import UserFree from './UserFree';
@@ -371,7 +371,8 @@ function DatastoreSettings() {
     <Box
       sx={(theme) => ({
         maxWidth: '100%',
-        width: theme.breakpoints.values.md,
+        width: '100%',
+        px: 4,
         mx: 'auto',
       })}
     >
@@ -416,7 +417,7 @@ function DatastoreSettings() {
               </Link>
             }
           >
-            Learn more about the Datatberry API
+            Learn more about the Chatvolt API
           </Alert>
 
           <Alert
@@ -438,7 +439,7 @@ function DatastoreSettings() {
 
       <Divider sx={{ my: 4 }} />
 
-      <Box id="chatgpt-plugin">
+      {/* <Box id="chatgpt-plugin">
         {getDatastoreQuery?.data?.id && (
           <FormControl sx={{ gap: 1 }}>
             <FormLabel>ChatGPT Plugin</FormLabel>
@@ -473,7 +474,7 @@ function DatastoreSettings() {
               </Alert>
 
               <UsageLimitCard
-                title="Premium Feature"
+                title="⚡ Premium Feature"
                 description="Upgrade your plan to access this feature"
               />
             </UserFree>
@@ -486,7 +487,7 @@ function DatastoreSettings() {
         )}
       </Box>
 
-      <Divider sx={{ my: 4 }} />
+      <Divider sx={{ my: 4 }} /> */}
 
       <FormControl sx={{ gap: 1 }}>
         <FormLabel>Delete Datastore</FormLabel>
